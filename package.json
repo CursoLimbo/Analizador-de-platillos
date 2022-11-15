@@ -13,7 +13,7 @@
   "main": "dist/src/Server.js",
   "scripts": {
     "start": "tsc && node dist/src/Server.js",
-    "build": "cd ./Client && npm run-script build",
+    "build": "cd ./Client && npm install && npm run-script build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
