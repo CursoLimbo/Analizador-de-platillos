@@ -14,7 +14,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "ts-node ./src/server.ts",
-    "build": "npm install -g ts-node",
+    "build": "npm install ts-node",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
