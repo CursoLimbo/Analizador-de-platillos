@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "tsc && node dist/server.js",
     "start": "node dist/server.js",
-    "build": "tsc",
+    "build": "tsc && cd Client && npm run-script build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
