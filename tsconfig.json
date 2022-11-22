@@ -8,5 +8,10 @@
     "outDir": "dist",
     "jsx": "react"
   },
-  "lib": ["es2021"]
+  "lib": ["es2021"],
+  "exclude": [
+    "Client",
+    "node_modules",
+    "dist"
+  ]
 }
