@@ -26,12 +26,14 @@ app.listen(port, () => {
 })*/
 
 
+
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express' 
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import { typeDefs } from './schemas/schema';  
 import { resolvers } from './resolvers/resolvers';
+import path from "path";
 
 dotenv.config();
 
@@ -44,10 +46,22 @@ async function startApolloServer() {
         resolvers
     });
 
+    app.use(express.static(path.join(__dirname, "../Client/build")));
+    app.get("*", function (_, res) {
+        res.sendFile(
+            path.join(__dirname, "../Client/build/index.html"),
+            function (err) {
+                res.status(500).send(err);
+            }
+        );
+    });
+
+
     await server.start();
     server.applyMiddleware({ app });
 
-    const PORT = process.env.PORT || 4000;
+    //const PORT = process.env.PORT || 4000;
+    const PORT = 5050 || 4000;
     await new Promise<void>(resolve => app.listen({ port: PORT },resolve))
     console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
     }
