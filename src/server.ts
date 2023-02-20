@@ -47,7 +47,7 @@ async function startApolloServer() {
     });
 
     app.use(express.static(path.join(__dirname, "../Client/build")));
-    app.get("*", function (_, res) {
+    app.get("/", function (_, res) {
         res.sendFile(
             path.join(__dirname, "../Client/build/index.html"),
             function (err) {
@@ -56,31 +56,29 @@ async function startApolloServer() {
         );
     });
 
-
-    await server.start();
+    await server.start()
     server.applyMiddleware({ app });
 
-    //const PORT = process.env.PORT || 4000;
-    const PORT = 5050 || 4000;
+    const PORT = process.env.PORT || 4000;
     await new Promise<void>(resolve => app.listen({ port: PORT },resolve))
     console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
-    }
+}
 
-    async function startMongoDB() {
-        try{
-            await mongoose.connect(process.env.MONGODB_URI!)
-            console.log('🟢 MongoDB connected!');
-        }catch(error){
-            console.error('🔴 MongoDB connection error:', error);
-            process.exit(1);
-        }
+async function startMongoDB() {
+    try{
+        await mongoose.connect(process.env.MONGODB_URI!)
+        console.log('🟢 MongoDB connected!');
+    }catch(error){
+        console.error('🔴 MongoDB connection error:', error);
+        process.exit(1);
     }
+}
 
-    async function startServer(){
-        await startMongoDB();
-        await startApolloServer();
-    }
+async function startServer(){
+    await startMongoDB();
+    await startApolloServer();
+}
 
-    startServer();
+startServer();
 
 
