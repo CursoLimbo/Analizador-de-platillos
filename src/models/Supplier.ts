@@ -3,17 +3,17 @@ import mongoose,{Document,Model,Schema} from "mongoose";
 
 
 
-interface IProveedor{
-    nombre: string;
-    ubicacion: string;
-    telefono: string;
+interface ISupplier{
+    name: string;
+    location: string;
+    phone: string;
 }
 
-interface objDocument extends IProveedor, Document {}
+interface objDocument extends ISupplier, Document {}
 
 interface objModel extends Model<objDocument>{}
 
-const ProveedorSchema: Schema = new Schema(
+const SupplierSchema: Schema = new Schema(
     {
       nombre: { type: String, required: true },
       ubicacion: { type: String, required: true },
@@ -22,6 +22,6 @@ const ProveedorSchema: Schema = new Schema(
     { timestamps: true }
   );
 
-  const Proveedor = mongoose.model<objDocument,objDocument>('Proveedor',ProveedorSchema );
+  const Supplier = mongoose.model<objDocument,objDocument>('Supplier', SupplierSchema);
 
-  export {Proveedor,IProveedor};
+  export {Supplier,ISupplier};
