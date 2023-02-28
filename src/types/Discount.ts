@@ -1,7 +1,6 @@
 import {GraphQLInt} from "graphql";
 
 const {
-
     GraphQLObjectType,
     GraphQLString,
     GraphQLNonNull,
@@ -17,6 +16,6 @@ export const DiscountType = new GraphQLObjectType ({
     fields: ()=> ({
         name: {type: GraphQLNonNull(GraphQLString)},
         percentage: {type: GraphQLNonNull(GraphQLInt)},
-        description: {type: GraphQLNonNull(GraphQLString)},
+        description: {type: GraphQLNonNull(GraphQLString)}
     })
 })

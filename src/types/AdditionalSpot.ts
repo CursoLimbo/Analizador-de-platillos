@@ -9,11 +9,11 @@ const {
 
 
 export const AdditionalSpotType = new GraphQLObjectType({
-    name: "Additional spot",
+    name: "AdditionalSpot",
     description: "This is a additional spot graphql account object",
 
     fields: ()=> ({
         name : {type: GraphQLNonNull(GraphQLString)},
-        value: GraphQLNonNull(GraphQLString)
+        value: {type: GraphQLNonNull(GraphQLString)}
     })
 })

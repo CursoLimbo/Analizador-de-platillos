@@ -32,7 +32,7 @@ import { ApolloServer } from 'apollo-server-express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import path from "path";
-const queries = require("./Resolvers/AdditionalSpotResolver")
+const queries = require("./Resolvers/Resolvers")
 
 
 dotenv.config();

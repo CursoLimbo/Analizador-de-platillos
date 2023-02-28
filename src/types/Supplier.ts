@@ -15,7 +15,7 @@ export const SupplierType = new GraphQLObjectType({
     fields: ()=> ({
         name: {type: GraphQLNonNull(GraphQLString)},
         location: {type: GraphQLNonNull(GraphQLString)},
-        phone: {type: GraphQLNonNull(GraphQLString)},
+        phone: {type: GraphQLNonNull(GraphQLString)}
     })
 })
 
