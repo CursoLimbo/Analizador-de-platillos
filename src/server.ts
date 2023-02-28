@@ -31,9 +31,9 @@ import express from 'express'
 import { ApolloServer } from 'apollo-server-express' 
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-import { typeDefs } from './schemas/schema';  
-import { resolvers } from './resolvers/resolvers';
 import path from "path";
+const queries = require("./Resolvers/AdditionalSpotResolver")
+
 
 dotenv.config();
 
@@ -42,8 +42,7 @@ async function startApolloServer() {
     const app = express();
 
     const server = new ApolloServer({
-        typeDefs,
-        resolvers
+       schema: queries
     });
 
     app.use(express.static(path.join(__dirname, "../Client/build")));
