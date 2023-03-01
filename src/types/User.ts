@@ -2,12 +2,10 @@ import {BankAccountType} from "./BankAccount";
 
 
 const {
-    GraphQLSchema,
     GraphQLObjectType,
     GraphQLString,
     GraphQLList,
-    GraphQLNonNull,
-    GraphQLID
+    GraphQLNonNull
 
 } = require('graphql');
 

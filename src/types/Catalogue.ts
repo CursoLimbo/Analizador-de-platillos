@@ -1,4 +1,5 @@
-import {GraphQLISODateTime} from "type-graphql";
+
+const { GraphQLDate } = require('graphql-iso-date')
 
 const {
     GraphQLObjectType,
@@ -14,6 +15,7 @@ export const CatalogueType = new GraphQLObjectType({
 
     fields: ()=> ({
         name : {type: GraphQLNonNull(GraphQLString)},
-        date: GraphQLNonNull(GraphQLISODateTime),
+        date: {type: GraphQLNonNull(GraphQLDate)},
+        file:  {type: GraphQLNonNull(GraphQLString)}
     })
 })

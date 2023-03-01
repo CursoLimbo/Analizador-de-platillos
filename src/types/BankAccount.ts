@@ -1,25 +1,22 @@
-import {GraphQLID, GraphQLInt} from "graphql";
+
 import {UserType} from "./User";
-
-
+import {GraphQLID} from "graphql";
 
 const {
-    GraphQLSchema,
     GraphQLObjectType,
     GraphQLString,
-    GraphQLList,
     GraphQLNonNull
 
 } = require('graphql');
 
 
 export const BankAccountType = new GraphQLObjectType({
-    name: "Bank account",
+    name: "BankAccount",
     description: "This is a bank graphql account object",
 
     fields: ()=> ({
         bank : {type: GraphQLNonNull(GraphQLString)},
-        accountNumber: GraphQLNonNull(GraphQLString),
-        owner: GraphQLObjectType(UserType)
+        accountNumber: {type: GraphQLNonNull(GraphQLString)},
+        owner: {type: GraphQLNonNull(GraphQLID)}
     })
 })

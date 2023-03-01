@@ -1,5 +1,5 @@
 import {GraphQLInt, GraphQLList} from "graphql";
-import mongoose from "mongoose";
+const { GraphQLDate } = require('graphql-iso-date')
 import {AdditionalSpotType} from "./AdditionalSpot";
 import {GraphQLISODateTime} from "type-graphql";
 
@@ -22,7 +22,7 @@ export const QuotationType = new GraphQLObjectType ({
         additionalSpots: {type: GraphQLList(AdditionalSpotType)},
         contentTemplate: {type: GraphQLNonNull(GraphQLString)},
         termsAndConditions: {type: GraphQLNonNull(GraphQLString)},
-        date: {type: GraphQLNonNull(GraphQLISODateTime)},
+        date: {type: GraphQLNonNull(GraphQLDate)},
         code: {type: GraphQLNonNull(GraphQLISODateTime)}
 
     })
