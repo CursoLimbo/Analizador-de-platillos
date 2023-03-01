@@ -1,21 +1,27 @@
-import mongoose, { Document,Model,Schema } from "mongoose";
+import {prop as Property, getModelForClass, modelOptions} from "@typegoose/typegoose";
+import {Field, ObjectType, ID} from "type-graphql";
 
-interface IDiscount {
+@ObjectType({description: 'The discount model'})
+@modelOptions({schemaOptions:{collection: 'Discount', timestamps: true}})
+export class Discount{
+    @Field( ()=> ID)
+    id:string;
+
+    @Field()
+    @Property({type: () => String, required: true})
     name: string;
+
+
+    @Field()
+    @Property({type: () => Number, required: true})
     percentage: number;
+
+    @Field()
+    @Property({type: () => String, required: true})
     description: string;
+
 }
 
-interface objDocument extends IDiscount, Document {}
+export const DiscountModel = getModelForClass(Discount);
 
-interface objModel extends Model<objDocument>{}
 
-const DiscountSchema : Schema = new Schema({
-    Nombre: { type: String, required: true },
-    CantidadPorcentaje: { type: Number, required: true },
-    Descripcion: { type: String, required: true },
-  }
-);
-
-const Discount = mongoose.model<objDocument,objModel>('Discount',DiscountSchema);
-export {Discount,IDiscount};

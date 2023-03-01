@@ -1,21 +1,23 @@
-import mongoose, { Document, Model, Schema } from "mongoose";
+import {prop as Property, getModelForClass, modelOptions} from "@typegoose/typegoose";
+import {Field, ObjectType, ID} from "type-graphql";
 
-interface IAdditionalSpot {
+@ObjectType({description: 'The additional spot model'})
+@modelOptions({schemaOptions:{collection: 'AdditionalSpot', timestamps: true}})
+export class AdditionalSpot{
+    @Field( ()=> ID)
+    id:string;
+
+    @Field()
+    @Property({type: () => String, required: true})
     name: string;
-    value : string;
+
+
+    @Field()
+    @Property({ type: () => String, required: true})
+    value: string;
+
 }
 
-interface objDocument extends IAdditionalSpot, Document {}
+export const AdditionalSpotModel = getModelForClass(AdditionalSpot);
 
-interface objModel extends Model<objDocument>{}
 
-const AdditionalSpotSchema : Schema = new Schema(
-    {
-        name: { type: String, required: true },
-        value: { type: String, required: true },
-    },
-    { timestamps: true }
-);
-
-const AdditionalSpot = mongoose.model<objDocument,objModel>('AdditionalSpot', AdditionalSpotSchema);
-export {AdditionalSpot, IAdditionalSpot};

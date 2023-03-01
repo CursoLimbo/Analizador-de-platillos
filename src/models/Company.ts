@@ -1,26 +1,30 @@
-import mongoose, { Document,Model,Schema } from "mongoose";
+import {prop as Property, getModelForClass, modelOptions} from "@typegoose/typegoose";
+import {Field, ObjectType, ID} from "type-graphql";
 
+@ObjectType({description: 'The company model'})
+@modelOptions({schemaOptions:{collection: 'Company', timestamps: true}})
+export class Company{
+    @Field( ()=> ID)
+    id:string;
 
-interface ICompany {
+    @Field()
+    @Property({type: () => String, required: true})
     name: string;
+
+
+    @Field()
+    @Property({type: () => String , required: true})
     email: string;
-    phone: string;
+
+    @Field()
+    @Property({type: () => [String], required: true})
+    phone: string[];
+
+    @Field()
+    @Property({type: () => String, required: true})
     logo: string;
 }
 
-interface objDocument extends ICompany, Document {}
-
-interface objModel extends Model<objDocument>{}
+export const CompanyModel = getModelForClass(Company);
 
 
-const CompanySchema : Schema = new Schema({
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    phone: { type: String, required: true },
-    logo: { type: String, required: true },
-    },
-    { timestamps: true }
-);
-
-const Company = mongoose.model<objDocument,objModel>('Company',CompanySchema);
-export {Company,ICompany};

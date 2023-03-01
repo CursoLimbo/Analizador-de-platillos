@@ -1,34 +1,51 @@
-import mongoose, { Document, Model, Schema } from "mongoose";
+import {prop as Property, getModelForClass, modelOptions} from "@typegoose/typegoose";
+import {Field, ObjectType, ID} from "type-graphql";
 
-interface IIngredient {
+@ObjectType({description: 'The ingredient model'})
+@modelOptions({schemaOptions:{collection: 'Ingredient', timestamps: true}})
+export class Ingredient{
+    @Field( ()=> ID)
+    id:string;
+
+    @Field()
+    @Property({type: () => String, required: true})
     name: string;
+
+
+    @Field()
+    @Property({type: () => Number, required: true})
     presentation: number;
-    pricePerGram: number;
-    yield: number;
-    percentageOfYield: number;
-    priceDecreased: number;// precio mermado
-    productMultipliedByTwo: number;
-    supplier: mongoose.Types.ObjectId;
+
+    @Field()
+    @Property({type: () => Number, required: true})
+    costPerGram: number;
+
+    @Field()
+    @Property({type: () => Number, required: true})
+    performance: number;
+
+    @Field()
+    @Property({type: () => String, required: true})
+    supplier: string;
+
+    @Field()
+    @Property({type: () => String, required: true})
+    perfomancePercentage: string;
+
+    @Field()
+    @Property({type: () => String, required: true})
+    title: string;
+
+    @Field()
+    @Property({type: () => Number, required: true})
+    mermado: number;
+
+    @Field()
+    @Property({type: () => Number, required: true})
+    productMultiplyByTwo: number;
+
 }
 
-interface objDocument extends IIngredient, Document {}
+export const IngredientModel = getModelForClass(Ingredient);
 
-interface objModel extends Model<objDocument>{}
 
-const IngredientSchema : Schema = new Schema(  {
-    name: { type: String, required: true },
-    presentation: { type: Number, required: true },
-    pricePerGram: { type: Number, required: true },
-    yield: { type: Number, required: true },
-    percentageOfYield: { type: Number, required: true },
-    priceDecreased: { type: Number, required: true },
-    productMultipliedByTwo: { type: Number, required: true },
-    supplier: {type: mongoose.Types.ObjectId, ref: 'Supplier', required: false,
-    },
-  },
-  { timestamps: true }
-);
-
-const Ingredient = mongoose.model<objDocument,objModel>('Ingredient', IngredientSchema);
-
-export {Ingredient,IIngredient};

@@ -1,39 +1,57 @@
-import mongoose, { Document, Model, Schema } from "mongoose";
+import {prop as Property, getModelForClass, modelOptions} from "@typegoose/typegoose";
+import {Field, ObjectType, ID} from "type-graphql";
+import {Ingredient} from "./Ingredient";
 
-interface IRecipe {
+@ObjectType({description: 'The recipe model'})
+@modelOptions({schemaOptions:{collection: 'Recipe', timestamps: true}})
+export class Recipe{
+    @Field( ()=> ID)
+    id:string;
+
+    @Field()
+    @Property({type: () => String, required: true})
     name: string;
-    preparation: string;
-    costTotalPerQuantity: number;
-    percentageInflation: number;
+
+
+    @Field()
+    @Property({type: () => [String] , required: true})
+    ingredients: string[];
+
+    @Field()
+    @Property({type: () => String, required: true})
+    procedure: string;
+
+    @Field()
+    @Property({type: () => Number, required: true})
+    totalCostPerQuantity: number;
+
+    @Field()
+    @Property({type: () => Number, required: true})
+    PercentageInflation: number;
+
+    @Field()
+    @Property({type: () => Number, required: true})
     salesTax: number;
+
+    @Field()
+    @Property({type: () => Number, required: true})
     serviceTax: number;
+
+    @Field()
+    @Property({type: () => Number, required: true})
     utilities: number;
+
+    @Field()
+    @Property({type: () => Number, required: true})
     revenue: number;
+
+
+    @Field()
+    @Property({type: () => Number, required: true})
     unitCost: number;
-    totalCost: number;
-    ingredients: mongoose.Types.ObjectId[];
+
 }
 
-interface objDocument extends IRecipe, Document {}
-
-interface objModel extends Model<objDocument>{}
+export const RecipeModel = getModelForClass(Recipe);
 
 
-const RecipeSchema : Schema = new Schema(  {
-    name: { type: String, required: true },
-    preparation: { type: String, required: true },
-    costTotalPerQuantity: { type: Number, required: true },
-    percentageInflation: { type: Number, required: true },
-    salesTax: { type: Number, required: true },
-    serviceTax: { type: Number, required: true },
-    utilities: { type: Number, required: true },
-    revenue: { type: Number, required: true },
-    unitCost: { type: Number, required: true },
-    totalCost: { type: Number, required: true },
-    ingredients: [{ type: mongoose.Types.ObjectId, ref: 'Ingredient' }],
-    },
-    { timestamps: true }
-  );
-
-  const Recipe = mongoose.model<objDocument,objModel>('Recipe',RecipeSchema);
-  export {Recipe,IRecipe};
