@@ -12,7 +12,7 @@ export class TypeOfQuote{
     name: string;
 
 
-    @Field()
+    @Field(type => [String])
     @Property({ type: ()=> [String], required: false})
     additionalSpots: string[];
 

@@ -32,7 +32,22 @@ import { ApolloServer } from 'apollo-server-express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import path from "path";
+import {buildSchema} from "type-graphql";
+import {AdditionalSpotResolver} from "./Resolvers/AdditionalSpot-Resolver";
+import {BankAccountResolver} from "./Resolvers/BankAccount-Resolver";
+import {CatalogueResolver} from "./Resolvers/Catalogue-Resolver";
+import {ClientModel} from "./models/Client";
+import {ClientResolver} from "./Resolvers/Client-Resolver";
+import {DiscountResolver} from "./Resolvers/Discount-Resolver";
+import {CompanyResolver} from "./Resolvers/Company-Resolver";
+import {IngredientResolver} from "./Resolvers/Ingredient-Resolver";
+import {ManagerResolver} from "./Resolvers/Manager-Resolve";
+import {QuotationResolver} from "./Resolvers/Quotation-Resolver";
+import {RecipeResolver} from "./Resolvers/Recipe-Resolver";
+import {SupplierResolver} from "./Resolvers/Supplier-Resolver";
+import {TypeOfQuoteResolver} from "./Resolvers/TypeOfQuote-Resolver";
 const queries = require("./Resolvers/Resolvers")
+import 'reflect-metadata';
 
 
 dotenv.config();
@@ -41,8 +56,15 @@ async function startApolloServer() {
     
     const app = express();
 
+    const schema = await buildSchema({
+        resolvers: [AdditionalSpotResolver, BankAccountResolver, CatalogueResolver, ClientResolver, CompanyResolver, DiscountResolver, IngredientResolver,
+        ManagerResolver, QuotationResolver, RecipeResolver, SupplierResolver, TypeOfQuoteResolver],
+        emitSchemaFile: true,
+        validate: false
+    })
+
     const server = new ApolloServer({
-       schema: queries
+       schema: schema
     });
 
     app.use(express.static(path.join(__dirname, "../Client/build")));

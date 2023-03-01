@@ -13,7 +13,7 @@ export class Recipe{
     name: string;
 
 
-    @Field()
+    @Field(type => [String])
     @Property({type: () => [String] , required: true})
     ingredients: string[];
 

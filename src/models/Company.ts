@@ -17,8 +17,8 @@ export class Company{
     email: string;
 
     @Field()
-    @Property({type: () => [String], required: true})
-    phone: string[];
+    @Property({type: () => String, required: true})
+    phone: string;
 
     @Field()
     @Property({type: () => String, required: true})

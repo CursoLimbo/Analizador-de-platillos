@@ -11,11 +11,9 @@ export class AdditionalSpot{
     @Property({type: () => String, required: true})
     name: string;
 
-
     @Field()
     @Property({ type: () => String, required: true})
     value: string;
-
 }
 
 export const AdditionalSpotModel = getModelForClass(AdditionalSpot);

@@ -1,5 +1,7 @@
 import {Field, InputType, ID} from 'type-graphql';
 import {Manager} from "../../models/Manager";
+import {type} from "os";
+
 
 @InputType()
 export class ManagerType implements Partial<Manager>{
@@ -15,7 +17,7 @@ export class ManagerType implements Partial<Manager>{
     @Field()
     email: string;
 
-    @Field()
+    @Field(type => [String])
     bankAccounts: string[];
 
     @Field()

@@ -20,7 +20,7 @@ export class Manager{
     @Property({type: () => String, required: true})
     email: string;
 
-    @Field()
+    @Field(type => [String])
     @Property({type: () => [String], required: true})
     bankAccounts: string[];
 
@@ -31,7 +31,6 @@ export class Manager{
     @Field()
     @Property({type: () => String, required: true})
     photo: string;
-
 }
 
 export const ManagerModel = getModelForClass(Manager);
