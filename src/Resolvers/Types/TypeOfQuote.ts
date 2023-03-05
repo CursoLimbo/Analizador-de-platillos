@@ -10,7 +10,7 @@ export class TypeOfQuoteType implements Partial<TypeOfQuote>{
     @Field()
     name: string;
 
-    @Field()
+    @Field(type => [String])
     additionalSpots: string[];
 
     @Field()

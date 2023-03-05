@@ -1,5 +1,6 @@
 import {Field, InputType, ID} from 'type-graphql';
 import {Quotation} from "../../models/Quotation";
+import {type} from "os";
 
 @InputType()
 export class QuotationType implements Partial<Quotation>{
@@ -18,13 +19,13 @@ export class QuotationType implements Partial<Quotation>{
     @Field()
     code: string;
 
-    @Field()
+    @Field(type => [String])
     recipes: string[];
 
     @Field()
     total: number;
 
-    @Field()
+    @Field(type => [String])
     bankAccounts: string[];
 
     @Field()

@@ -15,7 +15,7 @@ export class CompanyType implements Partial<Company>{
     email: string;
 
     @Field()
-    phone: string[];
+    phone: string;
 
     @Field()
     logo: string;

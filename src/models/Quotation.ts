@@ -1,5 +1,6 @@
 import {prop as Property, getModelForClass, modelOptions} from "@typegoose/typegoose";
 import {Field, ObjectType, ID} from "type-graphql";
+import {type} from "os";
 
 
 @ObjectType({description: 'The quotation model'})
@@ -25,7 +26,7 @@ export class Quotation{
     @Property({type: () => String, required: true})
     code: string;
 
-    @Field()
+    @Field(type => [String])
     @Property({type: () => [String], required: true})
     recipes: string[];
 
@@ -33,7 +34,7 @@ export class Quotation{
     @Property({type: () => Number, required: true})
     total: number;
 
-    @Field()
+    @Field(type => [String])
     @Property({type: () => String, required: true})
     bankAccounts: string[];
 

@@ -19,4 +19,7 @@ export class ClientType implements Partial<Client>{
 
     @Field()
     whatsapp: string;
+
+    @Field()
+    email: string;
 }

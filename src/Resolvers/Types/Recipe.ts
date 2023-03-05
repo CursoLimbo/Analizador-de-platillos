@@ -1,5 +1,6 @@
 import {Field, InputType, ID} from 'type-graphql';
 import {Recipe} from "../../models/Recipe";
+import {type} from "os";
 
 
 @InputType()
@@ -10,7 +11,7 @@ export class RecipeType implements Partial<Recipe>{
     @Field()
     name: string;
 
-    @Field()
+    @Field(type => [String])
     ingredients: string[];
 
     @Field()
