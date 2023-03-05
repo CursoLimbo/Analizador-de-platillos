@@ -11,7 +11,6 @@ export class Discount{
     @Property({type: () => String, required: true})
     name: string;
 
-
     @Field()
     @Property({type: () => Number, required: true})
     percentage: number;

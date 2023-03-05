@@ -42,7 +42,7 @@ export class Quotation{
     develop: string;
 
     @Field()
-    @Property({type: () => Number, required: true})
+    @Property({type: () => Number, required: false})
     discount: number;
 
 

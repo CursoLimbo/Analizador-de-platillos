@@ -12,12 +12,12 @@ export class Supplier{
     name: string;
 
     @Field()
-    @Property({type: () => Number, required: true})
-    location: number;
+    @Property({type: () => String, required: true})
+    location: string;
 
     @Field()
-    @Property({type: () => Number, required: true})
-    phone: number;
+    @Property({type: () => String, required: false})
+    phone: string;
 
 }
 

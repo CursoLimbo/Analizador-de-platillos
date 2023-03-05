@@ -13,7 +13,7 @@ export class TypeOfQuote{
 
 
     @Field()
-    @Property({ type: ()=> [String], required: true})
+    @Property({ type: ()=> [String], required: false})
     additionalSpots: string[];
 
     @Field()

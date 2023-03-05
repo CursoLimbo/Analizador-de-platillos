@@ -29,12 +29,9 @@ export class Ingredient{
     supplier: string;
 
     @Field()
-    @Property({type: () => String, required: true})
-    perfomancePercentage: string;
+    @Property({type: () => Number, required: true})
+    perfomancePercentage: number;
 
-    @Field()
-    @Property({type: () => String, required: true})
-    title: string;
 
     @Field()
     @Property({type: () => Number, required: true})
