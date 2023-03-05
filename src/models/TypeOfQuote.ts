@@ -1,9 +1,9 @@
 import {prop as Property, getModelForClass, modelOptions} from "@typegoose/typegoose";
 import {Field, ObjectType, ID} from "type-graphql";
 
-@ObjectType({description: 'The client model'})
-@modelOptions({schemaOptions:{collection: 'Client', timestamps: true}})
-export class Client{
+@ObjectType({description: 'The type of quote model'})
+@modelOptions({schemaOptions:{collection: 'Catalogue', timestamps: true}})
+export class TypeOfQuote{
     @Field( ()=> ID)
     id:string;
 
@@ -13,23 +13,18 @@ export class Client{
 
 
     @Field()
-    @Property({type: () => String , required: true})
-    location: string;
+    @Property({ type: ()=> [String], required: true})
+    additionalSpots: string[];
 
     @Field()
     @Property({type: () => String, required: true})
-    phone: string;
+    developmentTemplate: string;
 
     @Field()
     @Property({type: () => String, required: true})
-    whatsapp: string;
-
-    @Field()
-    @Property({type: () => String, required: true})
-    email: string;
-
+    TermsConditions: string;
 }
 
-export const ClientModel = getModelForClass(Client);
+export const TypeOfQuoteModel = getModelForClass(TypeOfQuote);
 
 

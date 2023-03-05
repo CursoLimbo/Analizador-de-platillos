@@ -1,27 +1,27 @@
-import mongoose, { Document,Model,Schema } from "mongoose";
+import {prop as Property, getModelForClass, modelOptions} from "@typegoose/typegoose";
+import {Field, ObjectType, ID} from "type-graphql";
 
-interface IBankAccount{
+@ObjectType({description: 'The bank account model'})
+@modelOptions({schemaOptions:{collection: 'BankAccount', timestamps: true}})
+export class BankAccount{
+    @Field( ()=> ID)
+    id:string;
+
+    @Field()
+    @Property({type: () => String, required: true})
     bank: string;
+
+
+    @Field()
+    @Property({ type: ()=> String, required: true})
     accountNumber: string;
-    owner: mongoose.Types.ObjectId;
+
+    @Field()
+    @Property({type: () => String, required: true})
+    owner: string;
+
 }
 
-interface objDocument extends IBankAccount, Document {}
-
-interface objModel extends Model<objDocument>{}
-
-
-const BankAccountSchema: Schema = new Schema(
-    {
-        bank: { type: String, required: true },
-        accountNumber: { type: String, required: true },
-        owner: [{ type: mongoose.Types.ObjectId, ref: 'User' }]
-      },
-      { timestamps: true }
-);
-
-
-const BankAccount = mongoose.model<objDocument,objModel>('BankAccount',BankAccountSchema);
-export {BankAccount,IBankAccount};
+export const BankAccountModel = getModelForClass(BankAccount);
 
 

@@ -1,38 +1,61 @@
-import mongoose, { Document,Model,Schema } from "mongoose";
+import {prop as Property, getModelForClass, modelOptions} from "@typegoose/typegoose";
+import {Field, ObjectType, ID} from "type-graphql";
 
-interface IQuotation {
-    date: Date;
+
+@ObjectType({description: 'The quotation model'})
+@modelOptions({schemaOptions:{collection: 'Quotation', timestamps: true}})
+export class Quotation{
+    @Field( ()=> ID)
+    id:string;
+
+    @Field()
+    @Property({type: () => String, required: true})
+    typeOfQuotation: string;
+
+
+    @Field()
+    @Property({type: () => String, required: true})
+    client: string;
+
+    @Field()
+    @Property({type: () => String, required: true})
+    date: string;
+
+    @Field()
+    @Property({type: () => String, required: true})
     code: string;
+
+    @Field()
+    @Property({type: () => [String], required: true})
+    recipes: string[];
+
+    @Field()
+    @Property({type: () => Number, required: true})
     total: number;
-    content: string;
-    company:mongoose.Types.ObjectId;
-    recipes: Array<mongoose.Types.ObjectId>;
-    quotationType: mongoose.Types.ObjectId;
-    bankAccounts: Array<mongoose.Types.ObjectId>;
-    client: mongoose.Types.ObjectId;
-    discounts: Array<mongoose.Types.ObjectId>;
+
+    @Field()
+    @Property({type: () => String, required: true})
+    bankAccounts: string[];
+
+    @Field()
+    @Property({type: () => String, required: true})
+    develop: string;
+
+    @Field()
+    @Property({type: () => Number, required: true})
+    discount: number;
+
+
+    @Field()
+    @Property({type: () => String, required: true})
+    company: string;
+
+    @Field()
+    @Property({type: () => Number, required: true})
+    amountOfPeople: number;
+
 }
 
-interface objDocument extends IQuotation, Document {}
-
-interface objModel extends Model<objDocument>{}
-
-const QuotationSchema: Schema = new Schema(
-    {
-        date: { type: Date, required: true },
-        code: { type: String, required: true },
-        total: { type: Number, required: true },
-        content: { type: String, required: true },
-        company: { type: Schema.Types.ObjectId, ref: 'Company', required: true },
-        recipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe',required: true }],
-        quotationType: { type: Schema.Types.ObjectId, ref: 'QuotationType', required: true },
-        bankAccounts: [{ type: Schema.Types.ObjectId, ref: 'BankAccount' }],
-        client: { type: Schema.Types.ObjectId, ref: 'Client', required: true },
-        discount: [{ type: Schema.Types.ObjectId, ref: 'Discount' }],
-      },
-      { timestamps: true }
-);
+export const QuotationModel = getModelForClass(Quotation);
 
 
-const Quotation = mongoose.model<objDocument,objModel>('Quotation', QuotationSchema);
-export {Quotation,IQuotation};

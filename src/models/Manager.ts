@@ -1,9 +1,9 @@
 import {prop as Property, getModelForClass, modelOptions} from "@typegoose/typegoose";
 import {Field, ObjectType, ID} from "type-graphql";
 
-@ObjectType({description: 'The client model'})
-@modelOptions({schemaOptions:{collection: 'Client', timestamps: true}})
-export class Client{
+@ObjectType({description: 'The manager model'})
+@modelOptions({schemaOptions:{collection: 'Manager', timestamps: true}})
+export class Manager{
     @Field( ()=> ID)
     id:string;
 
@@ -13,12 +13,16 @@ export class Client{
 
 
     @Field()
-    @Property({type: () => String , required: true})
-    location: string;
+    @Property({type: () => String, required: true})
+    phone: string;
 
     @Field()
     @Property({type: () => String, required: true})
-    phone: string;
+    email: string;
+
+    @Field()
+    @Property({type: () => [String], required: true})
+    bankAccounts: string[];
 
     @Field()
     @Property({type: () => String, required: true})
@@ -26,10 +30,10 @@ export class Client{
 
     @Field()
     @Property({type: () => String, required: true})
-    email: string;
+    photo: string;
 
 }
 
-export const ClientModel = getModelForClass(Client);
+export const ManagerModel = getModelForClass(Manager);
 
 

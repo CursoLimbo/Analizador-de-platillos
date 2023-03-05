@@ -1,27 +1,26 @@
-import exp from "constants";
-import mongoose,{Document,Model,Schema} from "mongoose";
+import {prop as Property, getModelForClass, modelOptions} from "@typegoose/typegoose";
+import {Field, ObjectType, ID} from "type-graphql";
 
+@ObjectType({description: 'The supplier model'})
+@modelOptions({schemaOptions:{collection: 'Supplier', timestamps: true}})
+export class Supplier{
+    @Field( ()=> ID)
+    id:string;
 
-
-interface ISupplier{
+    @Field()
+    @Property({type: () => String, required: true})
     name: string;
-    location: string;
-    phone: string;
+
+    @Field()
+    @Property({type: () => Number, required: true})
+    location: number;
+
+    @Field()
+    @Property({type: () => Number, required: true})
+    phone: number;
+
 }
 
-interface objDocument extends ISupplier, Document {}
+export const SupplierModel = getModelForClass(Supplier);
 
-interface objModel extends Model<objDocument>{}
 
-const SupplierSchema: Schema = new Schema(
-    {
-      nombre: { type: String, required: true },
-      ubicacion: { type: String, required: true },
-      telefono: { type: String, required: true },
-    },
-    { timestamps: true }
-  );
-
-  const Supplier = mongoose.model<objDocument,objDocument>('Supplier', SupplierSchema);
-
-  export {Supplier,ISupplier};

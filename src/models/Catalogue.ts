@@ -1,23 +1,27 @@
-import mongoose, { Document, Model, Schema } from "mongoose";
+import {prop as Property, getModelForClass, modelOptions} from "@typegoose/typegoose";
+import {Field, ObjectType, ID} from "type-graphql";
 
-interface ICatalogue {
+@ObjectType({description: 'The catalogue model'})
+@modelOptions({schemaOptions:{collection: 'Catalogue', timestamps: true}})
+export class Catalogue{
+    @Field( ()=> ID)
+    id:string;
+
+    @Field()
+    @Property({type: () => String, required: true})
     name: string;
+
+
+    @Field()
+    @Property({ required: true, default: Date.now()})
     date: Date;
-    file : String;
+
+    @Field()
+    @Property({type: () => String, required: true})
+    file: string;
+
 }
 
-interface objDocument extends ICatalogue, Document {}
+export const CatalogueModel = getModelForClass(Catalogue);
 
-interface objModel extends Model<objDocument>{}
 
-const CatalogueSchema : Schema = new Schema({
-    name: { type: String, required: true },
-    date: {type: Date, default: Date.now},
-    file : {type: String, required: true}
-    },
-    {timestamps: true}
-);
-
-const Catalogue = mongoose.model<objDocument,objModel>('Catalogue',CatalogueSchema);
-
-export {Catalogue,ICatalogue};
