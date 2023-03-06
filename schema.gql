@@ -150,7 +150,6 @@ input ManagerType {
 type Mutation {
   CreateAdditionalSpot(newAdditionalSpot: AdditionalSpotType!): AdditionalSpot!
   CreateCatalogue(newCatalogue: CatalogueType!): Catalogue!
-  CreateClient(newClient: ClientType!): Client!
   CreateCompany(newCompany: CompanyType!): Company!
   CreateDiscount(newDiscount: DiscountType!): Discount!
   CreateIngredient(newIngredient: IngredientType!): Ingredient!
@@ -160,6 +159,7 @@ type Mutation {
   CreateSupplier(newSupplier: SupplierType!): Supplier!
   CreateTypeOfQuote(newTypeOfQuote: TypeOfQuoteType!): TypeOfQuote!
   createBankAccount(newBankAccount: BankAccountType!): BankAccount!
+  createClient(newClient: ClientType!): Client!
   deleteAdditionalSpot(id: String!): String!
   deleteBankAccount(id: String!): String!
   deleteCatalogue(id: String!): String!
@@ -213,6 +213,9 @@ type Query {
   """Get List of TypeOfQuotes"""
   GetAllTypeOfQuotes: [TypeOfQuote!]!
   GetBankAccount(id: String!): BankAccount!
+
+  """Get List of clients"""
+  getAllClients: [Client!]!
   getCatalogue(id: String!): Catalogue!
   getClient(id: String!): Client!
   getCompany(id: String!): Company!

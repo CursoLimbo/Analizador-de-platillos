@@ -46,7 +46,7 @@ import {QuotationResolver} from "./Resolvers/Quotation-Resolver";
 import {RecipeResolver} from "./Resolvers/Recipe-Resolver";
 import {SupplierResolver} from "./Resolvers/Supplier-Resolver";
 import {TypeOfQuoteResolver} from "./Resolvers/TypeOfQuote-Resolver";
-const queries = require("./Resolvers/Resolvers")
+//const queries = require("./Resolvers/Resolvers")
 import 'reflect-metadata';
 
 

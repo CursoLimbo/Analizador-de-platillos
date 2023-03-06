@@ -10,13 +10,13 @@ export class ClientResolver {
         return ClientModel.findById({_id: id});
     }
 
-    @Query(()=> [Client], {name: 'GetAllClients', description: 'Get List of clients'})
-    async getALlClients(){
+    @Query((_returns)=> [Client], {name: 'getAllClients', description: 'Get List of clients'})
+    async getAllClients(){
         return ClientModel.find();
     }
 
-    @Mutation(() => Client, {name: 'CreateClient'})
-    async createCatalogue(@Arg('newClient'){name, location, phone, whatsapp, email}: ClientType): Promise<Client>{
+    @Mutation(() => Client, {name: 'createClient'})
+    async createClient(@Arg('newClient'){name, location, phone, whatsapp, email}: ClientType): Promise<Client>{
         const clientCreated = (
             await ClientModel.create({name, location, phone, whatsapp, email})
         ).save();
