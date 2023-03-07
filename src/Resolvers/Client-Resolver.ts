@@ -5,7 +5,7 @@ import {ClientType} from "./Types/Client";
 
 @Resolver((_of) => Client)
 export class ClientResolver {
-    @Query((_returns) => Client, {nullable:false, name: 'getClient'})
+    @Query((_returns) => Client, {nullable:false, name: 'getClientById'})
     async getClientById(@Arg('id') id: string){
         return ClientModel.findById({_id: id});
     }

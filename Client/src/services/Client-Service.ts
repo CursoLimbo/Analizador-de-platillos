@@ -1,97 +1,37 @@
 import axios from 'axios';
+const baseUrl = 'http://localhost:4000/graphql'; //Reemplaza con la URL de tu servidor
 
-//pruebas
-interface ClientType {
-    name: string;
-    location: string;
-    phone: string;
-    whatsapp: string;
-    email: string;
-  }
-
-class clientService {
-
-    private endpoint = 'http://localhost:4000/graphql'
-
-    async getClientById(id : string){
-        const query = 
-        ` query GetClientById($id: String!) {
-            getClient(id: $id) {
-                id
-                name
-                location
-                phone
-                whatsapp
-                email
-            }
-        } ` ;
-
-        const variables = {id};
-
-        const response = await axios.post(this.endpoint,{query, variables});
-
-        return response.data.data.getClient;
+export const getClientById = async (id: string) => {
+  const response = await axios.get(`${baseUrl}/getClientById`, {
+    params: {
+      id
     }
+  });
+  return response.data;
+}
 
-    async getAllClients() {
-        const query = `
-        query{
-            getAllClients {
-              id
-              name
-              location
-              phone
-              whatsapp
-              email
-            }
-          }
-        `;
+export const getAllClients = async () => {
+  const response = await axios.get(`${baseUrl}/getAllClients`);
+  console.log(response.data);
+  return response.data;
+  
+}
 
-        const response = await axios.post(this.endpoint, {query});
+export const createClient = async (newClient: any) => {
+  const response = await axios.post(`${baseUrl}/createClient`, newClient);
+  return response.data;
+}
 
-        return response.data.data.getAllClients;
+export const updateClient = async (updateClient: any & { id: string }) => {
+  const response = await axios.put(`${baseUrl}/updateClient`, updateClient);
+  return response.data;
+}
+
+export const deleteClient = async (id: string) => {
+  const response = await axios.delete(`${baseUrl}/deleteClient`, {
+    data: {
+      id
     }
-
-    async createClient(clientData: ClientType) {
-        const mutation = `
-            mutation CreateClient($newClient: ClientInput!) {
-                createClient(newClient: $newClient) {
-                    id
-                    name
-                    location
-                    phone
-                    whatsapp
-                    email
-                }
-            }
-        `;
-
-        const variables = {newClient: clientData};
-
-        const response = await axios.post(this.endpoint, {mutation, variables});
-
-        return response.data.data.createClient;
-    }
-
-    async updateClient(id: string, clientData: ClientType) {
-        const mutation = `
-        mutation($updateClient: ClientType!){
-            updateClient(updateClient: $updateClient) {
-              id
-              name
-              location
-              phone
-              whatsapp
-              email
-            }
-          }
-        `;
-      
-        const variables = { id, updatedClient: clientData };
-      
-        const response = await axios.post(this.endpoint, { mutation, variables });
-      
-        return response.data.data.updateClient;
-      }
-      
+  });
+  return response.data;
 }

@@ -217,7 +217,7 @@ type Query {
   """Get List of clients"""
   getAllClients: [Client!]!
   getCatalogue(id: String!): Catalogue!
-  getClient(id: String!): Client!
+  getClientById(id: String!): Client!
   getCompany(id: String!): Company!
   getDiscount(id: String!): Discount!
   getIngredient(id: String!): Ingredient!
