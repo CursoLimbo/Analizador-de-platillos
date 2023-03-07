@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = 'http://localhost:4000/graphql'; //Reemplaza con la URL de tu servidor
+const baseUrl = 'http://localhost:4000/graphql'; 
 
 export const getClientById = async (id: string) => {
   const response = await axios.get(`${baseUrl}/getClientById`, {
