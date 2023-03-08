@@ -1,31 +1,3 @@
-/*import express from 'express';
-import path from 'path';
-
-const app = express()
-const port = 5001
-
-
-app.use(express.static(path.join(__dirname, "../Client/build")));
-app.get("*", function (_, res) {
-    res.sendFile(
-        path.join(__dirname, "../Client/build/index.html"),
-        function (err) {
-            res.status(500).send(err);
-        }
-    );
-});
-
-
-app.get('/api', (req, res) => {
-    res.send('Hello World!')
-})
-
-
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})*/
-
-
 
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express' 
@@ -36,7 +8,6 @@ import {buildSchema} from "type-graphql";
 import {AdditionalSpotResolver} from "./Resolvers/AdditionalSpot-Resolver";
 import {BankAccountResolver} from "./Resolvers/BankAccount-Resolver";
 import {CatalogueResolver} from "./Resolvers/Catalogue-Resolver";
-import {ClientModel} from "./models/Client";
 import {ClientResolver} from "./Resolvers/Client-Resolver";
 import {DiscountResolver} from "./Resolvers/Discount-Resolver";
 import {CompanyResolver} from "./Resolvers/Company-Resolver";

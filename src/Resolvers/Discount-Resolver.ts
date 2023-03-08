@@ -5,13 +5,13 @@ import {DiscountType} from "./Types/Discount";
 
 @Resolver((_of) => Discount)
 export class DiscountResolver {
-    @Query((_returns) => Discount, {nullable:false, name: 'getDiscount'})
+    @Query((_returns) => Discount, {nullable:false, name: 'getDiscountById'})
     async getDiscountById(@Arg('id') id: string){
         return DiscountModel.findById({_id: id});
     }
 
-    @Query(()=> [Discount], {name: 'GetAllClients', description: 'Get List of discounts'})
-    async getALlDiscounts(){
+    @Query(()=> [Discount], {name: 'GetAllDiscounts', description: 'Get List of discounts'})
+    async getAllDiscounts(){
         return DiscountModel.find();
     }
 
@@ -36,7 +36,7 @@ export class DiscountResolver {
     }
 
     @Mutation(() => String, {name: 'deleteDiscount'})
-    async  deleteClient(@Arg('id')id: string): Promise<String>{
+    async  deleteDiscount(@Arg('id')id: string): Promise<String>{
         const result = await DiscountModel.deleteOne({_id: id});
 
         if(result.deletedCount == 1) return id;
