@@ -10,11 +10,16 @@ export class ManagerResolver {
         return ManagerModel.findById({_id: id});
     }
 
+    @Query((_returns) => Manager, {nullable:false, name: 'getManagerByEmailAndPassword'})
+    async getManagerByEmailAndPassword(@Arg('email') email: string, @Arg('password')password: string){
+        return ManagerModel.findOne({email: email, password: password})
+    }
+
 
     @Mutation(() => Manager, {name: 'CreateManager'})
-    async createManager(@Arg('newManager'){name, phone, email, bankAccounts, whatsapp, photo}: ManagerType): Promise<Manager>{
+    async createManager(@Arg('newManager'){name, phone, email, bankAccounts, whatsapp, photo, password}: ManagerType): Promise<Manager>{
         const managerCreated = (
-            await ManagerModel.create({name, phone, email, bankAccounts, whatsapp, photo})
+            await ManagerModel.create({name, phone, email, bankAccounts, whatsapp, photo, password})
         ).save();
         return managerCreated;
     }

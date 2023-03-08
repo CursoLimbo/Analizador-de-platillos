@@ -21,14 +21,12 @@ type BankAccount {
   accountNumber: String!
   bank: String!
   id: ID!
-  owner: String!
 }
 
 input BankAccountType {
   accountNumber: String!
   bank: String!
   id: ID
-  owner: String!
 }
 
 """The catalogue model"""
@@ -132,6 +130,7 @@ type Manager {
   email: String!
   id: ID!
   name: String!
+  password: String!
   phone: String!
   photo: String!
   whatsapp: String!
@@ -142,6 +141,7 @@ input ManagerType {
   email: String!
   id: ID
   name: String!
+  password: String!
   phone: String!
   photo: String!
   whatsapp: String!
@@ -195,8 +195,11 @@ type Query {
   """Get List of catalogues"""
   GetAllCatalogues: [Catalogue!]!
 
+  """Get List of clients"""
+  GetAllClients: [Client!]!
+
   """Get List of discounts"""
-  GetAllClients: [Discount!]!
+  GetAllDiscounts: [Discount!]!
 
   """Get List of Ingredients"""
   GetAllIngredients: [Ingredient!]!
@@ -214,11 +217,12 @@ type Query {
   GetAllTypeOfQuotes: [TypeOfQuote!]!
   GetBankAccount(id: String!): BankAccount!
   getCatalogue(id: String!): Catalogue!
-  getClient(id: String!): Client!
+  getClientById(id: String!): Client!
   getCompany(id: String!): Company!
-  getDiscount(id: String!): Discount!
+  getDiscountById(id: String!): Discount!
   getIngredient(id: String!): Ingredient!
   getManager(id: String!): Manager!
+  getManagerByEmailAndPassword(email: String!, password: String!): Manager!
   getQuotation(id: String!): Quotation!
   getRecipe(id: String!): Recipe!
   getSupplier(id: String!): Supplier!

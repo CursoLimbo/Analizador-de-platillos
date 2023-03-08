@@ -5,18 +5,18 @@ import {ClientType} from "./Types/Client";
 
 @Resolver((_of) => Client)
 export class ClientResolver {
-    @Query((_returns) => Client, {nullable:false, name: 'getClient'})
+    @Query((_returns) => Client, {nullable:false, name: 'getClientById'})
     async getClientById(@Arg('id') id: string){
         return ClientModel.findById({_id: id});
     }
 
     @Query(()=> [Client], {name: 'GetAllClients', description: 'Get List of clients'})
-    async getALlClients(){
+    async getAllClients(){
         return ClientModel.find();
     }
 
     @Mutation(() => Client, {name: 'CreateClient'})
-    async createCatalogue(@Arg('newClient'){name, location, phone, whatsapp, email}: ClientType): Promise<Client>{
+    async createClient(@Arg('newClient'){name, location, phone, whatsapp, email}: ClientType): Promise<Client>{
         const clientCreated = (
             await ClientModel.create({name, location, phone, whatsapp, email})
         ).save();

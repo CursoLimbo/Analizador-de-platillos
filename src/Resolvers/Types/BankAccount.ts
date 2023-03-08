@@ -13,6 +13,4 @@ export class BankAccountType implements Partial<BankAccount>{
     @Field()
     accountNumber: string;
 
-    @Field()
-    owner: string;
 }
