@@ -36,7 +36,6 @@ import {buildSchema} from "type-graphql";
 import {AdditionalSpotResolver} from "./Resolvers/AdditionalSpot-Resolver";
 import {BankAccountResolver} from "./Resolvers/BankAccount-Resolver";
 import {CatalogueResolver} from "./Resolvers/Catalogue-Resolver";
-import {ClientModel} from "./models/Client";
 import {ClientResolver} from "./Resolvers/Client-Resolver";
 import {DiscountResolver} from "./Resolvers/Discount-Resolver";
 import {CompanyResolver} from "./Resolvers/Company-Resolver";
