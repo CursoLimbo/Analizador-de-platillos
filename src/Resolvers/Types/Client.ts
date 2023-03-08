@@ -22,4 +22,6 @@ export class ClientType implements Partial<Client>{
 
     @Field()
     email: string;
+
+
 }

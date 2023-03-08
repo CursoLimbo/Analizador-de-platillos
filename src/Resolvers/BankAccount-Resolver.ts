@@ -16,10 +16,10 @@ export class BankAccountResolver{
 
 
     @Mutation(()=> BankAccount, {name: 'createBankAccount'})
-    async createBankAccount(@Arg('newBankAccount') {bank, accountNumber, owner}: BankAccountType): Promise<BankAccount>{
+    async createBankAccount(@Arg('newBankAccount') {bank, accountNumber}: BankAccountType): Promise<BankAccount>{
         const bankAccount = (
             await BankAccountModel.create({
-                bank, accountNumber, owner
+                bank, accountNumber
             })
         ).save();
         return bankAccount;
@@ -27,11 +27,10 @@ export class BankAccountResolver{
 
 
     @Mutation(()=> BankAccount, {name: 'updateBankAccount'})
-    async updateBankAccount(@Arg('updateBankAccount'){id, bank, accountNumber, owner}: BankAccountType): Promise<BankAccount>{
+    async updateBankAccount(@Arg('updateBankAccount'){id, bank, accountNumber}: BankAccountType): Promise<BankAccount>{
         const bankAccount = await BankAccountModel.findByIdAndUpdate({_Id: id}, {
             bank,
-            accountNumber,
-            owner
+            accountNumber
         }, {new: true}
         ); return bankAccount;
     }

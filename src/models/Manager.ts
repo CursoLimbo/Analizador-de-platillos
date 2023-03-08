@@ -11,7 +11,6 @@ export class Manager{
     @Property({type: () => String, required: true})
     name: string;
 
-
     @Field()
     @Property({type: () => String, required: true})
     phone: string;
@@ -19,6 +18,10 @@ export class Manager{
     @Field()
     @Property({type: () => String, required: true})
     email: string;
+
+    @Field()
+    @Property({type: () => String, required: true})
+    password: string;
 
     @Field(type => [String])
     @Property({type: () => [String], required: true})

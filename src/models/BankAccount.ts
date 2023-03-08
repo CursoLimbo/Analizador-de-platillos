@@ -16,9 +16,6 @@ export class BankAccount{
     @Property({ type: ()=> String, required: true})
     accountNumber: string;
 
-    @Field()
-    @Property({type: () => String, required: true})
-    owner: string;
 
 }
 

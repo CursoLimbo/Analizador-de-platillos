@@ -17,6 +17,9 @@ export class ManagerType implements Partial<Manager>{
     @Field()
     email: string;
 
+    @Field()
+    password: string;
+
     @Field(type => [String])
     bankAccounts: string[];
 
