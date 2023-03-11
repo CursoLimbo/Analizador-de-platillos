@@ -1,20 +1,23 @@
-import {Resolver, Mutation, Arg, Query, ID} from "type-graphql";
+import {Resolver, Mutation, Arg, Query, ID, Authorized} from "type-graphql";
 import {Discount, DiscountModel} from "../models/Discount";
 import {DiscountType} from "./Types/Discount";
 
 
 @Resolver((_of) => Discount)
 export class DiscountResolver {
+    @Authorized()
     @Query((_returns) => Discount, {nullable:false, name: 'getDiscountById'})
     async getDiscountById(@Arg('id') id: string){
         return DiscountModel.findById({_id: id});
     }
 
+    @Authorized()
     @Query(()=> [Discount], {name: 'GetAllDiscounts', description: 'Get List of discounts'})
     async getAllDiscounts(){
         return DiscountModel.find();
     }
 
+    @Authorized()
     @Mutation(() => Discount, {name: 'CreateDiscount'})
     async createDiscount(@Arg('newDiscount'){name, percentage, description}: DiscountType): Promise<Discount>{
         const discountCreated = (
@@ -23,6 +26,7 @@ export class DiscountResolver {
         return discountCreated;
     }
 
+    @Authorized()
     @Mutation(() => Discount, {name: 'updateDiscount'})
     async updateDiscount (@Arg('updateDiscount'){id, name,  percentage, description}: DiscountType): Promise<Discount>{
         const updatedDiscount = (
@@ -35,6 +39,7 @@ export class DiscountResolver {
         return updatedDiscount;
     }
 
+    @Authorized()
     @Mutation(() => String, {name: 'deleteDiscount'})
     async  deleteDiscount(@Arg('id')id: string): Promise<String>{
         const result = await DiscountModel.deleteOne({_id: id});

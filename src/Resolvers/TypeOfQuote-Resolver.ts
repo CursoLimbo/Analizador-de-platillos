@@ -1,19 +1,22 @@
-import {Resolver, Mutation, Arg, Query} from "type-graphql";
+import {Resolver, Mutation, Arg, Query, Authorized} from "type-graphql";
 import {TypeOfQuote, TypeOfQuoteModel} from "../models/TypeOfQuote";
 import {TypeOfQuoteType} from "./Types/TypeOfQuote";
 
 @Resolver((_of) => TypeOfQuote)
 export class TypeOfQuoteResolver {
+    @Authorized()
     @Query((_returns) => TypeOfQuote, {nullable:false, name: 'getTypeOfQuote'})
     async getTypeOfQuoteById(@Arg('id') id: string){
         return TypeOfQuoteModel.findById({_id: id});
     }
 
+    @Authorized()
     @Query(()=> [TypeOfQuote], {name: 'GetAllTypeOfQuotes', description: 'Get List of TypeOfQuotes'})
     async getALlTypeOfQuotes(){
         return TypeOfQuoteModel.find();
     }
 
+    @Authorized()
     @Mutation(() => TypeOfQuote, {name: 'CreateTypeOfQuote'})
     async createTypeOfQuote(@Arg('newTypeOfQuote'){name, additionalSpots, developmentTemplate, TermsConditions}: TypeOfQuoteType): Promise<TypeOfQuote>{
         const typeOfQuoteCreated = (
@@ -22,6 +25,7 @@ export class TypeOfQuoteResolver {
         return typeOfQuoteCreated;
     }
 
+    @Authorized()
     @Mutation(() => TypeOfQuote, {name: 'updateTypeOfQuote'})
     async updateTypeOfQuote (@Arg('updateTypeOfQuote'){id,name, additionalSpots, developmentTemplate, TermsConditions}: TypeOfQuoteType): Promise<TypeOfQuote>{
         const updatedTypeOfQuote = (
@@ -34,6 +38,7 @@ export class TypeOfQuoteResolver {
         return updatedTypeOfQuote;
     }
 
+    @Authorized()
     @Mutation(() => String, {name: 'deleteTypeOfQuote'})
     async  deleteTypeOfQuote(@Arg('id')id: string): Promise<String>{
         const result = await TypeOfQuoteModel.deleteOne({_id: id});

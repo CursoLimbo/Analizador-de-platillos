@@ -1,4 +1,4 @@
-import {Resolver, Mutation, Arg, Query, ID} from "type-graphql";
+import {Resolver, Mutation, Arg, Query, ID, Authorized} from "type-graphql";
 import {Ingredient, IngredientModel} from "../models/Ingredient";
 import {IngredientType} from "./Types/Ingredient";
 
@@ -6,16 +6,19 @@ import {IngredientType} from "./Types/Ingredient";
 
 @Resolver((_of) => Ingredient)
 export class IngredientResolver {
+    @Authorized()
     @Query((_returns) => Ingredient, {nullable:false, name: 'getIngredient'})
     async getIngredientById(@Arg('id') id: string){
         return IngredientModel.findById({_id: id});
     }
 
+    @Authorized()
     @Query(()=> [Ingredient], {name: 'GetAllIngredients', description: 'Get List of Ingredients'})
     async getALlIngredients(){
         return IngredientModel.find();
     }
 
+    @Authorized()
     @Mutation(() => Ingredient, {name: 'CreateIngredient'})
     async createIngredient(@Arg('newIngredient'){name, presentation, costPerGram, performance, supplier, performancePercentage, mermado, productMultiplyByTwo}: IngredientType): Promise<Ingredient>{
         const ingredientCreated = (
@@ -24,6 +27,7 @@ export class IngredientResolver {
         return ingredientCreated;
     }
 
+    @Authorized()
     @Mutation(() => Ingredient, {name: 'updateIngredient'})
     async updateIngredient (@Arg('updateIngredient'){id, name, presentation, costPerGram, performance, supplier, performancePercentage, mermado, productMultiplyByTwo}: IngredientType): Promise<Ingredient>{
         const updatedIngredient = (
@@ -36,6 +40,7 @@ export class IngredientResolver {
         return updatedIngredient;
     }
 
+    @Authorized()
     @Mutation(() => String, {name: 'deleteIngredient'})
     async  deleteIngredient(@Arg('id')id: string): Promise<String>{
         const result = await IngredientModel.deleteOne({_id: id});
