@@ -1,4 +1,4 @@
-import {Resolver, Mutation, Arg, Query} from "type-graphql";
+import {Resolver, Mutation, Arg, Query, Authorized} from "type-graphql";
 import {Company, CompanyModel} from "../models/Company";
 import {CompanyType} from "./Types/Company";
 import {Manager} from "../models/Manager";
@@ -7,11 +7,13 @@ import {Manager} from "../models/Manager";
 
 @Resolver((_of) => Company)
 export class CompanyResolver {
+    @Authorized()
     @Query((_returns) => Company, {nullable:false, name: 'getCompany'})
     async getCompanyById(@Arg('id') id: string){
         return CompanyModel.findById({_id: id});
     }
 
+    @Authorized()
     @Mutation(() => Company, {name: 'CreateCompany'})
     async createCompany(@Arg('newCompany'){name, email, phone, logo}: CompanyType): Promise<Company>{
         const companyCreated = (
@@ -20,6 +22,7 @@ export class CompanyResolver {
         return companyCreated;
     }
 
+    @Authorized()
     @Mutation(() => Company, {name: 'updateCompany'})
     async updateCompany (@Arg('updateCompany'){id, name, phone, logo, email}: CompanyType): Promise<Company>{
         const updatedCompany = (

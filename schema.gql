@@ -133,6 +133,7 @@ type Manager {
   password: String!
   phone: String!
   photo: String!
+  token: String!
   whatsapp: String!
 }
 

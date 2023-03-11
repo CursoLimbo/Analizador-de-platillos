@@ -1,10 +1,9 @@
-
+import * as jwt from "express-jwt";
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express' 
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-import path from "path";
-import {buildSchema} from "type-graphql";
+import {Authorized, buildSchema} from "type-graphql";
 import {AdditionalSpotResolver} from "./Resolvers/AdditionalSpot-Resolver";
 import {BankAccountResolver} from "./Resolvers/BankAccount-Resolver";
 import {CatalogueResolver} from "./Resolvers/Catalogue-Resolver";
@@ -17,9 +16,10 @@ import {QuotationResolver} from "./Resolvers/Quotation-Resolver";
 import {RecipeResolver} from "./Resolvers/Recipe-Resolver";
 import {SupplierResolver} from "./Resolvers/Supplier-Resolver";
 import {TypeOfQuoteResolver} from "./Resolvers/TypeOfQuote-Resolver";
-const queries = require("./Resolvers/Resolvers")
 import 'reflect-metadata';
-
+import {expressjwt} from "express-jwt";
+import {authChecker} from "./middleware/Auth";
+import path from "path";
 
 dotenv.config();
 
@@ -31,15 +31,24 @@ async function startApolloServer() {
         resolvers: [AdditionalSpotResolver, BankAccountResolver, CatalogueResolver, ClientResolver, CompanyResolver, DiscountResolver, IngredientResolver,
         ManagerResolver, QuotationResolver, RecipeResolver, SupplierResolver, TypeOfQuoteResolver],
         emitSchemaFile: true,
-        validate: false
+        validate: false,
+        authChecker
     })
 
+
     const server = new ApolloServer({
-       schema: schema
+       schema,
+        context: ({ req }) => {
+            const context = {
+                req
+            };
+
+            return context;
+        }
     });
 
     app.use(express.static(path.join(__dirname, "../Client/build")));
-    app.get("/", function (_, res) {
+    app.get("/app*", function (_, res) {
         res.sendFile(
             path.join(__dirname, "../Client/build/index.html"),
             function (err) {
@@ -49,6 +58,14 @@ async function startApolloServer() {
     });
 
     await server.start()
+    app.use(
+        server.graphqlPath,
+        expressjwt({
+            algorithms: ['HS256'],
+            secret: process.env.TOKEN_KEY,
+            credentialsRequired: false
+        })
+    );
     server.applyMiddleware({ app });
 
     const PORT = process.env.PORT || 4000;

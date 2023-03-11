@@ -1,31 +1,37 @@
 import React from 'react';
-
 import './styles/App.css';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import {ApolloProvider} from "@apollo/client";
-import {apolloClient} from "./ApolloClient";
+import { ApolloProvider} from "@apollo/react-hooks";
+import {useAppApolloClient} from "./ApolloClient";
+import {LogIn} from "./screens/LogIn";
+import {AuthGate} from "./core/AuthGate";
+import {Home} from "./screens/Home";
 
-
-export const App :React.FunctionComponent = () => {
+const App = () => {
+  const apolloClient:any = useAppApolloClient();
   const router = createBrowserRouter([
     {
-      path: "/logIn/"
+      path: "app/log-in",
+      element: <LogIn/>
     },
     {
-      path: "/Manager/:managerId"
+      path: "app/home",
+      element: <AuthGate><Home/></AuthGate>
     }
   ]);
 
 
-  return<>
+  return(
     <ApolloProvider client={apolloClient}>
       <RouterProvider router={router}/>
     </ApolloProvider>
-  </>
+  )
 
 }
+
+export default App;
 
 

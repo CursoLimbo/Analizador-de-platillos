@@ -7,6 +7,9 @@ export class Manager{
     @Field( ()=> ID)
     id:string;
 
+    @Field( ()=> String)
+    token:string;
+
     @Field()
     @Property({type: () => String, required: true})
     name: string;
