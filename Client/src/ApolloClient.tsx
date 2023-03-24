@@ -10,7 +10,7 @@ const httpLink = new HttpLink({ uri: "http://localhost:4000/graphql" });
 const authMiddleware = (authToken: string) =>
     new ApolloLink((operation, forward) => {
 
-        if (authToken) {
+        if (authToken) {//agregando token al header
             operation.setContext({
                 headers: {
                     authorization: `Bearer ${authToken}`,

@@ -12,9 +12,9 @@ const logInQuery = gql `
 export const useLogInQuery = (onCompleted: (data: any) => void, onError: (message: string) => void) => {
     const [_, setAuthToken, removeAuthToken] = useAuthToken();
 
-    const [query] = useLazyQuery(logInQuery, {
+    const [query] = useLazyQuery(logInQuery, {//callback
         onCompleted: (data) => {
-            if(data?.getManagerByEmailAndPassword?.token) {
+            if(data?.getManagerByEmailAndPassword?.token) {//token que viene del backend
                 setAuthToken(data.getManagerByEmailAndPassword.token);
             }
 
