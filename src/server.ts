@@ -58,14 +58,7 @@ async function startApolloServer() {
     });
 
     await server.start()
-    app.use(
-        server.graphqlPath,
-        expressjwt({
-            algorithms: ['HS256'],
-            secret: process.env.TOKEN_KEY,
-            credentialsRequired: false
-        })
-    );
+
     server.applyMiddleware({ app });
 
     const PORT = process.env.PORT || 4000;

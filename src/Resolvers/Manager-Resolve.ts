@@ -29,7 +29,6 @@ export class ManagerResolver {
             );
 
             manager.token = token;
-
             return manager;
         }else{
             throw new GraphQLError('Invalid user credentials' );
