@@ -15,7 +15,7 @@ export const authChecker: AuthChecker<Context> = ({ context: { req} }, roles) =>
 
     const token = authorization.replace("Bearer", "").trim();
 
-    const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+    const decoded = jwt.verify(token, process.env.TOKEN_KEY);//check if the sign is the same
     const userData: UserData = new UserData({...decoded as UserData})
 
     if (roles.length === 0) {

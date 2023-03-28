@@ -11,7 +11,7 @@ export const AuthGate: React.FunctionComponent<AuthGateProps> = (props) => {
     const [authToken] = useAuthToken()
 
     if (authToken) {
-        return <> {props.children} </>
+        return <> {props.children} </>//renderice
     }
 
     return <Navigate to={"/app/log-in"} />;
