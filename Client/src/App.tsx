@@ -10,6 +10,7 @@ import {LogIn} from "./screens/LogIn";
 import {AuthGate} from "./core/AuthGate";
 import {Home} from "./screens/Home";
 import {NavBar} from "./components/NavBar"
+import {Footer} from "./components/Footer"
 
 const App = () => {
   const apolloClient:any = useAppApolloClient();
@@ -25,6 +26,11 @@ const App = () => {
     {
       path: "app/NavBar",
       element: <NavBar/>
+    }
+    ,
+    {
+      path: "app/Footer",
+      element: <Footer/>
     }
   ]);
 
