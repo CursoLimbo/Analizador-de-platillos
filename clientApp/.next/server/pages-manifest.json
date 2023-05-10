@@ -1,8 +1,0 @@
-{
-  "/home/Home": "pages/home/Home.js",
-  "/login/LogIn": "pages/login/LogIn.js",
-  "/profile/Profile": "pages/profile/Profile.js",
-  "/_error": "pages/_error.js",
-  "/_app": "pages/_app.js",
-  "/_document": "pages/_document.js"
-}
