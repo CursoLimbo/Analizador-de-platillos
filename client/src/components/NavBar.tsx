@@ -37,7 +37,7 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
   };
 
   const handleGoBack = () => {
-    window.history.back();
+    router.back();
   };
 
   return (

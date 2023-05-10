@@ -1,35 +1,34 @@
 import React, {useState} from "react";
-import "./Ingredients-Register.css"
-import { Footer } from "../components/Footer";
-import { NavBar } from '../components/NavBar';
+import ingredientsRegisterStyles from "@/styles/ingredients-register.module.css";
+import { Footer } from "@/components/Footer";
+import { NavBar } from '@/components/NavBar';
 import {Stack, TextField,FormControl,MenuItem,InputLabel,FormHelperText} from "@mui/material";
-import { AppButton } from "../components/Button";
+import { AppButton } from "@/components/Button";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-export const IngredientsRegister: React.FunctionComponent = () => {
-    
-    
+//TODO: research about userForm
+const IngredientsRegister: React.FunctionComponent = () => {
     const [Name, setName] = useState<string>();
     const [Format, setFormat] = useState<string>();
     const [Price, setPrice] = useState<string>();
     const [Supplier, setSupplier] = useState<string>();
+    const [Yield, setYield] =useState<string>();
+
     const handleChange = (event: SelectChangeEvent) => {
         setSupplier(event.target.value);
       };
-    const [Yield, setYield] =useState<string>();
-
     
     return (
       <>
-        <NavBar />
-        <h1>Registrar ingrediente</h1>
-        <Stack className="RowContainer" direction={"row"} spacing={5}>
-          <Stack className="IngredientInputs" direction={"column"} spacing={5}>
+        <NavBar isHome={false}/>
+        <h1 className={ingredientsRegisterStyles.title}>Registrar ingrediente</h1>
+        <Stack className={ingredientsRegisterStyles.RowContainer} direction={"row"} spacing={5}>
+          <Stack className={ingredientsRegisterStyles.IngredientInputs} direction={"column"} spacing={5}>
             <TextField
               id="IngName"
               label="Nombre del artículo"
               variant="outlined"
-              className="TextField-root"
+              className={ingredientsRegisterStyles.TextFieldRoot}
               onChange={(event: React.ChangeEvent<HTMLInputElement>)=>{
                 setName(event.target.value)
               }}
@@ -38,7 +37,7 @@ export const IngredientsRegister: React.FunctionComponent = () => {
               id="IngFormat"
               label="Presentación"
               variant="outlined"
-              className="TextField-root"
+              className={ingredientsRegisterStyles.TextFieldRoot}
               onChange={(event: React.ChangeEvent<HTMLInputElement>)=>{
                 setFormat(event.target.value)
               }}
@@ -47,12 +46,12 @@ export const IngredientsRegister: React.FunctionComponent = () => {
               id="IngPrice"
               label="Precio"
               variant="outlined"
-              className="TextField-root"
+              className={ingredientsRegisterStyles.TextFieldRoot}
               onChange={(event: React.ChangeEvent<HTMLInputElement>)=>{
                 setPrice(event.target.value)
               }}
             />
-            <FormControl className="FormControl-root">
+            <FormControl className={ingredientsRegisterStyles.FormControlRoot}>
                 <InputLabel id="Supplier-label">Proveedor</InputLabel>
                 <Select
                     labelId="Supplier-label"
@@ -66,12 +65,12 @@ export const IngredientsRegister: React.FunctionComponent = () => {
           </Stack>
 
           <Stack style={{ width: "20px" }} />
-          <Stack className="IngredientOutputs" direction={"column"} spacing={5}>
+          <Stack className={ingredientsRegisterStyles.IngredientOutputs} direction={"column"} spacing={5}>
           <TextField
                 id="GramPrice"
                 label="Precio por gramo"
                 variant="outlined"
-                className="TextField-root"
+                className={ingredientsRegisterStyles.TextFieldRoot}
                 InputProps={{
                     readOnly: true,
                 }}
@@ -80,8 +79,8 @@ export const IngredientsRegister: React.FunctionComponent = () => {
               id="IngYield"
               label="Redimiento"
               variant="outlined"
-              className="TextField-root"
-              //revisar si es editable
+              className={ingredientsRegisterStyles.TextFieldRoot}
+              // check if it's editable
               onChange={(event: React.ChangeEvent<HTMLInputElement>)=>{
                 setYield(event.target.value)
               }}
@@ -90,7 +89,7 @@ export const IngredientsRegister: React.FunctionComponent = () => {
                 id="YieldPercent"
                 label="Porcentaje de Rendimiento"
                 variant="outlined"
-                className="TextField-root"
+                className={ingredientsRegisterStyles.TextFieldRoot}
                 InputProps={{
                     readOnly: true,
                 }}
@@ -99,7 +98,7 @@ export const IngredientsRegister: React.FunctionComponent = () => {
                 id="DepletedPrice"
                 label="Precio mermado"
                 variant="outlined"
-                className="TextField-root"
+                className={ingredientsRegisterStyles.TextFieldRoot}
                 InputProps={{
                     readOnly: true,
                 }}
@@ -108,15 +107,15 @@ export const IngredientsRegister: React.FunctionComponent = () => {
                 id="PriceX2"
                 label="Precio x 2"
                 variant="outlined"
-                className="TextField-root"
+                className={ingredientsRegisterStyles.TextFieldRoot}
                 InputProps={{
                     readOnly: true,
                 }}
             />            
           </Stack>
         </Stack>
-        <Stack className="btn">
-            <AppButton className="btn-Save">
+        <Stack className={ingredientsRegisterStyles.btn}>
+            <AppButton className={ingredientsRegisterStyles.btnSave}>
                 Guardar
             </AppButton>
         </Stack>
@@ -125,3 +124,5 @@ export const IngredientsRegister: React.FunctionComponent = () => {
       </>
     );
   };
+
+export default IngredientsRegister;

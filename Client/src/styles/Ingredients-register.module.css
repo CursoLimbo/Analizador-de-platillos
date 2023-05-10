@@ -1,4 +1,3 @@
-
 .RowContainer{
   width: 50%;
   margin: auto;
@@ -19,7 +18,7 @@
   align-items: center;
 }
 
-.TextField-root {
+.TextFieldRoot {
   width: 100%;
 }
 .btn{
@@ -27,17 +26,17 @@
     margin-top: 3%;
 }
 
-.btn-Save {
+.btnSave {
   width: 10.5rem;
   height: 4rem;
   font-size: 1.2rem;
 }
 
-.FormControl-root {
+.FormControlRoot {
   width: 100%;
 }
 
-h1 {
+.title {
   text-align: center;
   margin: 20px auto;
   font-size: 3.5rem;
