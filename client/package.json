@@ -1,0 +1,43 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@apollo/client": "3.4.0",
+    "@apollo/react-hooks": "4.0.0",
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.10.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.7",
+    "apollo-boost": "^0.4.9",
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-link": "^1.2.14",
+    "apollo-link-http": "^1.5.17",
+    "cloudinary-core": "^2.13.0",
+    "eslint": "8.40.0",
+    "eslint-config-next": "13.4.1",
+    "graphql": "^15.8.0",
+    "graphql-tag": "^2.12.6",
+    "materialize-css": "^1.0.0-rc.2",
+    "next": "13.4.1",
+    "next-cloudinary": "^4.10.0",
+    "react": "18.2.0",
+    "react-cookie": "^4.1.1",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.1.0",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "typescript": "^5.0.4"
+  }
+}

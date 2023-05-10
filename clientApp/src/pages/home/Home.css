@@ -1,0 +1,19 @@
+.objects {
+    display: flex;
+    justify-content: center;
+    padding-top: 2%;
+
+}
+
+.font-link {
+    font-family: 'Dancing Script', cursive;
+    width: 100%;
+    display: flex;
+    font-size: 100px;
+    justify-content: center;
+}
+
+.cont-main{
+    padding-top: 8%;
+}
+
