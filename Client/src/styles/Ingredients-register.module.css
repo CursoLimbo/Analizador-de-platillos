@@ -1,0 +1,43 @@
+.RowContainer{
+  width: 50%;
+  margin: auto;
+}
+.IngredientInputs {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.IngredientOutputs {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.TextFieldRoot {
+  width: 100%;
+}
+.btn{
+    align-items: center;
+    margin-top: 3%;
+}
+
+.btnSave {
+  width: 10.5rem;
+  height: 4rem;
+  font-size: 1.2rem;
+}
+
+.FormControlRoot {
+  width: 100%;
+}
+
+.title {
+  text-align: center;
+  margin: 20px auto;
+  font-size: 3.5rem;
+}

@@ -1,6 +1,5 @@
 import React, {useContext} from "react";
 import {NavBar} from "@/components/NavBar";
-import "@/styles/profile.module.css"
 import {useGetManagerQuery, useUpdatePhotoManagerMutation} from "@/hooks/services/manager";
 import {ManagerContext, ManagerContextState} from "@/contexts/managerContext";
 import {Stack} from "@mui/material";
