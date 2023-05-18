@@ -222,7 +222,7 @@ type Query {
   getCompany: Company!
   getDiscountById(id: String!): Discount!
   getIngredient(id: String!): Ingredient!
-  getManager(id: String!): Manager!
+  getManager: Manager!
   getManagerByEmailAndPassword(email: String!, password: String!): Manager!
   getQuotation(id: String!): Quotation!
   getRecipe(id: String!): Recipe!

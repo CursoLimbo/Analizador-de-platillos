@@ -10,8 +10,8 @@ import jwt from "jsonwebtoken"
 export class ManagerResolver {
     @Authorized()
     @Query((_returns) => Manager, {nullable:false, name: 'getManager'})
-    async getManagerById(@Arg('id') id: string){
-        return ManagerModel.findById({_id: id});
+    async getManagerById(){
+        return ManagerModel.findOne();
     }
 
 

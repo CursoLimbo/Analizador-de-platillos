@@ -10,7 +10,7 @@ import {useGetCompanyQuery, useUpdatePhotoCompanyMutation} from "@/hooks/service
 
  const Profile : React.FC = () => {
      const context = useContext<ManagerContextState>(ManagerContext);
-     const managerQuery = useGetManagerQuery(context.id);
+     const managerQuery = useGetManagerQuery();
      const companyQuery = useGetCompanyQuery();
      const [updateManagerMutation] =  useUpdatePhotoManagerMutation();
      const [updateCompanyMutation] = useUpdatePhotoCompanyMutation();
