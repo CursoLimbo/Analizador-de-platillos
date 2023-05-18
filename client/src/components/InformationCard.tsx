@@ -10,8 +10,7 @@ import Face4Icon from '@mui/icons-material/Face4';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import BusinessIcon from '@mui/icons-material/Business';
-
-
+import {useRouter} from "next/router";
 
 interface informationCardProps {
     type: "business" | "personal"
@@ -27,10 +26,8 @@ const InformationCard : React.FC<informationCardProps> = (props) => {
     const {profileFont} = Fonts;
     const {title, type, name, email, phone, photo} = props;
 
-
-
     return <Stack className={style.info} spacing={5}>
-        <Card sx={{maxWidth: 345}}>
+        <Card sx={{maxWidth: 400}}>
             <ImageUpload
                 onImageUpload={publicId => props.onPictureChanged(publicId)}
                 photo={photo}
@@ -46,7 +43,6 @@ const InformationCard : React.FC<informationCardProps> = (props) => {
                             <BusinessIcon fontSize="large" style={{marginRight: '16px'}}/> :
                             <Face4Icon fontSize="large" style={{marginRight: '16px'}}/>
                     }
-
                     <span className={profileFont.className}>  {name}</span>
                 </div>
 

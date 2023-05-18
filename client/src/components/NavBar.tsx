@@ -9,10 +9,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import {useLogout} from "@/hooks/auth/useAuthToken";
 import {useRouter} from "next/navigation";
-
+import {MenuOption} from "@/components/MenuItem";
 
 interface NavBarProps {
   isHome: boolean
@@ -32,8 +31,8 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
     setAnchorElUser(null);
   };
 
-  const handleOpenProfile = () => {
-    router.push("/profile");
+  const handleOpenInformation = (isGoingToUpdate: boolean) => {
+    router.push(`/information?edit=${isGoingToUpdate}`);
   };
 
   const handleGoBack = () => {
@@ -94,9 +93,8 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-                <MenuItem onClick={handleOpenProfile}>
-                  <Typography align="center">Perfil</Typography>
-                </MenuItem>
+              <MenuOption type={"Perfil"} action={() => handleOpenInformation(false)}/>
+              <MenuOption type={"Configuraciones"} action={() => handleOpenInformation(true)}/>
             </Menu>
           </Box>
         </Toolbar>

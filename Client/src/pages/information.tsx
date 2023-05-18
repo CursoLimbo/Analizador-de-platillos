@@ -5,10 +5,15 @@ import {ManagerContext, ManagerContextState} from "@/contexts/managerContext";
 import {Stack} from "@mui/material";
 import styles from "@/styles/login.module.css";
 import profileStyles from "@/styles/profile.module.css";
-import InformationCard from "@/components/informationCard";
 import {useGetCompanyQuery, useUpdatePhotoCompanyMutation} from "@/hooks/services/company";
+import CardActions from "@/components/Card";
 
- const Profile : React.FC = () => {
+interface informationProps {
+    isGoingToUpdate: boolean
+}
+
+
+ const Information : React.FC = () => {
      const context = useContext<ManagerContextState>(ManagerContext);
      const managerQuery = useGetManagerQuery();
      const companyQuery = useGetCompanyQuery();
@@ -52,12 +57,12 @@ import {useGetCompanyQuery, useUpdatePhotoCompanyMutation} from "@/hooks/service
          <NavBar isHome={false}></NavBar>
          <Stack direction={"row"}>
              <div className={profileStyles.infoBox}>
-                 <InformationCard type="personal" title={"Información personal"} name={managerData.getManager.name} email={managerData.getManager.email} phone={managerData.getManager.phone} photo={managerData.getManager.photo} onPictureChanged={onImageUploadHandlerManager}></InformationCard>
-                 <InformationCard type="business" title={"Información empresarial"} name={companyData.getCompany.name} email={companyData.getCompany.email} phone={companyData.getCompany.phone} photo={companyData.getCompany.logo} onPictureChanged={onImageUploadHandlerCompany}></InformationCard>
+                 <CardActions type="personal" title={"Información personal"} name={managerData.getManager.name} email={managerData.getManager.email} phone={managerData.getManager.phone} photo={managerData.getManager.photo} onPictureChanged={onImageUploadHandlerManager} isGoingToUpdate={true}></CardActions>
+                 <CardActions type="business" title={"Información empresarial"} name={companyData.getCompany.name} email={companyData.getCompany.email} phone={companyData.getCompany.phone} photo={companyData.getCompany.logo} onPictureChanged={onImageUploadHandlerCompany} isGoingToUpdate={false}></CardActions>
              </div>
              <div className={styles.banner}/>
          </Stack>
      </>
  }
 
-export default Profile;
+export default Information;
