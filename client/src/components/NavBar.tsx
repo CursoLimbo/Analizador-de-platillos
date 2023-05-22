@@ -32,6 +32,7 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
   };
 
   const handleOpenInformation = (isGoingToUpdate: boolean) => {
+
     router.push(`/information?edit=${isGoingToUpdate}`);
   };
 

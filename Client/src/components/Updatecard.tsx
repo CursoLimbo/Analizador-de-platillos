@@ -1,5 +1,6 @@
 import React from "react";
 import style from "@/styles/informationCard.module.css";
+import updateLineStyle  from '@/styles/updateCard.module.css'
 import {Stack} from "@mui/material";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
@@ -8,7 +9,6 @@ import Face4Icon from "@mui/icons-material/Face4";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import CardContent from "@mui/material/CardContent";
-import {Fonts} from "@/styles/fonts";
 import TextField from '@mui/material/TextField';
 
 interface updateCardProps {
@@ -18,14 +18,13 @@ interface updateCardProps {
     email: string,
     phone: string,
     photo: string,
+    whatsapp: string
 }
 
 
 
 const Updatecard: React.FC<updateCardProps> = (props) => {
-    const {type, title, name, email, phone} = props;
-    const {profileFont} = Fonts;
-
+    const {type, title, name, email, phone, whatsapp} = props;
 
     return<>
         <Stack className={style.info} spacing={5}>
@@ -35,7 +34,7 @@ const Updatecard: React.FC<updateCardProps> = (props) => {
                         {title}
                     </Typography>
 
-                    <div className={style.infoLine}>
+                    <div className={updateLineStyle.updateLine}>
                         {
                             type === 'business' ?
                                 <BusinessIcon fontSize="large" style={{marginRight: '16px'}}/> :
@@ -44,20 +43,42 @@ const Updatecard: React.FC<updateCardProps> = (props) => {
                         <TextField
                             required
                             id="outlined-required"
-                            label="Name"
+                            label="Nombre"
                             defaultValue={name}
+
                         />
 
                     </div>
 
-                    <div className={style.infoLine}>
+                    <div className={updateLineStyle.updateLine}>
                         <MailOutlineIcon fontSize="large" style={{marginRight: '16px'}}/>
-                        <span className={profileFont.className}>  {email}</span>
+                        <TextField
+                            required
+                            id="outlined-required"
+                            label="Correo"
+                            defaultValue={email}
+                        />
+
                     </div>
 
-                    <div className={style.infoLine}>
+                    <div className={updateLineStyle.updateLine}>
                         <PhoneIphoneIcon fontSize="large" style={{marginRight: '16px'}}/>
-                        <span className={profileFont.className}> {phone}</span>
+                        <TextField
+                            required
+                            id="outlined-required"
+                            label="Teléfono"
+                            defaultValue={phone}
+                        />
+                    </div>
+
+                    <div className={updateLineStyle.updateLine}>
+                        <PhoneIphoneIcon fontSize="large" style={{marginRight: '16px'}}/>
+                        <TextField
+                            required
+                            id="outlined-required"
+                            label="Whatsapp"
+                            defaultValue={whatsapp}
+                        />
                     </div>
                 </CardContent>
 

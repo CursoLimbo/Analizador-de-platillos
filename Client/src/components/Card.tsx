@@ -15,12 +15,14 @@ interface CardActionsProps{
 
 const CardActions: React.FC<CardActionsProps> = (props) => {
 const {type, title, name, email, phone, photo, onPictureChanged, isGoingToUpdate} = props;
+console.log(isGoingToUpdate, "Card Actions")
 
     return<>
         {
-            !isGoingToUpdate ?
-            <InformationCard type={type} title={title} name={name} email={email} phone={phone} photo={photo} onPictureChanged={onPictureChanged}></InformationCard> :
-            <Updatecard type={type} title={title} name={name} email={email} phone={phone} photo={photo}></Updatecard>
+
+            isGoingToUpdate ? <Updatecard type={type} title={title} name={name} email={email} phone={phone} photo={photo}></Updatecard> :
+            <InformationCard type={type} title={title} name={name} email={email} phone={phone} photo={photo} onPictureChanged={onPictureChanged}></InformationCard>
+
         }
     </>
 }

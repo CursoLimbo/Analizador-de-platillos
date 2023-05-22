@@ -10,7 +10,7 @@ import Face4Icon from '@mui/icons-material/Face4';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import BusinessIcon from '@mui/icons-material/Business';
-import {useRouter} from "next/router";
+
 
 interface informationCardProps {
     type: "business" | "personal"
@@ -19,12 +19,15 @@ interface informationCardProps {
     email: string,
     phone: string,
     photo: string,
+    whatsapp: string,
     onPictureChanged: (publicId: string) => void
 }
 
 const InformationCard : React.FC<informationCardProps> = (props) => {
     const {profileFont} = Fonts;
-    const {title, type, name, email, phone, photo} = props;
+    const {title, type, name, email, phone, photo, whatsapp} = props;
+
+    console.log("Hi information card")
 
     return <Stack className={style.info} spacing={5}>
         <Card sx={{maxWidth: 400}}>
@@ -55,6 +58,12 @@ const InformationCard : React.FC<informationCardProps> = (props) => {
                     <PhoneIphoneIcon fontSize="large" style={{marginRight: '16px'}}/>
                     <span className={profileFont.className}> {phone}</span>
                 </div>
+
+                <div className={style.infoLine}>
+                    <PhoneIphoneIcon fontSize="large" style={{marginRight: '16px'}}/>
+                    <span className={profileFont.className}> {whatsapp}</span>
+                </div>
+
             </CardContent>
         </Card>
     </Stack>
