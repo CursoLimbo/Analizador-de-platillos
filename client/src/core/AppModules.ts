@@ -26,5 +26,9 @@ export const AppModules = [
     {
         img: "/discounts.jpg",
         buttonName: "Descuentos"
+    },
+    {
+        img: "Ingredients-Register",
+        buttonName: "Ingredientes"
     }
 ]

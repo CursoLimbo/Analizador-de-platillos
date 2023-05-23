@@ -70,7 +70,6 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 2, textAlign: 'center' }}>
-            News
           </Typography>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
