@@ -13,6 +13,7 @@ import {
 import { AppButton } from "@/components/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useForm } from "react-hook-form";
+import { useGetAllSupplierQuery } from "@/hooks/services/Supplier";
 
 type IngredientFormData = {
   name: string;
@@ -28,6 +29,12 @@ const IngredientsRegister: React.FunctionComponent = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IngredientFormData>();
+
+  const [selectedSupplier, setSelectedSupplier] = useState("");
+
+  
+
+  const { data: suppliersData, loading: suppliersLoading } = useGetAllSupplierQuery();
 
   const onSubmit = (data: IngredientFormData) => {
     // Process the form data here
@@ -78,15 +85,25 @@ const IngredientsRegister: React.FunctionComponent = () => {
             />
             <FormControl className={ingredientsRegisterStyles.FormControlRoot}>
               <InputLabel id="Supplier-label">Proveedor</InputLabel>
-                <Select
-                  labelId="Supplier-label"
-                  id="IngSupplier"
-                  {...register("supplier", { required: true })}
-                  error={!!errors.supplier}
-                >
-                  <MenuItem value="maxiPali">Maxi Pali</MenuItem>
-                  <MenuItem value="miCasa">Mi Casa</MenuItem>
+              <Select
+                    labelId="Supplier-label"
+                    id="IngSupplier"
+                    value={selectedSupplier}
+                    onChange={(e: SelectChangeEvent) => setSelectedSupplier(e.target.value)}
+                    error={!!errors.supplier}
+                  >
+                  {suppliersLoading ? (
+                    <MenuItem value="">Loading...</MenuItem>
+                  ) : (
+                    suppliersData &&
+                    suppliersData.GetAllSuppliers.map((supplier: any) => (
+                      <MenuItem key={supplier.id} value={supplier.name}>
+                        {supplier.name}
+                      </MenuItem>
+                    ))
+                  )}
                 </Select>
+
 
               {errors.supplier && (
                 <FormHelperText>Este campo es requerido</FormHelperText>

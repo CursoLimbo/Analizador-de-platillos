@@ -11,6 +11,9 @@ query GetSupplier($getSupplierId: String!) {
 export const getAllSuppliers = gql`
 query GetAllSuppliers {
   GetAllSuppliers {
+    name
+    phone
+    location
     id
   }
 }
