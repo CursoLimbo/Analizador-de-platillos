@@ -8,7 +8,7 @@ query GetSupplier($getSupplierId: String!) {
 }
 `;
 
-export const getAllSuppliers = `
+export const getAllSuppliers = gql`
 query GetAllSuppliers {
   GetAllSuppliers {
     id
