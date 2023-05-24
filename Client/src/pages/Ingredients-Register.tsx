@@ -137,6 +137,15 @@ const IngredientsRegister: React.FunctionComponent = () => {
               helperText={errors.yield && "Este campo es requerido"}
             />
             <TextField
+              id="YieldPrecent"
+              label="Porcentaje rendimiento"
+              variant="outlined"
+              className={ingredientsRegisterStyles.TextFieldRoot}
+              InputProps={{
+                readOnly: true,
+              }}
+            />
+            <TextField
                 id="DepletedPrice"
                 label="Precio mermado"
                 variant="outlined"
