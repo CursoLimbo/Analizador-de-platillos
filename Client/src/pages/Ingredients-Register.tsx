@@ -30,7 +30,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
     formState: { errors },
   } = useForm<IngredientFormData>();
 
-  const [selectedSupplier, setSelectedSupplier] = useState("");
+  const [selectedSupplier, setSelectedSupplier] = useState('');
 
   
 
@@ -83,32 +83,32 @@ const IngredientsRegister: React.FunctionComponent = () => {
               error={!!errors.price}
               helperText={errors.price && "Este campo es requerido"}
             />
-            <FormControl className={ingredientsRegisterStyles.FormControlRoot}>
+            <FormControl className={ingredientsRegisterStyles.FormControlRoot} error={!!errors.supplier}>
               <InputLabel id="Supplier-label">Proveedor</InputLabel>
               <Select
-                    labelId="Supplier-label"
-                    id="IngSupplier"
-                    value={selectedSupplier}
-                    onChange={(e: SelectChangeEvent) => setSelectedSupplier(e.target.value)}
-                    error={!!errors.supplier}
-                  >
-                  {suppliersLoading ? (
-                    <MenuItem value="">Loading...</MenuItem>
-                  ) : (
-                    suppliersData &&
-                    suppliersData.GetAllSuppliers.map((supplier: any) => (
-                      <MenuItem key={supplier.id} value={supplier.name}>
-                        {supplier.name}
-                      </MenuItem>
-                    ))
-                  )}
-                </Select>
-
-
+                labelId="Supplier-label"
+                id="IngSupplier"
+                label="Proveedor"
+                value={selectedSupplier}
+                {...register("supplier", { required: true })}
+                onChange={(e: SelectChangeEvent) => setSelectedSupplier(e.target.value)}
+              >
+                {suppliersLoading ? (
+                  <MenuItem value="">Loading...</MenuItem>
+                ) : (
+                  suppliersData &&
+                  suppliersData.GetAllSuppliers.map((supplier: any) => (
+                    <MenuItem key={supplier.id} value={supplier.name}>
+                      {supplier.name}
+                    </MenuItem>
+                  ))
+                )}
+              </Select>
               {errors.supplier && (
                 <FormHelperText>Este campo es requerido</FormHelperText>
               )}
             </FormControl>
+
           </Stack>
 
           <Stack style={{ width: "20px" }} />
@@ -132,7 +132,9 @@ const IngredientsRegister: React.FunctionComponent = () => {
               label="Redimiento"
               variant="outlined"
               className={ingredientsRegisterStyles.TextFieldRoot}
-              {...register("yield")}
+              {...register("yield", { required: true })}
+              error={!!errors.yield}
+              helperText={errors.yield && "Este campo es requerido"}
             />
             <TextField
                 id="DepletedPrice"
