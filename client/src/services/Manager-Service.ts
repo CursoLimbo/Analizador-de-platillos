@@ -5,6 +5,7 @@ import {gql} from "apollo-boost";
 export const getManager = gql `
         query GetManager {
                   getManager {
+                    id,
                     name, 
                     email,
                     phone,

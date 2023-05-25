@@ -6,7 +6,7 @@ import { AppButton } from "@/components/Button";
 import {AuthGate} from "@/core/AuthGate";
 import {AppModules} from "@/core/AppModules";
 import {Fonts} from "@/styles/fonts";
-import {Footer} from "@/components/Footer";
+
 
 const Home = () => {
 const {welcomeFont, titleStyle} = Fonts;

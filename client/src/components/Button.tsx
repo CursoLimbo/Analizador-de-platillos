@@ -3,10 +3,14 @@ import {teal} from "@mui/material/colors";
 import {Button, ButtonProps, styled} from "@mui/material";
 
 
-export const AppButton = styled(Button)<ButtonProps>(({ theme }) => ({
-    color: theme.palette.getContrastText(teal[500]),
-    backgroundColor: teal[400],
-    '&:hover': {
-        backgroundColor: teal[700],
-    },
-}));
+export const AppButton = styled(Button)<ButtonProps>(({ theme, type }) => {
+    console.log("ASB", type)
+    return {
+        type: type,
+        color: theme.palette.getContrastText(teal[500]),
+        backgroundColor: teal[400],
+        '&:hover': {
+            backgroundColor: teal[700],
+        },
+    }
+});

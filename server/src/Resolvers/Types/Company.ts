@@ -20,4 +20,7 @@ export class CompanyType implements Partial<Company>{
     @Field({nullable : true})
     logo: string;
 
+    @Field({nullable : true})
+    whatsapp: string;
+
 }

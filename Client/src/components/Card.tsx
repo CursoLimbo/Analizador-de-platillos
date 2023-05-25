@@ -10,18 +10,33 @@ interface CardActionsProps{
     email: string,
     phone: string,
     photo: string,
-    onPictureChanged: (publicId: string) => void
+    onPictureChanged: (publicId: string) => void,
+    whatsapp: string
+    updateInformation: (data) => void
 }
 
 const CardActions: React.FC<CardActionsProps> = (props) => {
-const {type, title, name, email, phone, photo, onPictureChanged, isGoingToUpdate} = props;
+const {type, title, name, email, phone, photo, onPictureChanged, isGoingToUpdate, whatsapp, updateInformation} = props;
 console.log(isGoingToUpdate, "Card Actions")
 
     return<>
         {
 
-            isGoingToUpdate ? <Updatecard type={type} title={title} name={name} email={email} phone={phone} photo={photo}></Updatecard> :
-            <InformationCard type={type} title={title} name={name} email={email} phone={phone} photo={photo} onPictureChanged={onPictureChanged}></InformationCard>
+            isGoingToUpdate ? <Updatecard type={type}
+                                          title={title}
+                                          name={name}
+                                          email={email}
+                                          phone={phone}
+                                          photo={photo}
+                                          whatsapp={whatsapp} updateInformation={updateInformation}></Updatecard> :
+            <InformationCard type={type}
+                             title={title}
+                             name={name}
+                             email={email}
+                             phone={phone}
+                             photo={photo}
+                             onPictureChanged={onPictureChanged}
+                             whatsapp={whatsapp}></InformationCard>
 
         }
     </>

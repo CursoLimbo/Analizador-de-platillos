@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "react-hook-form": "^7.43.9",
     "@apollo/client": "3.4.0",
     "@apollo/react-hooks": "4.0.0",
     "@cloudinary/react": "^1.11.2",

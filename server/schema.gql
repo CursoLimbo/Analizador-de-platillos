@@ -69,6 +69,7 @@ type Company {
   logo: String!
   name: String!
   phone: String!
+  whatsapp: String!
 }
 
 input CompanyType {
@@ -77,6 +78,7 @@ input CompanyType {
   logo: String
   name: String
   phone: String
+  whatsapp: String
 }
 
 """

@@ -10,6 +10,7 @@ import Face4Icon from '@mui/icons-material/Face4';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import BusinessIcon from '@mui/icons-material/Business';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 
 interface informationCardProps {
@@ -26,8 +27,6 @@ interface informationCardProps {
 const InformationCard : React.FC<informationCardProps> = (props) => {
     const {profileFont} = Fonts;
     const {title, type, name, email, phone, photo, whatsapp} = props;
-
-    console.log("Hi information card")
 
     return <Stack className={style.info} spacing={5}>
         <Card sx={{maxWidth: 400}}>
@@ -60,7 +59,7 @@ const InformationCard : React.FC<informationCardProps> = (props) => {
                 </div>
 
                 <div className={style.infoLine}>
-                    <PhoneIphoneIcon fontSize="large" style={{marginRight: '16px'}}/>
+                    <WhatsAppIcon fontSize="large" style={{marginRight: '16px'}}/>
                     <span className={profileFont.className}> {whatsapp}</span>
                 </div>
 

@@ -22,6 +22,10 @@ export class Company{
     @Field()
     @Property({type: () => String, required: true})
     logo: string;
+
+    @Field()
+    @Property({type: () => String, required: true})
+    whatsapp: string;
 }
 
 export const CompanyModel = getModelForClass(Company);

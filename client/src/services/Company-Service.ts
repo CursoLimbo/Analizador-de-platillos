@@ -7,7 +7,8 @@ export const getCompany = gql`
         name,
         email,
         phone,
-        logo
+        logo,
+        whatsapp
       }
   }
 `;
