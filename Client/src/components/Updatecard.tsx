@@ -28,17 +28,14 @@ interface updateCardProps {
 
 const Updatecard: React.FC<updateCardProps> = (props) => {
     const {type, title, name, email, phone, whatsapp, updateInformation} = props;
-    const {register, handleSubmit, watch, formState} = useForm();
+    const {register, handleSubmit, formState} = useForm();
     const {errors} = formState
     const [show, setShow] = useState(false);
-    const formData = watch();
 
     const formSubmitManager = (data) => {
-       console.log(data);
+       updateInformation(data);
         setShow(true);
     }
-
-   // const {ref, ...inputProps} = register("name", {required: "error text"})
 
 
     return<>
@@ -59,7 +56,7 @@ const Updatecard: React.FC<updateCardProps> = (props) => {
                         }
                         <TextField
                             id="name"
-                            label="Nombre"
+                            label="Nombre Completo"
                             defaultValue={name}
                             {...register("name", {required: true})}
                             error={!!errors.name}
@@ -71,53 +68,44 @@ const Updatecard: React.FC<updateCardProps> = (props) => {
                     <div className={updateLineStyle.updateLine}>
                         <MailOutlineIcon fontSize="large" style={{marginRight: '16px'}}/>
                         <TextField
-                            required
-                            id="outlined-required"
                             label="Correo"
                             defaultValue={email}
                             {...register("email", {required: true})}
+                            error={!!errors.email}
+                            helperText={errors.email && "Este campo es requerido"}
                         />
-                        {errors.email && <p className={updateLineStyle.error}>El correo es requerido.</p>}
-
                     </div>
 
                     <div className={updateLineStyle.updateLine}>
                         <PhoneIphoneIcon fontSize="large" style={{marginRight: '16px'}}/>
                         <TextField
-                            required
-                            id="outlined-required"
                             label="Teléfono"
                             defaultValue={phone}
                             {...register("phone", {required: true})}
+                            error={!!errors.phone}
+                            helperText={errors.phone && "Este campo es requerido"}
 
                         />
-
-                        {errors.phone && <p className={updateLineStyle.error}>El telefono es requerido.</p>}
-
                     </div>
 
                     <div className={updateLineStyle.updateLine}>
                         <PhoneIphoneIcon fontSize="large" style={{marginRight: '16px'}}/>
                         <TextField
-                            required
-                            id="outlined-required"
                             label="Whatsapp"
                             defaultValue={whatsapp}
-                            {...register("whatsapp", {required: true} )}
+                            {...register("whatsapp", {required: true})}
+                            error={!!errors.whatsapp}
+                            helperText={errors.whatsapp && "Este campo es requerido"}
 
                         />
-                        {errors.whatsapp && <p className={updateLineStyle.error}>El whatsapp es requerido.</p>}
                     </div>
 
                 </CardContent>
-                </form>
+
                 <div  className={updateLineStyle.buttonSave}>
-
-                    <AppButton>{"Guardar"}</AppButton>
-
+                    <AppButton type={"submit"}>{"Guardar"}</AppButton>
                 </div>
-
-
+                </form>
             </Card>
         </Stack>
     </>

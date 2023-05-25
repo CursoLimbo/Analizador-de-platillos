@@ -1,14 +1,18 @@
 import React, {useContext} from "react";
 import {NavBar} from "@/components/NavBar";
-import {useGetManagerQuery, useUpdateManager, useUpdatePhotoManagerMutation} from "@/hooks/services/manager";
+import {
+    useGetManagerQuery,
+    useUpdateManagerMutation,
+    useUpdatePhotoManagerMutation
+} from "@/hooks/services/manager";
 import {ManagerContext, ManagerContextState} from "@/contexts/managerContext";
 import {Stack} from "@mui/material";
 import styles from "@/styles/login.module.css";
 import profileStyles from "@/styles/profile.module.css";
-import {useGetCompanyQuery, useUpdatePhotoCompanyMutation} from "@/hooks/services/company";
+import {useGetCompanyQuery, useUpdateCompanyMutation, useUpdatePhotoCompanyMutation} from "@/hooks/services/company";
 import CardActions from "@/components/Card";
 import {useRouter} from "next/router";
-import {useLogInQuery} from "@/services/useLogInQuery";
+
 
  const Information : React.FC = () => {
      const context = useContext<ManagerContextState>(ManagerContext);
@@ -22,7 +26,10 @@ import {useLogInQuery} from "@/services/useLogInQuery";
      const router = useRouter();
      const param = router.query;
      let isGoingToUpdate : boolean = param.edit !== 'false';
-     const [updateManager] = useUpdateManager();
+     const [updateManager] = useUpdateManagerMutation();
+     const [updateCompany] = useUpdateCompanyMutation();
+
+
 
      if(managerQuery.loading || companyQuery.loading) {
          return <span>Loading...</span>
@@ -54,7 +61,7 @@ import {useLogInQuery} from "@/services/useLogInQuery";
      };
 
      const updateManagerInformation = (data) => {
-         console.log(data, managerData);
+
           updateManager ( {
               variables: {
                   updateManager: {
@@ -65,8 +72,16 @@ import {useLogInQuery} from "@/services/useLogInQuery";
           });
      }
 
-     const updateCompanyInformation = () => {
-        console.log("companyInformation")
+     const updateCompanyInformation = (data) => {
+         console.log(data)
+            updateCompany({
+                variables:{
+                    updateCompany: {
+                        id: companyData.getCompany.id,
+                        ...data
+                    }
+                }
+            });
      }
 
 

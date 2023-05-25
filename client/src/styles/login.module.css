@@ -14,6 +14,7 @@
     background-image: url("/logo.jpeg");
     background-size: cover;
     width: 60%;
+    height: 1000px;
 }
 
 .btn-in{
