@@ -5,6 +5,7 @@ import {gql} from "apollo-boost";
 export const getManager = gql `
         query GetManager {
                   getManager {
+                    id,
                     name, 
                     email,
                     phone,
@@ -14,12 +15,23 @@ export const getManager = gql `
                   }
         }`
 
-export const updateManager = gql `
+export const updatePhotoManager = gql `
       mutation UpdateManager($updateManager: ManagerType!) {
            updateManager(updateManager: $updateManager) {
              id
            }
       }`
+
+
+export const updateManagerInformation = gql `
+      mutation UpdateManager($updateManager: ManagerType!){
+            updateManager(updateManager: $updateManager){
+                id
+            }
+      }`
+
+
+
 
 
 

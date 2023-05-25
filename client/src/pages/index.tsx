@@ -7,6 +7,7 @@ import {AuthGate} from "@/core/AuthGate";
 import {AppModules} from "@/core/AppModules";
 import {Fonts} from "@/styles/fonts";
 
+
 const Home = () => {
 const {welcomeFont, titleStyle} = Fonts;
 

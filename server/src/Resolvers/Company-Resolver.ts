@@ -15,9 +15,9 @@ export class CompanyResolver {
 
     @Authorized()
     @Mutation(() => Company, {name: 'CreateCompany'})
-    async createCompany(@Arg('newCompany'){name, email, phone, logo}: CompanyType): Promise<Company>{
+    async createCompany(@Arg('newCompany'){name, email, phone, logo, whatsapp}: CompanyType): Promise<Company>{
         const companyCreated = (
-            await CompanyModel.create({name, email, phone, logo})
+            await CompanyModel.create({name, email, phone, logo, whatsapp})
         ).save();
         return companyCreated;
     }
