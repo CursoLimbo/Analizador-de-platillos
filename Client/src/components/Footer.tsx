@@ -14,7 +14,7 @@ const styles = {
     left: 0,
     right: 0,
     padding: "0 2px",
-    mt: '2%'
+    mt: '2%',
   },
   bottomNavigation: {
     backgroundColor: "teal",
@@ -24,12 +24,15 @@ const styles = {
     maxHeight: 30,
     mt: "auto",
     mb: "auto",
-    "&:hover": {
+    color: 'white',
+        "&:hover": {
       transform: "scale(1.2)",
       transition: "all 0.1s ease",
     },
   },
   facebookButton: {
+    Width: 30,
+    Height: 30,
     ml: "auto",
   },
   instagramButton: {
