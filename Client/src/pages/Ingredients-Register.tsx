@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Footer } from "@/components/Footer";
-import { NavBar } from '@/components/NavBar';
+import { NavBar } from "@/components/NavBar";
 import ingredientsRegisterStyles from "@/styles/ingredients-register.module.css";
 import {
   Stack,
@@ -18,62 +18,70 @@ import { useCreateIngredientMutation } from "@/hooks/services/Ingredients";
 
 type IngredientFormData = {
   name: string;
-  format: number;
+  presentation: number;
   price: number;
   supplier: string;
-  gramPrice: number;
-  yield: string;
-  yieldPercent: number;
-  depletePrice: number;
-  priceX2: number;
+  costPerGram: number;
+  performance: number;
+  performancePercentage: number;
+  mermado: number;
+  productMultiplyByTwo: number;
 };
+
 
 const IngredientsRegister: React.FunctionComponent = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
     watch,
   } = useForm<IngredientFormData>();
 
   const [mutate] = useCreateIngredientMutation();
 
 
+
+
+  const [costPerGram, setCostPerGram] = useState(0);
+
+
+    //read form data
+    const price = watch("price", 0);
+    const presentation = watch("presentation", 0);
+    //calc gramPrice
+    useEffect(() => {
+        setCostPerGram(price/presentation); 
+    }, [price, presentation]);
+
+
   const [selectedSupplier, setSelectedSupplier] = useState('');
-  const [shouldCalculateGramPrice, setShouldCalculateGramPrice] = useState(false);
-  const [shouldCalculateYieldPercent, setShouldCalculateYieldPercent] = useState(false);
-  const [shouldCalculateDepletedPrice, setShouldCalculateDepletedPrice] = useState(false);
-  const [shouldCalculatePriceX2, setShouldCalculatePriceX2] = useState(false);
   const { data: suppliersData, loading: suppliersLoading } = useGetAllSupplierQuery();
-
-  //read form data
-  const price = watch('price',0);
-  const format = watch('format',0);
-// validation for calculated fields
-  useEffect(() => {
-    if (price && format) {
-      setShouldCalculateGramPrice(true);
-    } else {
-      setShouldCalculateGramPrice(false);
-    }
-  }, [price, format]);
   
-
-
   const onSubmit = (data: IngredientFormData) => {
-    mutate({ variables: { newIngredient : data}})
-    .then((response) => {
-      console.log(response)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-    console.log(data);
+    const { price, ...formData } = data;
+  
+    const updatedFormData: Omit<IngredientFormData, 'price'> = {
+      ...formData,
+      presentation: Number(data.presentation),
+      performance: Number(data.performance),
+      costPerGram: Number(data.costPerGram.toString()),
+      performancePercentage: Number(data.performancePercentage.toString()),
+      mermado: Number(data.mermado.toString()),
+      productMultiplyByTwo: Number(data.productMultiplyByTwo.toString()),
+    };
+  
+    mutate({ variables: { newIngredient: updatedFormData } })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  
+    console.log(updatedFormData);
   };
-
-  const calculateGramPrice = () => {
-    return price / format;
-  };
+  
 
   return (
     <>
@@ -104,9 +112,9 @@ const IngredientsRegister: React.FunctionComponent = () => {
               label="Presentación"
               variant="outlined"
               className={ingredientsRegisterStyles.TextFieldRoot}
-              {...register("format", { required: true })}
-              error={!!errors.format}
-              helperText={errors.format && "Este campo es requerido"}
+              {...register("presentation", { required: true })}
+              error={!!errors.presentation}
+              helperText={errors.presentation && "Este campo es requerido"}
             />
             <TextField
               id="IngPrice"
@@ -117,7 +125,10 @@ const IngredientsRegister: React.FunctionComponent = () => {
               error={!!errors.price}
               helperText={errors.price && "Este campo es requerido"}
             />
-            <FormControl className={ingredientsRegisterStyles.FormControlRoot} error={!!errors.supplier}>
+            <FormControl
+              className={ingredientsRegisterStyles.FormControlRoot}
+              error={!!errors.supplier}
+            >
               <InputLabel id="Supplier-label">Proveedor</InputLabel>
               <Select
                 labelId="Supplier-label"
@@ -142,7 +153,6 @@ const IngredientsRegister: React.FunctionComponent = () => {
                 <FormHelperText>Este campo es requerido</FormHelperText>
               )}
             </FormControl>
-
           </Stack>
 
           <Stack style={{ width: "20px" }} />
@@ -160,48 +170,51 @@ const IngredientsRegister: React.FunctionComponent = () => {
               InputProps={{
                 readOnly: true,
               }}
-              value={shouldCalculateGramPrice ? calculateGramPrice() : ""}
-              {...register("gramPrice")}
+              value={costPerGram}
+              {...register("costPerGram")}
             />
             <TextField
               id="IngYield"
               label="Rendimiento"
               variant="outlined"
               className={ingredientsRegisterStyles.TextFieldRoot}
-              {...register("yield", { required: true })}
-              error={!!errors.yield}
-              helperText={errors.yield && "Este campo es requerido"}
+              {...register("performance", { required: true })}
+              error={!!errors.performance}
+              helperText={errors.performance && "Este campo es requerido"}
             />
             <TextField
               id="YieldPercent"
               label="Porcentaje de rendimiento"
               variant="outlined"
               className={ingredientsRegisterStyles.TextFieldRoot}
+              //value={performancePercentage}
               InputProps={{
                 readOnly: true,
               }}
-              {...register("yieldPercent")}
+              {...register("performancePercentage")}
             />
             <TextField
               id="DepletedPrice"
               label="Precio mermado"
               variant="outlined"
               className={ingredientsRegisterStyles.TextFieldRoot}
+              //value={mermado}
               InputProps={{
                 readOnly: true,
               }}
-              {...register("depletePrice")}
+              {...register("mermado")}
             />
             <TextField
               id="PriceX2"
               label="Precio x 2"
               variant="outlined"
               className={ingredientsRegisterStyles.TextFieldRoot}
+              //value={productMultiplyByTwo}
               InputProps={{
                 readOnly: true,
               }}
-              {...register("priceX2")}
-            />   
+              {...register("productMultiplyByTwo")}
+            />
           </Stack>
         </Stack>
         <Stack className={ingredientsRegisterStyles.btn}>
