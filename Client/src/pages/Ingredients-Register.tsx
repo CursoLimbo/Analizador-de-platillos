@@ -37,12 +37,15 @@ const IngredientsRegister: React.FunctionComponent = () => {
 
   const [selectedSupplier, setSelectedSupplier] = useState('');
   const [shouldCalculateGramPrice, setShouldCalculateGramPrice] = useState(false);
+  const [shouldCalculateYieldPercent, setShouldCalculateYieldPercent] = useState(false);
+  const [shouldCalculateDepletedPrice, setShouldCalculateDepletedPrice] = useState(false);
+  const [shouldCalculatePriceX2, setShouldCalculatePriceX2] = useState(false);
   const { data: suppliersData, loading: suppliersLoading } = useGetAllSupplierQuery();
 
-  //read data
+  //read form data
   const price = watch('price',0);
   const format = watch('format',0);
-
+// validation for calculated fields
   useEffect(() => {
     if (price && format) {
       setShouldCalculateGramPrice(true);
@@ -51,6 +54,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
     }
   }, [price, format]);
   
+
 
   const onSubmit = (data: IngredientFormData) => {
     // Process the form data here
