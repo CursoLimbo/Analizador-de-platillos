@@ -14,6 +14,7 @@ import { AppButton } from "@/components/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useForm } from "react-hook-form";
 import { useGetAllSupplierQuery } from "@/hooks/services/Supplier";
+import { useCreateIngredientMutation } from "@/hooks/services/Ingredients";
 
 type IngredientFormData = {
   name: string;
@@ -34,6 +35,9 @@ const IngredientsRegister: React.FunctionComponent = () => {
     formState: { errors },
     watch,
   } = useForm<IngredientFormData>();
+
+  const [mutate] = useCreateIngredientMutation();
+
 
   const [selectedSupplier, setSelectedSupplier] = useState('');
   const [shouldCalculateGramPrice, setShouldCalculateGramPrice] = useState(false);
@@ -57,7 +61,13 @@ const IngredientsRegister: React.FunctionComponent = () => {
 
 
   const onSubmit = (data: IngredientFormData) => {
-    // Process the form data here
+    mutate({ variables: { newIngredient : data}})
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
     console.log(data);
   };
 
@@ -151,6 +161,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
                 readOnly: true,
               }}
               value={shouldCalculateGramPrice ? calculateGramPrice() : ""}
+              {...register("gramPrice")}
             />
             <TextField
               id="IngYield"
@@ -169,6 +180,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
               InputProps={{
                 readOnly: true,
               }}
+              {...register("yieldPercent")}
             />
             <TextField
               id="DepletedPrice"
@@ -178,6 +190,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
               InputProps={{
                 readOnly: true,
               }}
+              {...register("depletePrice")}
             />
             <TextField
               id="PriceX2"
@@ -187,6 +200,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
               InputProps={{
                 readOnly: true,
               }}
+              {...register("priceX2")}
             />   
           </Stack>
         </Stack>
