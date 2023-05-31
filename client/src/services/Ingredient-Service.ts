@@ -16,10 +16,17 @@ export const getAllIngredients = `
   }
 `;
 
-export const createIngredientMutation = `
-  mutation CreateIngredient($newIngredient: IngredientType!) {
+export const createIngredientMutation = gql`
+  mutation Mutation($newIngredient: IngredientType!) {
     CreateIngredient(newIngredient: $newIngredient) {
-      id
+      supplier
+      productMultiplyByTwo
+      presentation
+      performancePercentage
+      performance
+      name
+      mermado
+      costPerGram
     }
   }
 `;

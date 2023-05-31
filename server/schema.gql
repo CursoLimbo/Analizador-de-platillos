@@ -107,8 +107,8 @@ type Ingredient {
   id: ID!
   mermado: Float!
   name: String!
-  perfomancePercentage: Float!
   performance: Float!
+  performancePercentage: Float!
   presentation: Float!
   productMultiplyByTwo: Float!
   supplier: String!

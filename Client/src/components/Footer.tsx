@@ -6,14 +6,15 @@ import Facebook from "@mui/icons-material/Facebook";
 import Twitter from "@mui/icons-material/Twitter";
 import Instagram from "@mui/icons-material/Instagram";
 
+
 const styles = {
   box: {
-    height: "60px",
-    position: "absolute",
-    bottom: "0",
+    position: "relative",
+    bottom: 0,
     left: 0,
     right: 0,
     padding: "0 2px",
+    mt: '2%',
   },
   bottomNavigation: {
     backgroundColor: "teal",
@@ -23,12 +24,15 @@ const styles = {
     maxHeight: 30,
     mt: "auto",
     mb: "auto",
-    "&:hover": {
+    color: 'white',
+        "&:hover": {
       transform: "scale(1.2)",
       transition: "all 0.1s ease",
     },
   },
   facebookButton: {
+    Width: 30,
+    Height: 30,
     ml: "auto",
   },
   instagramButton: {

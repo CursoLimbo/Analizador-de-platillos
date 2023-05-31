@@ -30,7 +30,7 @@ export class Ingredient{
 
     @Field()
     @Property({type: () => Number, required: true})
-    perfomancePercentage: number;
+    performancePercentage: number;
 
 
     @Field()
