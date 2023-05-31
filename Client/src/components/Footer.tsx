@@ -10,7 +10,7 @@ import Instagram from "@mui/icons-material/Instagram";
 const styles = {
   box: {
     position: "relative",
-    botto: 0,
+    bottom: 0,
     left: 0,
     right: 0,
     padding: "0 2px",
