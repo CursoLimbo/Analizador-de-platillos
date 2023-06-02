@@ -71,11 +71,12 @@ const IngredientsRegister: React.FunctionComponent = () => {
         setValue('performancePercentage', 0)
       }
   }, [performance]);
+
+
     //calc mermado and productX2
     useEffect(() => { 
       if(costPerGram>0 && performancePercentage>0){
       const valmermado = Number((costPerGram*performancePercentage).toFixed(2));
-
       setValue('mermado',valmermado )
       setValue('productMultiplyByTwo',valmermado*2)
       }else{
@@ -113,10 +114,10 @@ const IngredientsRegister: React.FunctionComponent = () => {
   
 
   return (
-    <div className={ingredientsRegisterStyles.box}>
+    <>
       <NavBar isHome={false} />
       <h1 className={ingredientsRegisterStyles.title}>Registrar ingrediente</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} style={{minHeight:'78.7vh'}}>
         <Stack
           className={ingredientsRegisterStyles.RowContainer}
           direction={"row"}
@@ -126,7 +127,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
             className={ingredientsRegisterStyles.IngredientInputs}
             direction={"column"}
             spacing={5}
-          >
+          >            
             <TextField
               id="IngName"
               label="Nombre del artículo"
@@ -249,7 +250,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
         </Stack>
       </form>
       <Footer />
-    </div>
+    </>
   );
 };
 

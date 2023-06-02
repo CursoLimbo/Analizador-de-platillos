@@ -9,12 +9,7 @@ import Instagram from "@mui/icons-material/Instagram";
 
 const styles = {
   box: {
-    position: "relative",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    padding: "0 2px",
-    mt: '2%',
+    mt:'2%',
   },
   bottomNavigation: {
     backgroundColor: "teal",
