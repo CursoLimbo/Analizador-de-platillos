@@ -8,12 +8,20 @@ export const getIngredientById = `
   }
 `;
 
-export const getAllIngredients = `
-  query GetAllIngredients {
-    GetAllIngredients {
-      id
-    }
+export const getAllIngredients = gql`
+query GetAllIngredients {
+  GetAllIngredients {
+    supplier
+    productMultiplyByTwo
+    presentation
+    performancePercentage
+    performance
+    name
+    mermado
+    id
+    costPerGram
   }
+}
 `;
 
 export const createIngredientMutation = gql`
