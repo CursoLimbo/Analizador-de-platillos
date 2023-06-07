@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -38,17 +39,25 @@ interface Ingredient {
 }
 
 const CreateData = (): Ingredient[] => {
+  const [rows, setRows] = useState<Ingredient[]>([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const rowsData = useGetAllIngredients();
   
-  if (!rowsData.data) {
-    console.log('error de data')
-    return [];
+  useEffect(() => {
+    if (rowsData.data) {
+      console.log('datos cargados')
+      setRows(rowsData.data.GetAllIngredients.slice());
+      setDataLoaded(true);
+    }
+  }, [rowsData]);
+  
+  if (!dataLoaded) {
+    console.log('datos no cargados')
+    return []; // Mostrar un estado de carga o un mensaje mientras se obtienen los datos
   }
   
-  const rows: Ingredient[] = rowsData.data.GetAllIngredients.slice();
-  
   return rows;
-}
+};
 
 
 
@@ -252,8 +261,6 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 }
 
 export default function Ingredients() {
-
-
   const rows = CreateData();
 
   const [order, setOrder] = React.useState<Order>(DEFAULT_ORDER);
@@ -266,13 +273,10 @@ export default function Ingredients() {
   const [paddingHeight, setPaddingHeight] = React.useState(0);
 
   React.useEffect(() => {
-    let rowsOnMount = stableSort(
-      rows,
-      getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY),
-    );
+    let rowsOnMount = stableSort(rows, getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY));
     rowsOnMount = rowsOnMount.slice(
       0 * DEFAULT_ROWS_PER_PAGE,
-      0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE,
+      0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE
     );
 
     setVisibleRows(rowsOnMount);
@@ -288,11 +292,11 @@ export default function Ingredients() {
       const sortedRows = stableSort(rows, getComparator(toggledOrder, newOrderBy));
       const updatedRows = sortedRows.slice(
         page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage,
+        page * rowsPerPage + rowsPerPage
       );
       setVisibleRows(updatedRows);
     },
-    [order, orderBy, page, rowsPerPage],
+    [order, orderBy, page, rowsPerPage]
   );
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -317,7 +321,7 @@ export default function Ingredients() {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
 
@@ -331,18 +335,16 @@ export default function Ingredients() {
       const sortedRows = stableSort(rows, getComparator(order, orderBy));
       const updatedRows = sortedRows.slice(
         newPage * rowsPerPage,
-        newPage * rowsPerPage + rowsPerPage,
+        newPage * rowsPerPage + rowsPerPage
       );
       setVisibleRows(updatedRows);
 
-
-      const numEmptyRows =
-        newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - rows.length) : 0;
+      const numEmptyRows = newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - rows.length) : 0;
 
       const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
       setPaddingHeight(newPaddingHeight);
     },
-    [order, orderBy, dense, rowsPerPage],
+    [order, orderBy, dense, rowsPerPage]
   );
 
   const handleChangeRowsPerPage = React.useCallback(
@@ -355,13 +357,13 @@ export default function Ingredients() {
       const sortedRows = stableSort(rows, getComparator(order, orderBy));
       const updatedRows = sortedRows.slice(
         0 * updatedRowsPerPage,
-        0 * updatedRowsPerPage + updatedRowsPerPage,
+        0 * updatedRowsPerPage + updatedRowsPerPage
       );
       setVisibleRows(updatedRows);
 
       setPaddingHeight(0);
     },
-    [order, orderBy],
+    [order, orderBy]
   );
 
   const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -371,98 +373,87 @@ export default function Ingredients() {
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
   return (
-    <Box sx={{ width: '100%'}}>
-      <NavBar isHome={false}/>
-      <Paper sx={{ width: '100%', mb: 2,minHeight: '82.5vh' }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-          >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {visibleRows
-                ? visibleRows.map((row, index) => {
-                    const isItemSelected = isSelected(row.id);
-                    const labelId = `enhanced-table-checkbox-${index}`;
+    <Box sx={{ width: '100%' }}>
+      <NavBar isHome={false} />
 
-                    return (
-                      <TableRow
-                        hover
-                        onClick={(event) => handleClick(event, row.id)}
-                        role="checkbox"
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.id}
-                        selected={isItemSelected}
-                        sx={{ cursor: 'pointer' }}
-                      >
-                        <TableCell padding="checkbox">
-                          <Checkbox
-                            color="primary"
-                            checked={isItemSelected}
-                            inputProps={{
-                              'aria-labelledby': labelId,
-                            }}
-                          />
-                        </TableCell>
-                        <TableCell
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                          align='center'
+      {rows.length !== 0 ? (
+        <Paper sx={{ width: '100%', mb: 2, minHeight: '82.5vh' }}>
+          <EnhancedTableToolbar numSelected={selected.length} />
+          <TableContainer>
+            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
+              <EnhancedTableHead
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {visibleRows
+                  ? visibleRows.map((row, index) => {
+                      const isItemSelected = isSelected(row.id);
+                      const labelId = `enhanced-table-checkbox-${index}`;
+
+                      return (
+                        <TableRow
+                          hover
+                          onClick={(event) => handleClick(event, row.id)}
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={row.id}
+                          selected={isItemSelected}
+                          sx={{ cursor: 'pointer' }}
                         >
-                          {row.id}
-                        </TableCell>
-                        <TableCell align="center">{row.name}</TableCell>
-                        <TableCell align="center">{row.presentation}</TableCell>
-                        <TableCell align="center">{row.costPerGram}</TableCell>
-                        <TableCell align="center">{row.supplier}</TableCell>
-                        <TableCell align="center">{row.performance}</TableCell>
-                        <TableCell align="center">{row.performancePercentage}</TableCell>
-                        <TableCell align="center">{row.mermado}</TableCell>
-                        <TableCell align="center">{row.productMultiplyByTwo}</TableCell>
-                      </TableRow>
-                    );
-                  })
-                : null}
-              {paddingHeight > 0 && (
-                <TableRow
-                  style={{
-                    height: paddingHeight,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
-      <Footer/>
+                          <TableCell padding="checkbox">
+                            <Checkbox
+                              color="primary"
+                              checked={isItemSelected}
+                              inputProps={{
+                                'aria-labelledby': labelId
+                              }}
+                            />
+                          </TableCell>
+                          <TableCell component="th" id={labelId} scope="row" padding="none" align="center">
+                            {row.id}
+                          </TableCell>
+                          <TableCell align="center">{row.name}</TableCell>
+                          <TableCell align="center">{row.presentation}</TableCell>
+                          <TableCell align="center">{row.costPerGram}</TableCell>
+                          <TableCell align="center">{row.supplier}</TableCell>
+                          <TableCell align="center">{row.performance}</TableCell>
+                          <TableCell align="center">{row.performancePercentage}</TableCell>
+                          <TableCell align="center">{row.mermado}</TableCell>
+                          <TableCell align="center">{row.productMultiplyByTwo}</TableCell>
+                        </TableRow>
+                      );
+                    })
+                  : null}
+                {paddingHeight > 0 && (
+                  <TableRow style={{ height: paddingHeight }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+      ): (
+        <div>Cargando...</div>
+      )}
+
+      <FormControlLabel control={<Switch checked={dense} onChange={handleChangeDense} />} label="Dense padding" />
+      <Footer />
     </Box>
   );
 }
