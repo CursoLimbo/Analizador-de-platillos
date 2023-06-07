@@ -21,6 +21,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { useGetAllIngredients } from '@/hooks/services/Ingredients';
+import { NavBar } from '@/components/NavBar';
+import { Footer } from '@/components/Footer';
+
 
 interface Ingredient {
   supplier : string,
@@ -90,65 +93,45 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 }
 
 interface HeadCell {
-  disablePadding: boolean;
   id: keyof Ingredient;
   label: string;
-  numeric: boolean;
 }
 
 const headCells: readonly HeadCell[] = [
   {
     id: 'id',
-    numeric: false,
-    disablePadding: true,
     label: 'Id',
   },
   {
     id: 'name',
-    numeric: false,
-    disablePadding: true,
     label: 'Nombre',
   },
   {
     id: 'presentation',
-    numeric: true,
-    disablePadding: false,
     label: 'Presentación',
   },
   {
     id: 'costPerGram',
-    numeric: true,
-    disablePadding: false,
     label: 'Costo por gramo',
   },
   {
     id: 'supplier',
-    numeric: false,
-    disablePadding: false,
     label: 'Distribuidor',
   },
   {
     id: 'performance',
-    numeric: true,
-    disablePadding: false,
     label: 'Rendimiento',
   },
   {
     id: 'performancePercentage',
-    numeric: true,
-    disablePadding: false,
     label: 'Rendimiento %',
   },
   {
     id: 'mermado',
-    numeric: true,
-    disablePadding: false,
     label: 'Precio Mermado',
   },
   {
     id: 'productMultiplyByTwo',
-    numeric: true,
-    disablePadding: false,
     label: 'Producto X2',
   },
 ];
@@ -192,7 +175,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           <TableCell
             key={headCell.id}
             align='center'
-            padding={headCell.disablePadding ? 'none' : 'normal'}
+            padding='normal'
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -244,7 +227,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
       ) : (
         <Typography
           sx={{ flex: '1 1 100%' }}
-          variant="h6"
+          variant="h2"
           id="tableTitle"
           component="div"
         >
@@ -388,8 +371,9 @@ export default function Ingredients() {
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+    <Box sx={{ width: '100%'}}>
+      <NavBar isHome={false}/>
+      <Paper sx={{ width: '100%', mb: 2,minHeight: '82.5vh' }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
@@ -436,6 +420,7 @@ export default function Ingredients() {
                           id={labelId}
                           scope="row"
                           padding="none"
+                          align='center'
                         >
                           {row.id}
                         </TableCell>
@@ -477,6 +462,7 @@ export default function Ingredients() {
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
+      <Footer/>
     </Box>
   );
 }
