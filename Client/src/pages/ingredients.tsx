@@ -19,11 +19,13 @@ import Tooltip from '@mui/material/Tooltip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { useGetAllIngredients } from '@/hooks/services/Ingredients';
 import { NavBar } from '@/components/NavBar';
 import { Footer } from '@/components/Footer';
+import ingredientsStyle from '@/styles/ingredients.module.css'
 
 
 interface Ingredient {
@@ -53,9 +55,9 @@ const CreateData = (): Ingredient[] => {
   
   if (!dataLoaded) {
     console.log('datos no cargados')
-    return []; // Mostrar un estado de carga o un mensaje mientras se obtienen los datos
+    return []; 
   }
-  
+
   return rows;
 };
 
@@ -235,20 +237,29 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: '1 1 100%',marginBottom: '2%' }}
           variant="h2"
           id="tableTitle"
           component="div"
         >
-          Ingredientes
+          <div className={ingredientsStyle.tableTitle}>Ingredientes</div>
+          
         </Typography>
       )}
       {numSelected > 0 ? (
+        <>
+        <Tooltip title="Edit">
+          <IconButton>
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
         <Tooltip title="Delete">
           <IconButton>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
+        </>
+        
       ) : (
         <Tooltip title="Filter list">
           <IconButton>
@@ -280,7 +291,7 @@ export default function Ingredients() {
     );
 
     setVisibleRows(rowsOnMount);
-  }, []);
+  }, [rows]);
 
   const handleRequestSort = React.useCallback(
     (event: React.MouseEvent<unknown>, newOrderBy: keyof Ingredient) => {
