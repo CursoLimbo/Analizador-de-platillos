@@ -20,7 +20,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { visuallyHidden } from '@mui/utils';
 import { useGetAllIngredients } from '@/hooks/services/Ingredients';
 import { NavBar } from '@/components/NavBar';
@@ -170,7 +170,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
   return (
     <TableHead>
-      <TableRow>
+      <TableRow className={ingredientsStyle.tableHead}>
         <TableCell padding="checkbox">
           <Checkbox
             color="primary"
@@ -242,28 +242,30 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           id="tableTitle"
           component="div"
         >
-          <div className={ingredientsStyle.tableTitle}>Ingredientes</div>
+          <h1 className={ingredientsStyle.tableTitle}>Ingredientes</h1>
           
         </Typography>
       )}
       {numSelected > 0 ? (
         <>
-        <Tooltip title="Edit">
+        {numSelected ===1 && (      
+        <Tooltip title="Editar">
           <IconButton>
-            <EditIcon />
+            <EditIcon fontSize='large'/>
           </IconButton>
-        </Tooltip>
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
+        </Tooltip>)}
+        
+        <Tooltip title="Eliminar">
+        <IconButton>
+          <DeleteIcon fontSize='large'/>
+        </IconButton>
         </Tooltip>
         </>
         
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
+        <Tooltip title="Crear">
+          <IconButton href='ingredients-register'>
+            <AddCircleIcon fontSize='large'  />
           </IconButton>
         </Tooltip>
       )}
@@ -384,11 +386,11 @@ export default function Ingredients() {
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%'  }}>
       <NavBar isHome={false} />
 
       {rows.length !== 0 ? (
-        <Paper sx={{ width: '100%', mb: 2, minHeight: '82.5vh' }}>
+        <Paper sx={{ width: '100%', mb: 2, minHeight: '80vh' }}>
           <EnhancedTableToolbar numSelected={selected.length} />
           <TableContainer>
             <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
@@ -415,7 +417,8 @@ export default function Ingredients() {
                           tabIndex={-1}
                           key={row.id}
                           selected={isItemSelected}
-                          sx={{ cursor: 'pointer' }}
+                          sx={{ cursor: 'pointer'}}
+                          className={ingredientsStyle.tableRow}
                         >
                           <TableCell padding="checkbox">
                             <Checkbox
