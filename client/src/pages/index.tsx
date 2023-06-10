@@ -26,7 +26,7 @@ const {welcomeFont, titleStyle} = Fonts;
                                 srcSet={`${module.img}?w=330&h=330&fit=crop&auto=format&dpr=2 2x`}
 
                             />
-                            <AppButton>{module.buttonName}</AppButton>
+                            <AppButton href={module.ref}>{module.buttonName}</AppButton>
                         </ImageListItem>
                     ))}
                 </ImageList>
