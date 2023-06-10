@@ -25,6 +25,7 @@ import { visuallyHidden } from '@mui/utils';
 import { useGetAllIngredients } from '@/hooks/services/Ingredients';
 import { NavBar } from '@/components/NavBar';
 import { Footer } from '@/components/Footer';
+import Search from "@/components/SearchBar";
 import ingredientsStyle from '@/styles/ingredients.module.css'
 
 
@@ -242,8 +243,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           id="tableTitle"
           component="div"
         >
-          <h1 className={ingredientsStyle.tableTitle}>Ingredientes</h1>
-          
+          <Search/>
         </Typography>
       )}
       {numSelected > 0 ? (
@@ -388,7 +388,7 @@ export default function Ingredients() {
   return (
     <Box sx={{ width: '100%'  }}>
       <NavBar isHome={false} />
-
+      <h1 className={ingredientsStyle.tableTitle}>Ingredientes</h1>
       {rows.length !== 0 ? (
         <Paper sx={{ width: '100%', mb: 2, minHeight: '80vh' }}>
           <EnhancedTableToolbar numSelected={selected.length} />
