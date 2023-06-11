@@ -1,11 +1,13 @@
 export const AppModules = [
     {
         img: "/ingredients.jpg",
-        buttonName: "Ingredientes"
+        buttonName: "Ingredientes",
+        ref: 'ingredients'
     },
     {
         img: "/clients.jpg",
-        buttonName: "Clientes"
+        buttonName: "Clientes",
+        ref: ''
     },
     {
         img: "/suppliers.jpg",
@@ -13,18 +15,22 @@ export const AppModules = [
     },
     {
         img: "/quotations.jpg",
-        buttonName: "Cotizaciones"
+        buttonName: "Cotizaciones",
+        ref: ''
     },
     {
         img: "/recipes.jpg",
-        buttonName: "Recetas"
+        buttonName: "Recetas",
+        ref: ''
     },
     {
         img: "/catalogues.jpg",
-        buttonName: "catalogos"
+        buttonName: "catalogos",
+        ref: ''
     },
     {
         img: "/discounts.jpg",
-        buttonName: "Descuentos"
+        buttonName: "Descuentos",
+        ref: ''
     }
 ]

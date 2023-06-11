@@ -116,7 +116,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
     <div className={ingredientsRegisterStyles.box}>
       <NavBar isHome={false} />
       <h1 className={ingredientsRegisterStyles.title}>Registrar ingrediente</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className={ingredientsRegisterStyles.formData} onSubmit={handleSubmit(onSubmit)}>
         <Stack
           className={ingredientsRegisterStyles.RowContainer}
           direction={"row"}
