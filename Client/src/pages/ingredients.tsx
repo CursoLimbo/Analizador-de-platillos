@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -25,8 +25,8 @@ import { visuallyHidden } from '@mui/utils';
 import { useGetAllIngredients } from '@/hooks/services/Ingredients';
 import { NavBar } from '@/components/NavBar';
 import { Footer } from '@/components/Footer';
-import Search from "@/components/SearchBar";
 import ingredientsStyle from '@/styles/ingredients.module.css'
+import { TextField,Stack } from '@mui/material';
 
 
 interface Ingredient {
@@ -48,21 +48,30 @@ const CreateData = (): Ingredient[] => {
   
   useEffect(() => {
     if (rowsData.data) {
-      console.log('datos cargados')
       setRows(rowsData.data.GetAllIngredients.slice());
       setDataLoaded(true);
     }
   }, [rowsData]);
   
   if (!dataLoaded) {
-    console.log('datos no cargados')
+
     return []; 
   }
 
   return rows;
 };
 
+const FilteredDataComponent = ({ data ,filter }: { data: Ingredient[]; filter: string }) => {
+  const filteredData = useMemo(() => {
+    if (filter === '') {
+      return data;
+    } else {
+      return data.filter(row => row.name.toLowerCase().includes(filter.toLowerCase()));
+    }
+  }, [data, filter]);
 
+  return filteredData;
+}
 
 
 
@@ -215,7 +224,6 @@ interface EnhancedTableToolbarProps {
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
   const { numSelected } = props;
-
   return (
     <Toolbar
       sx={{
@@ -243,7 +251,6 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           id="tableTitle"
           component="div"
         >
-          <Search/>
         </Typography>
       )}
       {numSelected > 0 ? (
@@ -264,7 +271,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         
       ) : (
         <Tooltip title="Crear">
-          <IconButton href='ingredients-register'>
+          <IconButton href='Ingredients-Register'>
             <AddCircleIcon fontSize='large'  />
           </IconButton>
         </Tooltip>
@@ -273,8 +280,12 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
   );
 }
 
-export default function Ingredients() {
-  const rows = CreateData();
+const Ingredients:React.FunctionComponent =() =>  {
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    setSearchValue(event.target.value);
+  };
 
   const [order, setOrder] = React.useState<Order>(DEFAULT_ORDER);
   const [orderBy, setOrderBy] = React.useState<keyof Ingredient>(DEFAULT_ORDER_BY);
@@ -284,6 +295,8 @@ export default function Ingredients() {
   const [visibleRows, setVisibleRows] = React.useState<Ingredient[] | null>(null);
   const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE);
   const [paddingHeight, setPaddingHeight] = React.useState(0);
+  const data= CreateData();
+  const rows = FilteredDataComponent({ data: data, filter: searchValue });
 
   React.useEffect(() => {
     let rowsOnMount = stableSort(rows, getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY));
@@ -291,7 +304,7 @@ export default function Ingredients() {
       0 * DEFAULT_ROWS_PER_PAGE,
       0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE
     );
-
+ 
     setVisibleRows(rowsOnMount);
   }, [rows]);
 
@@ -309,7 +322,7 @@ export default function Ingredients() {
       );
       setVisibleRows(updatedRows);
     },
-    [order, orderBy, page, rowsPerPage]
+    [order, orderBy, page, rowsPerPage,rows]
   );
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -357,7 +370,7 @@ export default function Ingredients() {
       const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
       setPaddingHeight(newPaddingHeight);
     },
-    [order, orderBy, dense, rowsPerPage]
+    [order, orderBy, dense, rowsPerPage,rows]
   );
 
   const handleChangeRowsPerPage = React.useCallback(
@@ -376,7 +389,7 @@ export default function Ingredients() {
 
       setPaddingHeight(0);
     },
-    [order, orderBy]
+    [order, orderBy,rows]
   );
 
   const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -389,6 +402,13 @@ export default function Ingredients() {
     <Box sx={{ width: '100%'  }}>
       <NavBar isHome={false} />
       <h1 className={ingredientsStyle.tableTitle}>Ingredientes</h1>
+      <Stack className={ingredientsStyle.root} >
+        <TextField id="search-bar" 
+          label="Search" variant="outlined"
+          value={searchValue}
+          onChange={handleChange} 
+          className={ingredientsStyle.textfield} />
+        </Stack>
       {rows.length !== 0 ? (
         <Paper sx={{ width: '100%', mb: 2, minHeight: '80vh' }}>
           <EnhancedTableToolbar numSelected={selected.length} />
@@ -471,3 +491,5 @@ export default function Ingredients() {
     </Box>
   );
 }
+
+export default Ingredients;
