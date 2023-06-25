@@ -4,17 +4,17 @@
     font-size: 3.5rem;
     font-family: 'Times New Roman', Times, serif;
 }
-.tableHead{
+/* .tableHead{
     background-color: teal;
-}
+} */
 
-.tableRow:nth-child(odd){
+/* .tableRow:nth-child(odd){
     background-color: rgb(153, 210, 210);
 }
 
 .tableRow:nth-child(even){
     background-color: rgb(194, 234, 234);
-}
+} */
 
 .root{
       width: '100%';

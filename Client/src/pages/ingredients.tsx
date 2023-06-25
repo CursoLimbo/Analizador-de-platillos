@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect, useMemo } from 'react';
+import { redirect } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -27,6 +28,7 @@ import { NavBar } from '@/components/NavBar';
 import { Footer } from '@/components/Footer';
 import ingredientsStyle from '@/styles/ingredients.module.css'
 import { TextField,Stack } from '@mui/material';
+
 
 
 interface Ingredient {
@@ -220,10 +222,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
+  handleEditClick: () => void;
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-  const { numSelected } = props;
+  const { numSelected,handleEditClick } = props;
   return (
     <Toolbar
       sx={{
@@ -257,7 +260,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         <>
         {numSelected ===1 && (      
         <Tooltip title="Editar">
-          <IconButton>
+          <IconButton href='Ingredient-Update'>
             <EditIcon fontSize='large'/>
           </IconButton>
         </Tooltip>)}
@@ -279,17 +282,18 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     </Toolbar>
   );
 }
-
+///////////////////////////////////////////////////////////////////////////////
 const Ingredients:React.FunctionComponent =() =>  {
   const [searchValue, setSearchValue] = useState('');
 
   const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setSearchValue(event.target.value);
   };
-
+  
   const [order, setOrder] = React.useState<Order>(DEFAULT_ORDER);
   const [orderBy, setOrderBy] = React.useState<keyof Ingredient>(DEFAULT_ORDER_BY);
   const [selected, setSelected] = React.useState<readonly string[]>([]);
+  const [selectedId, setSelectedId] = useState<string>('');
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [visibleRows, setVisibleRows] = React.useState<Ingredient[] | null>(null);
@@ -335,7 +339,8 @@ const Ingredients:React.FunctionComponent =() =>  {
   };
 
   const handleClick = (event: React.MouseEvent<unknown>, id: string) => {
-    const selectedIndex = selected.indexOf(id);
+    const selectedIndex = selected.indexOf(id);    
+    console.log('selected')
     let newSelected: readonly string[] = [];
 
     if (selectedIndex === -1) {
@@ -350,9 +355,16 @@ const Ingredients:React.FunctionComponent =() =>  {
         selected.slice(selectedIndex + 1)
       );
     }
-
+    setSelectedId(id);
+    console.log(selectedId);
     setSelected(newSelected);
+
   };
+
+  const handleEditClick = () => {
+    console.log(selectedId+'edit');
+    redirect(`Ingredient-Update/:${selectedId}`);
+  }
 
   const handleChangePage = React.useCallback(
     (event: unknown, newPage: number) => {
@@ -411,7 +423,7 @@ const Ingredients:React.FunctionComponent =() =>  {
         </Stack>
       {rows.length !== 0 ? (
         <Paper sx={{ width: '100%', mb: 2, minHeight: '80vh' }}>
-          <EnhancedTableToolbar numSelected={selected.length} />
+          <EnhancedTableToolbar numSelected={selected.length} handleEditClick={handleEditClick}/>
           <TableContainer>
             <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
               <EnhancedTableHead

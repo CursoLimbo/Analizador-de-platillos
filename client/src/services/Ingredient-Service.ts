@@ -1,9 +1,17 @@
 import { gql } from "apollo-boost";
 
-export const getIngredientById = `
+export const getIngredientById = gql`
   query GetIngredientById($id: String!) {
     getIngredient(id: $id) {
+      supplier
+      productMultiplyByTwo
+      presentation
+      performancePercentage
+      performance
+      name
+      mermado
       id
+      costPerGram
     }
   }
 `;
@@ -39,7 +47,7 @@ export const createIngredientMutation = gql`
   }
 `;
 
-export const updateIngredientMutation = `
+export const updateIngredientMutation = gql`
   mutation UpdateIngredient($updateIngredient: IngredientType!) {
     updateIngredient(updateIngredient: $updateIngredient) {
       id
