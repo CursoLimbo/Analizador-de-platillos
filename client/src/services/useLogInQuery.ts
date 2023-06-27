@@ -30,8 +30,6 @@ export const useLogInQuery = (onCompleted: (data: any) => void, onError: (messag
 
 
     const login = (password: string, email: string) => {
-        removeAuthToken();
-
         return query({
             variables: {
                 password,

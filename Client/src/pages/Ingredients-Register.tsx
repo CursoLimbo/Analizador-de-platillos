@@ -102,11 +102,10 @@ const IngredientsRegister: React.FunctionComponent = () => {
   
     mutate({ variables: { newIngredient: updatedFormData } })
       .then((response) => {
-        console.log(response);
+
         alert('Ingrediente registrado exitosamente')
       })
       .catch((error) => {
-        console.log(error);
         alert('Ingrediente no registrado')
       });
   };

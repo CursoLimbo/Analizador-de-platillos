@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React from "react";
 import {Stack} from "@mui/material";
 import {Fonts} from "@/styles/fonts";
 import style from "@/styles/informationCard.module.css"

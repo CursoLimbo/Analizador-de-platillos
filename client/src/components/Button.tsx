@@ -4,7 +4,7 @@ import {Button, ButtonProps, styled} from "@mui/material";
 
 
 export const AppButton = styled(Button)<ButtonProps>(({ theme, type }) => {
-    console.log("ASB", type)
+
     return {
         type: type,
         color: theme.palette.getContrastText(teal[500]),

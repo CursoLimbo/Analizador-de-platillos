@@ -1,6 +1,5 @@
-import React, {ReactNode, useContext, useEffect} from "react";
+import React, {ReactNode, useEffect} from "react";
 import {useAuthToken} from "@/hooks/auth/useAuthToken";
-import {ManagerContext, ManagerContextState} from "@/contexts/managerContext";
 import {useRouter} from "next/navigation";
 
 interface AuthGateProps {
@@ -9,7 +8,6 @@ interface AuthGateProps {
 
 export const AuthGate: React.FunctionComponent<AuthGateProps> = (props) => {
     const [authToken] = useAuthToken()
-    const context = useContext<ManagerContextState>(ManagerContext);
     const router = useRouter();
 
     useEffect(() => {
@@ -18,5 +16,5 @@ export const AuthGate: React.FunctionComponent<AuthGateProps> = (props) => {
         }
     }, [authToken])
 
-    return <> {props.children} </> //renderice
+    return <> {props.children} </>
 };

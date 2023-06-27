@@ -21,7 +21,7 @@ interface updateCardProps {
     phone: string,
     photo: string,
     whatsapp: string,
-    updateInformation: (data) => void
+    updateInformation: (data: any) => void
 }
 
 
@@ -32,11 +32,10 @@ const Updatecard: React.FC<updateCardProps> = (props) => {
     const {errors} = formState
     const [show, setShow] = useState(false);
 
-    const formSubmitManager = (data) => {
-       updateInformation(data);
+    const formSubmitManager = (data: any) => {
+        updateInformation(data);
         setShow(true);
     }
-
 
     return<>
         <Stack className={style.info} spacing={5}>

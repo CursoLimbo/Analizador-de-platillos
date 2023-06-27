@@ -31,9 +31,12 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
     setAnchorElUser(null);
   };
 
-  const handleOpenInformation = (isGoingToUpdate: boolean) => {
+  const handleOpenPerfil = () => {
+    window.location.href = `/perfil`
+  };
 
-    router.push(`/information?edit=${isGoingToUpdate}`);
+  const handleOpenSettings = () => {
+    window.location.href = `/settings-profile`
   };
 
   const handleGoBack = () => {
@@ -93,8 +96,8 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuOption type={"Perfil"} action={() => handleOpenInformation(false)}/>
-              <MenuOption type={"Configuraciones"} action={() => handleOpenInformation(true)}/>
+              <MenuOption type={"Perfil"} action={() => handleOpenPerfil()}/>
+              <MenuOption type={"Configuraciones"} action={() => handleOpenSettings()}/>
             </Menu>
           </Box>
         </Toolbar>

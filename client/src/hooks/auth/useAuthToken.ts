@@ -4,20 +4,20 @@ import { useCookies } from "react-cookie";
 const TOKEN_NAME = "authToken";
 
 export const useAuthToken = () => {
-    const [cookies, setCookie, removeCookie] = useCookies([TOKEN_NAME]);
+    const [cookies, setCookie] = useCookies();
     const setAuthToken = (authToken:string) => setCookie(TOKEN_NAME, authToken);
-    const removeAuthToken = () => removeCookie(TOKEN_NAME);
-    return [cookies[TOKEN_NAME], setAuthToken, removeAuthToken];
+
+    return [cookies[TOKEN_NAME], setAuthToken];
 };
 
 
 export const useLogout = () => {
-    const [, , removeAuthToken] = useAuthToken();
+    const [, , removeCookie] = useCookies([TOKEN_NAME]);
     const apolloClient = useApolloClient();
 
     const logout = async () => {
         await apolloClient.clearStore(); // we remove all information in the store
-        removeAuthToken();
+        removeCookie(TOKEN_NAME);
     };
 
     return logout;
