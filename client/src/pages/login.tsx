@@ -1,31 +1,25 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import "../styles/login.module.css"
 import {Stack, TextField} from "@mui/material";
 import {AppButton} from "@/components/Button";
 import {useLogInQuery} from "@/services/useLogInQuery";
-import {ManagerContext, ManagerContextState} from "@/contexts/managerContext";
+
 import {useRouter} from "next/navigation";
 import styles from '../styles/login.module.css'
 
 const Login: React.FunctionComponent = ()=> {
-    const context = useContext<ManagerContextState>(ManagerContext);
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
     const router = useRouter();
 
-    const login = useLogInQuery((data) => {
-        if(context.setId) {
-            context.setId(data.getManagerByEmailAndPassword.id);
-            router.push("/");
-
-        }
+    const login = useLogInQuery(() => {
+        router.push("/");
     }, (error) => {
         alert(error)
     });
 
 
     return <Stack direction={"row"}>
-
         <div className={styles.logInBox}>
             <Stack className={styles.txt} spacing={5}>
                 <TextField id="email"

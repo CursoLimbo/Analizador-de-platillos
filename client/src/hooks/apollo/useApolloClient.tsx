@@ -8,8 +8,7 @@ const httpLink = new HttpLink({ uri: "http://localhost:4000/graphql" });
 
 const authMiddleware = (authToken: string) =>
     new ApolloLink((operation, forward) => {
-
-        if (authToken) {//agregando token al header
+        if (authToken) {
             operation.setContext({
                 headers: {
                     authorization: `Bearer ${authToken}`,
@@ -24,6 +23,7 @@ const cache = new InMemoryCache({});
 
 export const useAppApolloClient = () => {
     const [authToken] = useAuthToken();
+    console.log("SETTING UP APOLLO CLIENT", authToken)
 
     return new ApolloClient({
         link: authMiddleware(authToken).concat(httpLink),

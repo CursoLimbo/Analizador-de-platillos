@@ -54,7 +54,6 @@ const CreateData = (): Ingredient[] => {
   }, [rowsData]);
   
   if (!dataLoaded) {
-
     return []; 
   }
 
