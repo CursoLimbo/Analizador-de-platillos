@@ -23,10 +23,10 @@ const cache = new InMemoryCache({});
 
 export const useAppApolloClient = () => {
     const [authToken] = useAuthToken();
-    console.log("SETTING UP APOLLO CLIENT", authToken)
 
     return new ApolloClient({
         link: authMiddleware(authToken).concat(httpLink),
         cache
     });
 };
+

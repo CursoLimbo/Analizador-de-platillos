@@ -1,12 +1,11 @@
-import {useGetManagerQuery, useUpdateManagerMutation} from "@/hooks/services/manager";
-import {useGetCompanyQuery, useUpdateCompanyMutation} from "@/hooks/services/company";
-import {AuthGate} from "@/core/AuthGate";
-import {NavBar} from "@/components/NavBar";
+import {useGetManagerQuery, useUpdateManagerMutation} from "../hooks/services/manager";
+import {useGetCompanyQuery, useUpdateCompanyMutation} from "../hooks/services/company";
+import {AuthGate} from "../core/AuthGate";
 import {Stack} from "@mui/material";
 import profileStyles from "@/styles/profile.module.css";
 import styles from "@/styles/login.module.css";
 import React from "react";
-import Updatecard from "@/components/Updatecard";
+import Updatecard from "../components/Updatecard";
 
 const SettingsProfile : React.FC = () => {
     const managerQuery = useGetManagerQuery();
@@ -46,7 +45,6 @@ const SettingsProfile : React.FC = () => {
 
     return<>
         <AuthGate>
-            <NavBar isHome={false}></NavBar>
             <Stack direction={"row"}>
                 <div className={profileStyles.infoBox}>
                     <Updatecard type="personal"

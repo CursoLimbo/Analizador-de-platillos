@@ -9,9 +9,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
-import {useLogout} from "@/hooks/auth/useAuthToken";
-import {useRouter} from "next/navigation";
-import {MenuOption} from "@/components/MenuItem";
+import {useAuthToken, useLogout} from "../hooks/auth/useAuthToken";
+import {MenuOption} from "./MenuItem";
+import {useRouter} from "next/router";
 
 interface NavBarProps {
   isHome: boolean
@@ -22,6 +22,7 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const logOut = useLogout();
   const router = useRouter();
+  const [authToken] = useAuthToken();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);

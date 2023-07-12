@@ -1,6 +1,6 @@
 import {gql} from "apollo-boost";
-import {useAuthToken} from "@/hooks/auth/useAuthToken";
-import {ApolloError, useLazyQuery} from "@apollo/react-hooks";
+import {useAuthToken} from "../hooks/auth/useAuthToken";
+import {ApolloError, useLazyQuery} from "@apollo/client";
 
 const logInQuery = gql `
         query GetManagerByEmailAndPassword($password: String!, $email: String!){

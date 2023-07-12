@@ -11,3 +11,11 @@
     padding-top: 16%;
 }
 
+.titulo {
+    font-size: 100px;
+    display:flex;
+    justify-content: center;
+    margin-top: 5%;
+    font-family: cursive;
+}
+

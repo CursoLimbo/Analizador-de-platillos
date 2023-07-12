@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Footer } from "@/components/Footer";
-import { NavBar } from "@/components/NavBar";
+import { Footer } from "../components/Footer";
 import ingredientsRegisterStyles from "@/styles/ingredients-register.module.css";
 import {
   Stack,
@@ -10,11 +9,11 @@ import {
   InputLabel,
   FormHelperText,
 } from "@mui/material";
-import { AppButton } from "@/components/Button";
+import { AppButton } from "../components/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useForm } from "react-hook-form";
-import { useGetAllSupplierQuery } from "@/hooks/services/Supplier";
-import { useCreateIngredientMutation } from "@/hooks/services/Ingredients";
+import { useGetAllSupplierQuery } from "../hooks/services/Supplier";
+import { useCreateIngredientMutation } from "../hooks/services/Ingredients";
 
 type IngredientFormData = {
   name: string;
@@ -113,7 +112,6 @@ const IngredientsRegister: React.FunctionComponent = () => {
 
   return (
     <div className={ingredientsRegisterStyles.box}>
-      <NavBar isHome={false} />
       <h1 className={ingredientsRegisterStyles.title}>Registrar ingrediente</h1>
       <form className={ingredientsRegisterStyles.formData} onSubmit={handleSubmit(onSubmit)}>
         <Stack

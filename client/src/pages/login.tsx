@@ -1,11 +1,10 @@
 import React, {useState} from "react";
 import "../styles/login.module.css"
 import {Stack, TextField} from "@mui/material";
-import {AppButton} from "@/components/Button";
-import {useLogInQuery} from "@/services/useLogInQuery";
-
-import {useRouter} from "next/navigation";
+import {AppButton} from "../components/Button";
+import {useLogInQuery} from "../services/useLogInQuery";
 import styles from '../styles/login.module.css'
+import {useRouter} from "next/router";
 
 const Login: React.FunctionComponent = ()=> {
     const [email, setEmail] = useState<string>();

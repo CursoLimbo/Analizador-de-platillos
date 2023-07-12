@@ -9,7 +9,6 @@ interface MenuItemProps  {
 
 
 export const MenuOption : React.FC<MenuItemProps> = (props) => {
-
     return <MenuItem onClick={props.action}>
         <Typography align="center">{props.type}</Typography>
     </MenuItem>
