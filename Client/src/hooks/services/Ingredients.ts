@@ -1,5 +1,6 @@
 import {useMutation, useQuery} from "@apollo/react-hooks";
-import { createIngredientMutation,getAllIngredients } from "@/services/Ingredient-Service";
+import {createIngredientMutation, getAllIngredients} from "../../services/Ingredient-Service";
+
 
 
 export const useCreateIngredientMutation = () => {

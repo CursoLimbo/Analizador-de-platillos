@@ -399,7 +399,7 @@ const Ingredients:React.FunctionComponent =() =>  {
 
   return (
     <Box sx={{ width: '100%'  }}>
-      <NavBar isHome={false} />
+
       <h1 className={ingredientsStyle.tableTitle}>Ingredientes</h1>
       <Stack className={ingredientsStyle.root} >
         <TextField id="search-bar" 
@@ -486,7 +486,7 @@ const Ingredients:React.FunctionComponent =() =>  {
       )}
 
       <FormControlLabel control={<Switch checked={dense} onChange={handleChangeDense} />} label="Dense padding" />
-      <Footer />
+
     </Box>
   );
 }

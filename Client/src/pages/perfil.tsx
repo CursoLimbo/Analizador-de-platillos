@@ -1,16 +1,15 @@
 import React from "react";
-import {NavBar} from "@/components/NavBar";
 import {
     useGetManagerQuery,
     useUpdatePhotoManagerMutation
-} from "@/hooks/services/manager";
+} from "../hooks/services/manager";
 
 import {Stack} from "@mui/material";
 import styles from "@/styles/login.module.css";
 import profileStyles from "@/styles/profile.module.css";
-import {useGetCompanyQuery, useUpdatePhotoCompanyMutation} from "@/hooks/services/company";
-import {AuthGate} from "@/core/AuthGate";
-import InformationCard from "@/components/InformationCard";
+import {useGetCompanyQuery, useUpdatePhotoCompanyMutation} from "../hooks/services/company";
+import {AuthGate} from "../core/AuthGate";
+import InformationCard from "../components/InformationCard";
 
  const Perfil : React.FC = () => {
      const managerQuery = useGetManagerQuery();
@@ -19,7 +18,6 @@ import InformationCard from "@/components/InformationCard";
      const companyData = companyQuery.data;
      const [updatePhotoManagerMutation] =  useUpdatePhotoManagerMutation();
      const [updatePhotoCompanyMutation] = useUpdatePhotoCompanyMutation();
-
 
      const onImageUploadHandlerManager = (publicId: string) => {
          updatePhotoManagerMutation({
@@ -50,7 +48,6 @@ import InformationCard from "@/components/InformationCard";
 
      return <>
          <AuthGate>
-         <NavBar isHome={false}></NavBar>
          <Stack direction={"row"}>
              <div className={profileStyles.infoBox}>
                  <InformationCard type="personal"

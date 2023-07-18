@@ -1,20 +1,17 @@
 import React from "react";
 import styles from "../styles/index.module.css";
 import {ImageList, ImageListItem} from "@mui/material";
-import { NavBar } from "@/components/NavBar";
-import { AppButton } from "@/components/Button";
-import {AuthGate} from "@/core/AuthGate";
-import {AppModules} from "@/core/AppModules";
-import {Fonts} from "@/styles/fonts";
+import { AppButton } from "../components/Button";
+import {AuthGate} from "../core/AuthGate";
+import {AppModules} from "../core/AppModules";
+
 
 
 const Home = () => {
-const {welcomeFont, titleStyle} = Fonts;
 
     return <AuthGate>
-        <NavBar isHome={true}></NavBar>
         <div className={styles.contMain}>
-        <span className={welcomeFont.className} style={titleStyle}>
+        <span className={styles.titulo}>
               Bienvenida Lu
           </span>
             <div className={styles.objects}>

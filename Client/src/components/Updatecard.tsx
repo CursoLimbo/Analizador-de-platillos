@@ -10,7 +10,7 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import CardContent from "@mui/material/CardContent";
 import TextField from '@mui/material/TextField';
-import {AppButton} from "@/components/Button";
+import {AppButton} from "./Button";
 import {useForm} from "react-hook-form";
 
 interface updateCardProps {
