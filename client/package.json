@@ -19,6 +19,7 @@
     "@hookform/resolvers": "^2.9.11",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.7",
+    "@mui/x-data-grid": "^6.10.0",
     "apollo-boost": "^0.4.9",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-link": "^1.2.14",
