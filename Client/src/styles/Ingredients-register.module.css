@@ -21,6 +21,16 @@
 .TextFieldRoot {
   width: 100%;
 }
+.box{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.textfield{
+  width: 100%;
+}
 .btn{
     align-items: center;
     margin-top: 3%;
@@ -44,6 +54,10 @@
 
 .formData{
   min-height: 77vh;
+}
+
+.tableTitle{
+  font-size: 3.5rem;
 }
 
 

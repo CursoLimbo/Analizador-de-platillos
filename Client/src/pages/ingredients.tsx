@@ -2,9 +2,11 @@ import { useState, useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { useGetAllIngredients } from '../hooks/services/Ingredients';
 import TableData from "../components/dataTable";
+import { NavBar } from 'components/NavBar';
 
 interface RowData {
   id: number;
+  name:string;
   [key: string]: string | number | null;
 }
 const tableName:string= 'Ingredientes'
@@ -41,7 +43,7 @@ const Ingredients: React.FunctionComponent = () => {
   return (
     <Box>
       {dataLoaded ? (
-        <TableData rows={rows} columns={columns} tableName={tableName} />
+        <TableData dataRows={rows} columns={columns} tableName={tableName} />
       ) : (
         <div>Loading...</div>
       )}
