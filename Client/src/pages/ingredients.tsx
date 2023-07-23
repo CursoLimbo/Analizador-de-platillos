@@ -1,15 +1,17 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
-import { useGetAllIngredients } from '../hooks/services/Ingredients';
+import { useGetAllIngredients,useDeleteIngredientMutation } from '../hooks/services/Ingredients';
 import TableData from "../components/dataTable";
-import { NavBar } from 'components/NavBar';
 
 interface RowData {
   id: number;
   name:string;
   [key: string]: string | number | null;
 }
-const tableName:string= 'Ingredientes'
+const tableName:string= 'Ingredientes';
+const createObj: string = 'Ingredients-Register';
+const updateObj : string = '';
+const deleteObj = useDeleteIngredientMutation;
 
 const Ingredients: React.FunctionComponent = () => {
   const [rows, setRows] = useState<RowData[]>([]);
@@ -43,7 +45,7 @@ const Ingredients: React.FunctionComponent = () => {
   return (
     <Box>
       {dataLoaded ? (
-        <TableData dataRows={rows} columns={columns} tableName={tableName} />
+        <TableData dataRows={rows} columns={columns} tableName={tableName} urlCreate={createObj} />
       ) : (
         <div>Loading...</div>
       )}

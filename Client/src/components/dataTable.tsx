@@ -18,9 +18,10 @@ interface DataGridProps {
   tableName: string;
   dataRows: RowData[];
   columns: GridColDef[];
+  urlCreate : string;
 }
 
-const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, tableName }) => {
+const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, tableName, urlCreate }) => {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [selectedRow, setSelectedRow] = useState<RowData | null>(null);
   const [filteredRows, setFilteredRows] = useState<RowData[]>(dataRows);
@@ -46,8 +47,9 @@ const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, tableName })
     console.log('Editing selected row:', selectedRow);
   };
 
-  const handleAddRow = () => {
+  const handleAddRow = (url:string) => {
     console.log('Adding a new row');
+    window.location.href = url;
   };
 
   const handleDataFiltered = (filteredData: RowData[]) => {
@@ -76,7 +78,7 @@ const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, tableName })
               </IconButton>
             )}
             {selectedIds.length === 0 && (
-              <IconButton onClick={handleAddRow}>
+              <IconButton onClick={()=>handleAddRow(urlCreate)}>
                 <AddIcon />
               </IconButton>
             )}

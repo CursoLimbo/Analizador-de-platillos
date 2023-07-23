@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Footer } from "../components/Footer";
-import ingredientsRegisterStyles from "@/styles/ingredients-register.module.css";
+import ingredientsRegisterStyles from "../styles/Ingredients-register.module.css";
 import {
   Stack,
   TextField,
@@ -245,7 +245,6 @@ const IngredientsRegister: React.FunctionComponent = () => {
           </AppButton>
         </Stack>
       </form>
-      <Footer />
     </div>
   );
 };

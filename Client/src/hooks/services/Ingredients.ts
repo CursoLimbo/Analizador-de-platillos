@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from "@apollo/react-hooks";
-import {createIngredientMutation, getAllIngredients} from "../../services/Ingredient-Service";
+import {createIngredientMutation, getAllIngredients,updateIngredientMutation,deleteIngredientMutation,getIngredientById} from "../../services/Ingredient-Service";
 
 
 
@@ -7,7 +7,19 @@ export const useCreateIngredientMutation = () => {
     return useMutation(createIngredientMutation)
 } 
 
+export const useUpdateIngredientMutation = () => {
+    return useMutation(updateIngredientMutation)
+} 
+
+export const useDeleteIngredientMutation = () => {
+    return useMutation(deleteIngredientMutation)
+} 
+
 
 export const useGetAllIngredients = () => {
     return useQuery(getAllIngredients)
 } 
+
+export const useGetIngredientById = () => {
+    return useQuery(getIngredientById)
+}

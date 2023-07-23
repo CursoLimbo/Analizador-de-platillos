@@ -1,6 +1,6 @@
 import { gql } from "apollo-boost";
 
-export const getIngredientById = `
+export const getIngredientById = gql`
   query GetIngredientById($id: String!) {
     getIngredient(id: $id) {
       id
@@ -39,7 +39,7 @@ export const createIngredientMutation = gql`
   }
 `;
 
-export const updateIngredientMutation = `
+export const updateIngredientMutation = gql`
   mutation UpdateIngredient($updateIngredient: IngredientType!) {
     updateIngredient(updateIngredient: $updateIngredient) {
       id
@@ -47,7 +47,7 @@ export const updateIngredientMutation = `
   }
 `;
 
-export const deleteIngredientMutation = `
+export const deleteIngredientMutation = gql`
   mutation DeleteIngredient($id: String!) {
     deleteIngredient(id: $id)
   }
