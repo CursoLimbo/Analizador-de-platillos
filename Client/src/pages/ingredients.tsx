@@ -2,14 +2,9 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { useGetAllIngredients, useDeleteIngredientMutation } from '../hooks/services/Ingredients';
 import TableData from '../components/dataTable';
-import { QueryResult } from '@apollo/client/react/types/types';
-import { OperationVariables } from '@apollo/client/core/types';
+import { OperationVariables, QueryResult } from '@apollo/react-hooks';
 
-interface RowData {
-  id: string;
-  name: string;
-  [key: string]: string | number | null;
-}
+
 
 const Ingredients: React.FunctionComponent = () => {
   const [rows, setRows] = useState<RowData[]>([]);
@@ -17,10 +12,8 @@ const Ingredients: React.FunctionComponent = () => {
   const createObj: string = 'Ingredients-Register';
   const deleteIngredientMutationHook = useDeleteIngredientMutation();
   const [deleteIngredient] = deleteIngredientMutationHook;
-
-  const rowsData = useGetAllIngredients()
+  let rowsData:QueryResult<any, OperationVariables>|undefined = useGetAllIngredients();
   const [version, setVersion] = useState(0);
- 
   const tableName: string = 'Ingredientes';
 
   const handleDeleteSelected = (id: string) => {
@@ -35,11 +28,13 @@ const Ingredients: React.FunctionComponent = () => {
     setVersion(version + 1); 
   };
 
+
+
   
 //todo:mejora para renderizar componente
-  useEffect(()=>{
-
-  }),[version]
+  // useEffect(()=>{
+  //   rowsData
+  // }),[version]
 
 
   useEffect(() => {

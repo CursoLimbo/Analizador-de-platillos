@@ -3,11 +3,7 @@ import { TextField, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import ingredientsStyle from '../styles/Ingredients-register.module.css';
 
-interface RowData {
-  id: string;
-  name: string;
-  [key: string]: string | number | null;
-}
+
 
 interface DataFilt {
   rows: RowData[];

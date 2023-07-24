@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-
-import { DataGrid, GridColDef, GridRowSelectionModel, GridCallbackDetails } from '@mui/x-data-grid';
-
+import { DataGrid, GridColDef, GridRowSelectionModel,  } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
@@ -10,11 +8,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import DataFilter from '../components/dataFilter';
 
-interface RowData {
-  id: string;
-  name: string;
-  [key: string]: string | number | null;
-}
 
 interface DataGridProps {
   tableName: string;
@@ -24,14 +17,13 @@ interface DataGridProps {
   handleDelete: Function;
 }
 
-let prevCount = 0;
 
 const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, tableName, urlCreate, handleDelete }) => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedRow, setSelectedRow] = useState<RowData | null>(null);
   const [filteredRows, setFilteredRows] = useState<RowData[]>(dataRows);
 
-  const handleSelectionChange = (rowSelectionModel: GridRowSelectionModel, details: GridCallbackDetails<any>) => {
+  const handleSelectionChange = (rowSelectionModel: GridRowSelectionModel) => {
     const selectedRowIds = rowSelectionModel.map((id) => String(id));
     setSelectedIds(selectedRowIds);
   
