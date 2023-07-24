@@ -48,7 +48,7 @@ export const updateIngredientMutation = gql`
 `;
 
 export const deleteIngredientMutation = gql`
-  mutation DeleteIngredient($id: String!) {
-    deleteIngredient(id: $id)
+  mutation Mutation($deleteIngredientId: String!) {
+    deleteIngredient(id: $deleteIngredientId)
   }
 `;

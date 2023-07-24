@@ -1,26 +1,49 @@
-import { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
-import { useGetAllIngredients,useDeleteIngredientMutation } from '../hooks/services/Ingredients';
-import TableData from "../components/dataTable";
+import { useGetAllIngredients, useDeleteIngredientMutation } from '../hooks/services/Ingredients';
+import TableData from '../components/dataTable';
+import { QueryResult } from '@apollo/client/react/types/types';
+import { OperationVariables } from '@apollo/client/core/types';
 
 interface RowData {
-  id: number;
-  name:string;
+  id: string;
+  name: string;
   [key: string]: string | number | null;
 }
-const tableName:string= 'Ingredientes';
-const createObj: string = 'Ingredients-Register';
-const updateObj : string = '';
-const deleteObj = useDeleteIngredientMutation;
 
 const Ingredients: React.FunctionComponent = () => {
   const [rows, setRows] = useState<RowData[]>([]);
   const [dataLoaded, setDataLoaded] = useState(false);
+  const createObj: string = 'Ingredients-Register';
+  const deleteIngredientMutationHook = useDeleteIngredientMutation();
+  const [deleteIngredient] = deleteIngredientMutationHook;
 
-  const rowsData = useGetAllIngredients();
+  const rowsData = useGetAllIngredients()
+  const [version, setVersion] = useState(0);
+ 
+  const tableName: string = 'Ingredientes';
+
+  const handleDeleteSelected = (id: string) => {
+    deleteIngredient({ variables: { deleteIngredientId: id } })
+      .then((response: any) => {
+        console.log('Ingredient deleted:', response);
+      })
+      .catch((error: any) => {
+        console.error('Error deleting ingredient:', error);
+      });
+
+    setVersion(version + 1); 
+  };
+
+  
+//todo:mejora para renderizar componente
+  useEffect(()=>{
+
+  }),[version]
+
 
   useEffect(() => {
-    if (rowsData.data) {
+    if (rowsData && rowsData.data) {
       setRows(rowsData.data.GetAllIngredients.slice());
       setDataLoaded(true);
     }
@@ -45,7 +68,7 @@ const Ingredients: React.FunctionComponent = () => {
   return (
     <Box>
       {dataLoaded ? (
-        <TableData dataRows={rows} columns={columns} tableName={tableName} urlCreate={createObj} />
+        <TableData dataRows={rows} columns={columns} tableName={tableName} urlCreate={createObj} handleDelete={handleDeleteSelected} />
       ) : (
         <div>Loading...</div>
       )}

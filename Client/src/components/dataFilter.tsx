@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import ingredientsStyle from '../styles/Ingredients-register.module.css';
 
 interface RowData {
-  id: number;
+  id: string;
   name: string;
   [key: string]: string | number | null;
 }
@@ -12,9 +12,10 @@ interface RowData {
 interface DataFilt {
   rows: RowData[];
   onDataFiltered: (filteredData: RowData[]) => void;
+  tableName:string
 }
 
-const DataFilter: React.FC<DataFilt> = ({ rows, onDataFiltered }) => {
+const DataFilter: React.FC<DataFilt> = ({ rows, onDataFiltered,tableName }) => {
   const [searchValue, setSearchValue] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +31,7 @@ const DataFilter: React.FC<DataFilt> = ({ rows, onDataFiltered }) => {
 
   return (
     <Box className={ingredientsStyle.box}>
-    <h1 className={ingredientsStyle.tableTitle}>Ingredientes</h1>
+    <h1 className={ingredientsStyle.tableTitle}>{tableName}</h1>
     <Stack className={ingredientsStyle.root}>
       <TextField
         id="search-bar"
