@@ -1,5 +1,5 @@
 .RowContainer{
-  width: 50%;
+  width: 100%;
   margin: auto;
 }
 .IngredientInputs {
@@ -19,6 +19,16 @@
 }
 
 .TextFieldRoot {
+  width: 100%;
+}
+.box{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.textfield{
   width: 100%;
 }
 .btn{
@@ -44,6 +54,10 @@
 
 .formData{
   min-height: 77vh;
+}
+
+.tableTitle{
+  font-size: 3.5rem;
 }
 
 
