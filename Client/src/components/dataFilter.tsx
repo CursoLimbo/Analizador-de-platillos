@@ -8,10 +8,9 @@ import ingredientsStyle from '../styles/Ingredients-register.module.css';
 interface DataFilt {
   rows: RowData[];
   onDataFiltered: (filteredData: RowData[]) => void;
-  tableName:string
 }
 
-const DataFilter: React.FC<DataFilt> = ({ rows, onDataFiltered,tableName }) => {
+const DataFilter: React.FC<DataFilt> = ({ rows, onDataFiltered }) => {
   const [searchValue, setSearchValue] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +26,6 @@ const DataFilter: React.FC<DataFilt> = ({ rows, onDataFiltered,tableName }) => {
 
   return (
     <Box className={ingredientsStyle.box}>
-    <h1 className={ingredientsStyle.tableTitle}>{tableName}</h1>
     <Stack className={ingredientsStyle.root}>
       <TextField
         id="search-bar"

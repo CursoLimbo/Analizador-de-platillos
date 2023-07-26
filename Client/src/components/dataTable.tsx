@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid, GridColDef, GridRowSelectionModel,  } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import DataFilter from '../components/dataFilter';
 
 
+
 interface DataGridProps {
-  tableName: string;
   dataRows: RowData[];
   columns: GridColDef[];
   urlCreate: string;
-  handleDelete: Function;
+  handleDelete: (id: string) => void;
+  dataVersion: number;
 }
 
-
-const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, tableName, urlCreate, handleDelete }) => {
+const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, urlCreate, handleDelete, dataVersion }) => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedRow, setSelectedRow] = useState<RowData | null>(null);
   const [filteredRows, setFilteredRows] = useState<RowData[]>(dataRows);
@@ -26,7 +25,7 @@ const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, tableName, u
   const handleSelectionChange = (rowSelectionModel: GridRowSelectionModel) => {
     const selectedRowIds = rowSelectionModel.map((id) => String(id));
     setSelectedIds(selectedRowIds);
-  
+
     if (selectedRowIds.length === 1) {
       const selectedRowIndex = filteredRows.findIndex((row) => row.id === selectedRowIds[0]);
       setSelectedRow(filteredRows[selectedRowIndex]);
@@ -34,15 +33,13 @@ const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, tableName, u
       setSelectedRow(null);
     }
   };
-  
 
   const handleDeleteSelected = () => {
     console.log('Deleting selected rows:', selectedIds);
     for (const id of selectedIds) {
-      handleDelete(id)
+      handleDelete(id);
     }
   };
-  
 
   const handleEditSelected = () => {
     console.log('Editing selected row:', selectedRow);
@@ -58,14 +55,16 @@ const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, tableName, u
     setFilteredRows(filteredData);
   };
 
+
+  useEffect(() => {
+    setFilteredRows(dataRows);
+  }, [dataVersion, dataRows]);
+
   return (
     <Box>
-      <DataFilter rows={dataRows} onDataFiltered={handleDataFiltered} tableName={tableName} />
+      <DataFilter rows={dataRows} onDataFiltered={handleDataFiltered}  />
       <Box sx={{ height: '60vh', width: '100%' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-          <Typography variant="h6" component="div">
-            Registros
-          </Typography>
           <Box>
             {selectedIds.length > 0 && (
               <IconButton onClick={handleDeleteSelected}>
@@ -86,6 +85,7 @@ const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, tableName, u
         </Box>
 
         <DataGrid
+          autoPageSize
           rows={filteredRows}
           columns={columns}
           checkboxSelection
@@ -98,8 +98,3 @@ const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, tableName, u
 };
 
 export default DataGridInfo;
-
-
-
-
-
