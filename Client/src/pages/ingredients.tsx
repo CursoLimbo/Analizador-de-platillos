@@ -2,9 +2,10 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { useGetAllIngredients, useDeleteIngredientMutation } from '../hooks/services/Ingredients';
 import TableData from '../components/dataTable';
+
 import { OperationVariables, QueryResult } from '@apollo/react-hooks';
-import Typography from '@mui/material/Typography';
 import ingredientsStyle from '../styles/Ingredients-register.module.css';
+
 
 
 const Ingredients: React.FunctionComponent = () => {
@@ -27,6 +28,11 @@ const Ingredients: React.FunctionComponent = () => {
       });
   };
 
+  const handleUpdateSelected = (id: string) =>{
+    const idUpdate : string = encodeURIComponent(id)
+    window.location.href = `ingredientUpdate/?idUpdate=${idUpdate}`;
+  }
+
   useEffect(() => {
     if (rowsData && rowsData.data) {
       setRows(rowsData.data.GetAllIngredients.slice());
@@ -44,9 +50,9 @@ const Ingredients: React.FunctionComponent = () => {
     if (rows.length > 0) {
       return [
         { field: 'id', headerName: 'ID', width: 250, editable: true },
-        { field: 'name', headerName: 'Nombre', width: 300, editable: true },
+        { field: 'name', headerName: 'Nombre', width: 250, editable: true },
         { field: 'supplier', headerName: 'Proveedor', width: 300, editable: true },
-        { field: 'presentation', headerName: 'Presentaciónn', width: 100, editable: true },
+        { field: 'presentation', headerName: 'Presentaciónn', width: 150, editable: true },
         { field: 'performance', headerName: 'Rendimiento', width: 100, editable: true },
         { field: 'mermado', headerName: 'Mermado', width: 100, editable: true },
         { field: 'performancePercentage', headerName: '% Redimiento', width: 100, editable: true },
@@ -60,7 +66,7 @@ const Ingredients: React.FunctionComponent = () => {
     <Box className={ingredientsStyle.box}>
       <h1 className={ingredientsStyle.tableTitle}>Ingredientes</h1>
       {dataLoaded ? (
-        <TableData dataRows={rows} columns={columns}  urlCreate={createObj} handleDelete={handleDeleteSelected} dataVersion={dataVersion} />
+        <TableData dataRows={rows} columns={columns}  urlCreate={createObj} handleDelete={handleDeleteSelected} handleUpdate={handleUpdateSelected} dataVersion={dataVersion} />
       ) : (
         <div>Loading...</div>
       )}

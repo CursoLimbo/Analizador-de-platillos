@@ -20,6 +20,6 @@ export const useGetAllIngredients = () => {
     return useQuery(getAllIngredients)
 } 
 
-export const useGetIngredientById = () => {
-    return useQuery(getIngredientById)
+export const useGetIngredientById = (id:string) => {
+    return useQuery(getIngredientById, {variables:{"getIngredientId":id}})
 }

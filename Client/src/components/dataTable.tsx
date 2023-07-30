@@ -14,24 +14,18 @@ interface DataGridProps {
   columns: GridColDef[];
   urlCreate: string;
   handleDelete: (id: string) => void;
+  handleUpdate: (id:string) => void
   dataVersion: number;
 }
 
-const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, urlCreate, handleDelete, dataVersion }) => {
+const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, urlCreate, handleDelete,handleUpdate, dataVersion }) => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [selectedRow, setSelectedRow] = useState<RowData | null>(null);
   const [filteredRows, setFilteredRows] = useState<RowData[]>(dataRows);
 
   const handleSelectionChange = (rowSelectionModel: GridRowSelectionModel) => {
     const selectedRowIds = rowSelectionModel.map((id) => String(id));
     setSelectedIds(selectedRowIds);
 
-    if (selectedRowIds.length === 1) {
-      const selectedRowIndex = filteredRows.findIndex((row) => row.id === selectedRowIds[0]);
-      setSelectedRow(filteredRows[selectedRowIndex]);
-    } else {
-      setSelectedRow(null);
-    }
   };
 
   const handleDeleteSelected = () => {
@@ -42,7 +36,9 @@ const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, urlCreate, h
   };
 
   const handleEditSelected = () => {
-    console.log('Editing selected row:', selectedRow);
+    console.log('Deleting selected rows:', selectedIds[0]);
+    handleUpdate(selectedIds[0]);
+
   };
 
   const handleAddRow = (url: string) => {
