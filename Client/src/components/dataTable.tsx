@@ -59,7 +59,7 @@ const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, urlCreate, h
   return (
     <Box>
       <DataFilter rows={dataRows} onDataFiltered={handleDataFiltered}  />
-      <Box sx={{ height: '60vh', width: '100%' }}>
+      <Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Box>
             {selectedIds.length > 0 && (
