@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { useGetAllIngredients, useDeleteIngredientMutation } from '../hooks/services/Ingredients';
 import TableData from '../components/dataTable';
-
+import { useRouter } from 'next/router';
 import { OperationVariables, QueryResult } from '@apollo/react-hooks';
 import ingredientsStyle from '../styles/Ingredients-register.module.css';
 
@@ -16,7 +16,7 @@ const Ingredients: React.FunctionComponent = () => {
   const [deleteIngredient] = deleteIngredientMutationHook;
   let rowsData: QueryResult<any, OperationVariables> = useGetAllIngredients();
   const [dataVersion, setDataVersion] = useState(0);
-
+  const router = useRouter();
   const handleDeleteSelected = (id: string) => {
     deleteIngredient({ variables: { deleteIngredientId: id } })
       .then((response: any) => {
@@ -29,9 +29,7 @@ const Ingredients: React.FunctionComponent = () => {
   };
 
   const handleUpdateSelected = (id: string) =>{
-
-    // const idUpdate : string = encodeURIComponent(id)
-    // window.location.href = `ingredientUpdate/?idUpdate=${idUpdate}`;
+    router.push(`/ingredientUpdate?idUpdate=${encodeURIComponent(id)}`);
   }
 
   useEffect(() => {
