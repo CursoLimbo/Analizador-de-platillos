@@ -7,17 +7,12 @@ import { useRouter } from "next/router";
 import {
   Stack,
   TextField,
-  FormControl,
-  MenuItem,
-  InputLabel,
-  FormHelperText,
-  Container,
+  MenuItem
 } from "@mui/material";
 import ingredientsRegisterStyles from "../styles/Ingredients-register.module.css";
 import { AppButton } from "../components/Button";
 import { useForm } from "react-hook-form";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Ingredients from "./ingredients";
+import { useGetAllSupplierQuery } from "hooks/services/Supplier";
 
 type IngredientFormData = {
   id: string;
@@ -40,17 +35,18 @@ const IngredientUpdate: React.FC = () => {
     setValue,
     watch,
   } = useForm<IngredientFormData>();
+  const [mutate] = useUpdateIngredientMutation();
   const router = useRouter();
   const { idUpdate } = router.query;
   const [id, setId] = useState<string>("");
   const [ingredient, setIngredient] = useState<IngredientFormData | undefined>(
     undefined
   );
+  const [confirmData, setConfirmData] = useState(false);
 
   useEffect(() => {
     if (typeof idUpdate === "string") {
       setId(idUpdate);
-      console.log("soy id: " + idUpdate);
     }
   }, [idUpdate]);
 
@@ -60,11 +56,11 @@ const IngredientUpdate: React.FC = () => {
   useEffect(() => {
     if (ingredientData && !ingredientLoading) {
       setIngredient(ingredientData.getIngredient);
-      console.log("soy data:", ingredientData.getIngredient);
+      setConfirmData(true);
     }
   }, [ingredientData, ingredientLoading]);
-
-  const onSubmit = (data: IngredientFormData) => {};
+  const { data: suppliersData, loading: suppliersLoading } =
+    useGetAllSupplierQuery();
 
   //read form data
   const price = watch("price", 0);
@@ -72,6 +68,7 @@ const IngredientUpdate: React.FC = () => {
   const performance = watch("performance", 0);
   const costPerGram = watch("costPerGram", 0);
   const performancePercentage = watch("performancePercentage", 0);
+  const supplier = watch("supplier", "");
 
   //calc gramPrice
   useEffect(() => {
@@ -85,129 +82,180 @@ const IngredientUpdate: React.FC = () => {
 
   //calc performance percent
   useEffect(() => {
-    if (performance > 0) {
-      const valPerformacePercent = performance / 100;
-      setValue("performancePercentage", valPerformacePercent);
-    } else {
-      setValue("performancePercentage", 0);
-    }
+    const valPerformacePercent = performance / 100;
+    setValue("performancePercentage", valPerformacePercent);
   }, [performance]);
   //calc mermado and productX2
   useEffect(() => {
-    if (costPerGram > 0 && performancePercentage > 0) {
-      const valmermado = Number(
-        (costPerGram * performancePercentage).toFixed(2)
-      );
+    const valmermado = Number((costPerGram * performancePercentage).toFixed(2));
+    setValue("mermado", valmermado);
+    setValue("productMultiplyByTwo", valmermado * 2);
+  }, [performance, costPerGram]);
 
-      setValue("mermado", valmermado);
-      setValue("productMultiplyByTwo", valmermado * 2);
-    } else {
-      setValue("mermado", 0);
-      setValue("productMultiplyByTwo", 0);
-    }
-  }, [performance]);
+  const onSubmit = (data: IngredientFormData) => {
+    const { price, ...formData } = data;
+
+    const updatedFormData: Omit<IngredientFormData, "price"> = {
+      ...formData,
+      presentation: Number(data.presentation),
+      performance: Number(data.performance),
+      costPerGram: Number(data.costPerGram.toString()),
+      performancePercentage: Number(data.performancePercentage.toString()),
+      mermado: Number(data.mermado.toString()),
+      productMultiplyByTwo: Number(data.productMultiplyByTwo.toString()),
+      supplier: data.supplier.toString(),
+      id:id
+    };
+    console.log(updatedFormData)
+    mutate({ variables: { updateIngredient: updatedFormData } })
+      .then((response) => {
+        alert("Ingrediente actualizado exitosamente");
+      })
+      .catch((error) => {
+        console.log(error)
+        alert("Ingrediente no actualizado");
+      });
+  };
 
   return (
     <div className={ingredientsRegisterStyles.box}>
       <h1 className={ingredientsRegisterStyles.title}>
         Actualizar ingrediente
       </h1>
-      <Stack>
-        <form className={ingredientsRegisterStyles.formData}>
-          <Stack
-            className={ingredientsRegisterStyles.RowContainer}
-            direction={"row"}
-            spacing={5}
+      {confirmData ? (
+        <Stack>
+          <form
+            className={ingredientsRegisterStyles.formData}
+            onSubmit={handleSubmit(onSubmit)}
           >
             <Stack
-              className={ingredientsRegisterStyles.IngredientInputs}
-              direction={"column"}
+              className={ingredientsRegisterStyles.RowContainer}
+              direction={"row"}
               spacing={5}
             >
-              <TextField
-                id="IngName"
-                label="Nombre del artículo"
-                defaultValue={ingredient?.name}
-                // onChange={handleInputChange}
-                {...register("name", { required: true })}
-                error={!!errors.name}
-                helperText={errors.name && "Este campo es requerido"}
-              />
-              <TextField
-                id="IngFormat"
-                label="Presentación"
-                value={ingredient?.presentation}
-                // onChange={handleInputChange}
-              />
-              <TextField
-                id="IngPrice"
-                label="Precio"
-                value={
-                  ingredient?.presentation && ingredient?.costPerGram // Verifica si ambos valores tienen datos
-                    ? ingredient.presentation * ingredient.costPerGram
-                    : ""
-                }
-                // onChange={handleInputChange}
-                {...register("price", { required: true })}
-                error={!!errors.price}
-                helperText={errors.price && "Este campo es requerido"}
-              />
+              <Stack
+                className={ingredientsRegisterStyles.IngredientInputs}
+                direction={"column"}
+                spacing={5}
+              >
+                <TextField
+                  id="IngName"
+                  label="Nombre del artículo"
+                  defaultValue={ingredient?.name}
+                  {...register("name", { required: true })}
+                  error={!!errors.name}
+                  helperText={errors.name && "Este campo es requerido"}
+                />
+                <TextField
+                  id="IngFormat"
+                  label="Presentación"
+                  defaultValue={ingredient?.presentation}
+                  {...register("presentation", { required: true })}
+                  error={!!errors.presentation}
+                  helperText={errors.presentation && "Este campo es requerido"}
+                />
+                <TextField
+                  id="IngPrice"
+                  label="Precio"
+                  defaultValue={
+                    ingredient?.presentation && ingredient?.costPerGram // Verifica si ambos valores tienen datos
+                      ? ingredient.presentation * ingredient.costPerGram
+                      : ""
+                  }
+                  {...register("price", { required: true })}
+                  error={!!errors.price}
+                  helperText={errors.price && "Este campo es requerido"}
+                />
+
+                <TextField
+                  id="IngSupplier"
+                  select
+                  label="Proveedor"
+                  defaultValue={ingredient?.supplier}
+                  {...register("supplier", { required: true })}
+                  error={!!errors.price}
+                  helperText={errors.supplier && "Este campo es requerido"}
+                  className={ingredientsRegisterStyles.TextFieldRoot}
+                >
+                  {suppliersLoading ? (
+                    <MenuItem value="">Loading...</MenuItem>
+                  ) : (
+                    suppliersData &&
+                    suppliersData.GetAllSuppliers.map((supplier: any) => (
+                      <MenuItem key={supplier.id} value={supplier.name}>
+                        {supplier.name}
+                      </MenuItem>
+                    ))
+                  )}
+                </TextField>
+              </Stack>
+
+              <Stack style={{ width: "20px" }} />
+
+              <Stack
+                className={ingredientsRegisterStyles.IngredientOutputs}
+                direction={"column"}
+                spacing={5}
+              >
+                <TextField
+                  id="GramPrice"
+                  label="Precio por gramo"
+                  defaultValue={ingredient?.costPerGram}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  {...register("costPerGram")}
+                />
+                <TextField
+                  id="IngPerformance"
+                  label="Rendimiento"
+                  defaultValue={ingredient?.performance}
+                  {...register("performance", { required: true })}
+                  error={!!errors.performance}
+                  helperText={errors.performance && "Este campo es requerido"}
+                />
+                <TextField
+                  id="PerformancePercentage"
+                  label="Porcentaje de rendimiento"
+                  defaultValue={ingredient?.performancePercentage}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  {...register("performancePercentage")}
+                />
+                <TextField
+                  id="DepletedPrice"
+                  label="Precio mermado"
+                  defaultValue={ingredient?.mermado}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  {...register("mermado")}
+                />
+                <TextField
+                  id="ProductoX2"
+                  label="Producto x 2"
+                  defaultValue={ingredient?.productMultiplyByTwo}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  {...register("productMultiplyByTwo")}
+                />
+              </Stack>
             </Stack>
-
-            <Stack style={{ width: "20px" }} />
-
-            <Stack
-              className={ingredientsRegisterStyles.IngredientOutputs}
-              direction={"column"}
-              spacing={5}
-            >
-              <TextField
-                id="GramPrice"
-                label="Precio por gramo"
-                value={ingredient?.costPerGram}
-
-                // onChange={handleInputChange}
-              />
-              <TextField
-                id="IngPerformance"
-                label="Rendimiento"
-                value={ingredient?.performance}
-                // onChange={handleInputChange}
-              />
-              <TextField
-                id="PerformancePercentage"
-                label="Porcentaje de rendimiento"
-                value={ingredient?.performancePercentage}
-                // onChange={handleInputChange}
-              />
-              <TextField
-                id="DepletedPrice"
-                label="Precio mermado"
-                value={ingredient?.mermado}
-                // onChange={handleInputChange}
-              />
-              <TextField
-                id="ProductoX2"
-                label="Producto x 2"
-                value={ingredient?.productMultiplyByTwo}
-                // onChange={handleInputChange}
-              />
+            <Stack className={ingredientsRegisterStyles.btn}>
+              <AppButton
+                className={ingredientsRegisterStyles.btnSave}
+                type="submit"
+              >
+                Guardar
+              </AppButton>
             </Stack>
-          </Stack>
-          <Stack className={ingredientsRegisterStyles.btn}>
-            <AppButton
-              className={ingredientsRegisterStyles.btnSave}
-              type="submit"
-            >
-              Guardar
-            </AppButton>
-          </Stack>
-        </form>
-      </Stack>
+          </form>
+        </Stack>
+      ) : null}
     </div>
   );
 };
 
 export default IngredientUpdate;
-
-// onSubmit={handleSubmit}
