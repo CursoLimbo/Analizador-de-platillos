@@ -81,7 +81,6 @@ const DataGridInfo: React.FC<DataGridProps> = ({ dataRows, columns, urlCreate, h
         </Box>
 
         <DataGrid
-          autoPageSize
           rows={filteredRows}
           columns={columns}
           checkboxSelection
