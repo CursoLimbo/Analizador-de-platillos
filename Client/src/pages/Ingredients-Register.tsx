@@ -14,6 +14,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useForm } from "react-hook-form";
 import { useGetAllSupplierQuery } from "../hooks/services/Supplier";
 import { useCreateIngredientMutation } from "../hooks/services/Ingredients";
+import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
+import { useRouter } from "next/router";
 
 type IngredientFormData = {
   name: string;
@@ -27,7 +29,6 @@ type IngredientFormData = {
   productMultiplyByTwo: number;
 };
 
-
 const IngredientsRegister: React.FunctionComponent = () => {
   const {
     register,
@@ -38,58 +39,57 @@ const IngredientsRegister: React.FunctionComponent = () => {
   } = useForm<IngredientFormData>();
 
   const [mutate] = useCreateIngredientMutation();
+  const Router = useRouter();
 
+  //read form data
+  const price = watch("price", 0);
+  const presentation = watch("presentation", 0);
+  const performance = watch("performance", 0);
+  const costPerGram = watch("costPerGram", 0);
+  const performancePercentage = watch("performancePercentage", 0);
 
-    //read form data
-    const price = watch("price", 0);
-    const presentation = watch("presentation", 0);
-    const performance = watch("performance", 0);
-    const costPerGram = watch("costPerGram",0);
-    const performancePercentage = watch("performancePercentage",0);
+  //calc gramPrice
+  useEffect(() => {
+    if (price > 0 && presentation > 0) {
+      const valCostPerGram = price / presentation;
+      setValue("costPerGram", Number(valCostPerGram.toFixed(2)));
+    } else {
+      setValue("costPerGram", 0);
+    }
+  }, [price, presentation]);
 
-
-
-    //calc gramPrice
-    useEffect(() => { 
-      if(price>0 && presentation>0){
-        const valCostPerGram = price/presentation;
-        setValue('costPerGram', Number((valCostPerGram).toFixed(2)))
-      }else{
-        setValue('costPerGram', 0)
-      }
-    }, [price, presentation]);
-
-
-
-    //calc performance percent
-    useEffect(() => { 
-      if(performance>0){
-      const valPerformacePercent = performance/100;
-      setValue('performancePercentage', valPerformacePercent)
-      }else{
-        setValue('performancePercentage', 0)
-      }
+  //calc performance percent
+  useEffect(() => {
+    if (performance > 0) {
+      const valPerformacePercent = performance / 100;
+      setValue("performancePercentage", valPerformacePercent);
+    } else {
+      setValue("performancePercentage", 0);
+    }
   }, [performance]);
-    //calc mermado and productX2
-    useEffect(() => { 
-      if(costPerGram>0 && performancePercentage>0){
-      const valmermado = Number((costPerGram*performancePercentage).toFixed(2));
+  //calc mermado and productX2
+  useEffect(() => {
+    if (costPerGram > 0 && performancePercentage > 0) {
+      const valmermado = Number(
+        (costPerGram * performancePercentage).toFixed(2)
+      );
 
-      setValue('mermado',valmermado )
-      setValue('productMultiplyByTwo',valmermado*2)
-      }else{
-        setValue('mermado',0 )
-        setValue('productMultiplyByTwo',0)
-      }
+      setValue("mermado", valmermado);
+      setValue("productMultiplyByTwo", valmermado * 2);
+    } else {
+      setValue("mermado", 0);
+      setValue("productMultiplyByTwo", 0);
+    }
   }, [performance]);
 
-  const [selectedSupplier, setSelectedSupplier] = useState('');
-  const { data: suppliersData, loading: suppliersLoading } = useGetAllSupplierQuery();
-  
-  const onSubmit = (data: IngredientFormData) => {
+  const [selectedSupplier, setSelectedSupplier] = useState("");
+  const { data: suppliersData, loading: suppliersLoading } =
+    useGetAllSupplierQuery();
+
+  const onSubmit = async (data: IngredientFormData) => {
     const { price, ...formData } = data;
-  
-    const updatedFormData: Omit<IngredientFormData, 'price'> = {
+
+    const updatedFormData: Omit<IngredientFormData, "price"> = {
       ...formData,
       presentation: Number(data.presentation),
       performance: Number(data.performance),
@@ -98,22 +98,26 @@ const IngredientsRegister: React.FunctionComponent = () => {
       mermado: Number(data.mermado.toString()),
       productMultiplyByTwo: Number(data.productMultiplyByTwo.toString()),
     };
-  
-    mutate({ variables: { newIngredient: updatedFormData } })
-      .then((response) => {
-
-        alert('Ingrediente registrado exitosamente')
-      })
-      .catch((error) => {
-        alert('Ingrediente no registrado')
-      });
+    const confirm = await ConfirmAlert();
+    if (confirm) {
+      mutate({ variables: { newIngredient: updatedFormData } })
+        .then((response) => {
+          SuccessAlert("Ingrediente registrado exitosamente");
+          Router.push("/ingredients");
+        })
+        .catch((error) => {
+          ErrorAlert("Ingrediente no registrado");
+        });
+    }
   };
-  
 
   return (
     <div className={ingredientsRegisterStyles.box}>
       <h1 className={ingredientsRegisterStyles.title}>Registrar ingrediente</h1>
-      <form className={ingredientsRegisterStyles.formData} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={ingredientsRegisterStyles.formData}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <Stack
           className={ingredientsRegisterStyles.RowContainer}
           direction={"row"}
@@ -162,7 +166,9 @@ const IngredientsRegister: React.FunctionComponent = () => {
                 label="Proveedor"
                 value={selectedSupplier}
                 {...register("supplier", { required: true })}
-                onChange={(e: SelectChangeEvent) => setSelectedSupplier(e.target.value)}
+                onChange={(e: SelectChangeEvent) =>
+                  setSelectedSupplier(e.target.value)
+                }
               >
                 {suppliersLoading ? (
                   <MenuItem value="">Loading...</MenuItem>
@@ -240,7 +246,10 @@ const IngredientsRegister: React.FunctionComponent = () => {
           </Stack>
         </Stack>
         <Stack className={ingredientsRegisterStyles.btn}>
-          <AppButton className={ingredientsRegisterStyles.btnSave} type="submit">
+          <AppButton
+            className={ingredientsRegisterStyles.btnSave}
+            type="submit"
+          >
             Guardar
           </AppButton>
         </Stack>

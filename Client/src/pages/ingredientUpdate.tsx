@@ -4,15 +4,12 @@ import {
   useUpdateIngredientMutation,
 } from "../hooks/services/Ingredients";
 import { useRouter } from "next/router";
-import {
-  Stack,
-  TextField,
-  MenuItem
-} from "@mui/material";
+import { Stack, TextField, MenuItem } from "@mui/material";
 import ingredientsRegisterStyles from "../styles/Ingredients-register.module.css";
 import { AppButton } from "../components/Button";
 import { useForm } from "react-hook-form";
 import { useGetAllSupplierQuery } from "hooks/services/Supplier";
+import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
 
 type IngredientFormData = {
   id: string;
@@ -43,6 +40,7 @@ const IngredientUpdate: React.FC = () => {
     undefined
   );
   const [confirmData, setConfirmData] = useState(false);
+
 
   useEffect(() => {
     if (typeof idUpdate === "string") {
@@ -92,7 +90,7 @@ const IngredientUpdate: React.FC = () => {
     setValue("productMultiplyByTwo", valmermado * 2);
   }, [performance, costPerGram]);
 
-  const onSubmit = (data: IngredientFormData) => {
+  const onSubmit = async (data: IngredientFormData) => {
     const { price, ...formData } = data;
 
     const updatedFormData: Omit<IngredientFormData, "price"> = {
@@ -104,17 +102,20 @@ const IngredientUpdate: React.FC = () => {
       mermado: Number(data.mermado.toString()),
       productMultiplyByTwo: Number(data.productMultiplyByTwo.toString()),
       supplier: data.supplier.toString(),
-      id:id
+      id: id,
     };
-    console.log(updatedFormData)
-    mutate({ variables: { updateIngredient: updatedFormData } })
-      .then((response) => {
-        alert("Ingrediente actualizado exitosamente");
-      })
-      .catch((error) => {
-        console.log(error)
-        alert("Ingrediente no actualizado");
-      });
+    const confirm = await ConfirmAlert();
+    if (confirm) {
+      mutate({ variables: { updateIngredient: updatedFormData } })
+        .then((response) => {
+          SuccessAlert("Ingrediente actualizado exitosamente");
+          router.push(`/ingredients?Update=${encodeURIComponent('true')}`)
+        })
+        .catch((error) => {
+          console.log(error);
+          ErrorAlert("Ingrediente no actualizado");
+        });
+    }
   };
 
   return (
