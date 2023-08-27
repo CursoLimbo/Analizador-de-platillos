@@ -4,6 +4,7 @@ import RichTextEditor from "components/richTextEditor";
 import { ConfirmAlert } from "components/sweetAlert";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 type RecipeFormatdata = {
   nameRecipe: string;
@@ -18,13 +19,19 @@ const RecipeRegister: React.FC = () => {
     watch,
   } = useForm();
 
+  const router = useRouter();
+
   const [procedure, setProcedure] = useState("");
-  const name = watch("name", "");
-  const cant = watch("cant", 0);
+  // const name = watch("name", "");
+  // const cant = watch("cant", 0);
 
   const handleSetText = (text: string) => {
     setProcedure(text);
   };
+
+  const handleSelectIngredients =()=>{
+    router.push("/ingredients")
+  }
 
   const onSubmit = async (data: Record<string, any>) => {
     const newRecipe = {
@@ -72,7 +79,7 @@ const RecipeRegister: React.FC = () => {
           <RichTextEditor handleSetText={handleSetText} />
         </Stack>
         <Stack>
-          <AppButton type="submit">Guardar</AppButton>
+          <AppButton onClick={handleSelectIngredients}>Ingredientes</AppButton>
         </Stack>
       </Stack>
     </form>
