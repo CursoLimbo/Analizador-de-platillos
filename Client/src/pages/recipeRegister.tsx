@@ -31,7 +31,7 @@ const RecipeRegister: React.FC = () => {
   };
 
   const handleSelectIngredients =()=>{
-    router.push("/ingredients")
+    router.push("/addIngredientsToRecipe")
   }
 
   const onSubmit = async (data: Record<string, any>) => {
@@ -78,7 +78,7 @@ const RecipeRegister: React.FC = () => {
         </Stack>
         <Stack width={600} height={200}>
         <Stack margin={1} alignItems={"start"}>
-        <AppButton >+ Ingredientes</AppButton>
+        <AppButton  onClick={handleSelectIngredients}  >+ Ingredientes</AppButton>
         </Stack>
           <RichTextEditor handleSetText={handleSetText} />
         </Stack>
