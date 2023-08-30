@@ -1,10 +1,11 @@
-import { Stack, TextField } from "@mui/material";
+import { IconButton, Stack, TextField } from "@mui/material";
 import { AppButton } from "components/Button";
 import RichTextEditor from "components/richTextEditor";
 import { ConfirmAlert } from "components/sweetAlert";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import AddIcon from "@mui/icons-material/Add";
 
 type RecipeFormatdata = {
   nameRecipe: string;
@@ -76,10 +77,13 @@ const RecipeRegister: React.FC = () => {
           />
         </Stack>
         <Stack width={600} height={200}>
+        <Stack margin={1} alignItems={"start"}>
+        <AppButton >+ Ingredientes</AppButton>
+        </Stack>
           <RichTextEditor handleSetText={handleSetText} />
         </Stack>
         <Stack>
-          <AppButton onClick={handleSelectIngredients}>Ingredientes</AppButton>
+          <AppButton type="submit">Guardar</AppButton>
         </Stack>
       </Stack>
     </form>

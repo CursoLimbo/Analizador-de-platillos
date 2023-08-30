@@ -19,20 +19,20 @@ export class RecipeResolver {
 
     @Authorized()
     @Mutation(() => Recipe, {name: 'CreateRecipe'})
-    async createRecipe(@Arg('newRecipe'){name, ingredients, procedure, totalCostPerQuantity, PercentageInflation, salesTax, serviceTax, utilities, revenue, unitCost}: RecipeType): Promise<Recipe>{
+    async createRecipe(@Arg('newRecipe'){name, ingredients, procedure, quantity, totalCostPerQuantity, PercentageInflation, salesTax, serviceTax, utilities, revenue, unitCost}: RecipeType): Promise<Recipe>{
         const recipeCreated = (
-            await RecipeModel.create({name, ingredients, procedure, totalCostPerQuantity, PercentageInflation, salesTax, serviceTax, utilities, revenue, unitCost})
+            await RecipeModel.create({name, ingredients, procedure, quantity, totalCostPerQuantity, PercentageInflation, salesTax, serviceTax, utilities, revenue, unitCost})
         ).save();
         return recipeCreated;
     }
 
     @Authorized()
     @Mutation(() => Recipe, {name: 'updateRecipe'})
-    async updateRecipe (@Arg('updateQuotation'){id,name, ingredients, procedure, totalCostPerQuantity, PercentageInflation, salesTax, serviceTax, utilities, revenue, unitCost}: RecipeType): Promise<Recipe>{
+    async updateRecipe (@Arg('updateQuotation'){id,name, ingredients, procedure, quantity, totalCostPerQuantity, PercentageInflation, salesTax, serviceTax, utilities, revenue, unitCost}: RecipeType): Promise<Recipe>{
         const updatedRecipe = (
             await RecipeModel.findByIdAndUpdate({_id:id},
                 {
-                    name, ingredients, procedure, totalCostPerQuantity, PercentageInflation, salesTax, serviceTax, utilities, revenue, unitCost
+                    name, ingredients, procedure, quantity, totalCostPerQuantity, PercentageInflation, salesTax, serviceTax, utilities, revenue, unitCost
                 }, {new: true}
             )
         );
