@@ -3,48 +3,38 @@ import Box from "@mui/material/Box/Box";
 import { DataGrid, GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
 import DataFilter from "./dataFilter";
 import IconButton from "@mui/material/IconButton";
-import FastForwardIcon from "@mui/icons-material/FastForward";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ListIcon from '@mui/icons-material/List';
 
 interface DataGridProps {
   dataRows: RowData[];
   columns: GridColDef[];
   dataVersion: number;
-  handleGetData: (ingredient: RowData[]) => void;
-  handleAdd: () => void;
+  handleDeleteIngredients: (id: string) => void;
 }
 
 const AddDataGridInfo: React.FC<DataGridProps> = ({
   dataRows,
   columns,
   dataVersion,
-  handleGetData,
-  handleAdd,
+  handleDeleteIngredients,
 }) => {
-  const [selectedIngredients, setSelectedIngredients] = useState<RowData[]>([]);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [filteredRows, setFilteredRows] = useState<RowData[]>(dataRows);
 
   const handleSelectionChange = (rowSelectionModel: GridRowSelectionModel) => {
-    const selectedRows = rowSelectionModel.map((id) => {
-      const ingredient = dataRows.find((row) => row.id === id);
-      if (ingredient) {
-        return ingredient;
-      }
-      return null;
-    });
-    setSelectedIngredients(selectedRows.filter(Boolean) as RowData[]);
+    const selectedRowIds = rowSelectionModel.map((id) => String(id));
+    setSelectedIds(selectedRowIds);
   };
 
-  const handleAddIngredients = () => {
-    handleGetData(selectedIngredients);
-  };
-
-  const handleAddRow = () => {
-    handleAdd();
+  const handledeleteIngredients = () => {
+    for (let i = 0; i < selectedIds.length; i++) {
+      handleDeleteIngredients(selectedIds[i]);
+    }
   };
 
   const handleDataFiltered = (filteredData: RowData[]) => {
-    setSelectedIngredients([]);
+    setSelectedIds([]);
     setFilteredRows(filteredData);
   };
 
@@ -65,14 +55,14 @@ const AddDataGridInfo: React.FC<DataGridProps> = ({
           }}
         >
           <Box>
-            {selectedIngredients.length > 0 && (
-              <IconButton onClick={handleAddIngredients}>
-                <FastForwardIcon />
+          {selectedIds.length === 0 && (
+              <IconButton onClick={handledeleteIngredients}>
+                <ListIcon />
               </IconButton>
             )}
-            {selectedIngredients.length === 0 && (
-              <IconButton onClick={handleAddRow}>
-                <AddCircleOutlineIcon />
+            {selectedIds.length > 0 && (
+              <IconButton onClick={handledeleteIngredients}>
+                <DeleteIcon />
               </IconButton>
             )}
           </Box>

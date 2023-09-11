@@ -16,10 +16,13 @@ query GetAllRecipes {
 }
 `;
 
-export const createRecipeMutation = `
-mutation CreateRecipe($newRecipe: RecipeType!) {
+export const createRecipeMutation = gql`
+mutation Mutation($newRecipe: RecipeType!) {
   CreateRecipe(newRecipe: $newRecipe) {
-    id
+    name
+    quantity
+    procedure
+    ingredients
   }
 }
 `;
