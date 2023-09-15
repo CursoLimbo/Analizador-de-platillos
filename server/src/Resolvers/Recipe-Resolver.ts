@@ -19,7 +19,7 @@ export class RecipeResolver {
 
     @Authorized()
     @Mutation(() => Recipe, {name: 'CreateRecipe'})
-    async createRecipe(@Arg('newRecipe'){name, ingredients, procedure, quantity, totalCostPerQuantity, PercentageInflation, salesTax, serviceTax, utilities, revenue, unitCost}: RecipeType): Promise<Recipe>{
+    async createRecipe(@Arg('newRecipe'){name, ingredients, procedure, quantity, totalCostPerQuantity, PercentageInflation,salesTax, serviceTax, utilities, revenue, unitCost}: RecipeType): Promise<Recipe>{
         const recipeCreated = (
             await RecipeModel.create({name, ingredients, procedure, quantity, totalCostPerQuantity, PercentageInflation, salesTax, serviceTax, utilities, revenue, unitCost})
         ).save();

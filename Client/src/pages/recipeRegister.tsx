@@ -1,15 +1,17 @@
-import { IconButton, Stack, TextField } from "@mui/material";
-import { AppButton } from "components/Button";
+import React, { useEffect, useState } from "react";
+import { Stack, TextField } from "@mui/material";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import { useCreateRecipeMutation } from "hooks/services/Recipe";
+import { useContextData } from "hooks/utils/context";
 import RichTextEditor from "components/richTextEditor";
 import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
-import React, { useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
-import { useRouter } from "next/router";
-import AddIcon from "@mui/icons-material/Add";
-import { useCreateRecipeMutation } from "hooks/services/Recipe";
+import { AppButton } from "components/Button";
+
 type RecipeFormatdata = {
   name: string;
   quantity: number;
+  procedure: string;
   ingredients: string[];
 };
 
@@ -19,29 +21,31 @@ const RecipeRegister: React.FC = () => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm();
+  } = useForm<RecipeFormatdata>();
+
   const [mutate] = useCreateRecipeMutation();
   const router = useRouter();
-
+  const { ingredientsIDsArray, setIngredientsIDsArray } = useContextData();
   const [procedure, setProcedure] = useState("");
   const [ingredients, setIngredients] = useState<string[]>([]);
-
-  const handleAddIngredient = () => {
-    
-  }
 
   const handleSetText = (text: string) => {
     setProcedure(text);
   };
 
+  useEffect(() => {
+    let tempIngredients = [...ingredientsIDsArray];
+    setIngredients(tempIngredients);
+  }, [ingredientsIDsArray]);
+
   const handleSelectIngredients = () => {
     router.push("/addIngredientsToRecipe");
   };
 
-  const onSubmit = async (data: FieldValues) => {
-    const newRecipes = {
+  const onSubmit = async (data: RecipeFormatdata) => {
+    const newRecipes: RecipeFormatdata = {
       name: data.name,
-      quantity: data.cant,
+      quantity: Number(data.quantity),
       procedure: procedure,
       ingredients: ingredients,
     };
@@ -55,7 +59,7 @@ const RecipeRegister: React.FC = () => {
           SuccessAlert("Receta registrada exitosamente");
         })
         .catch((error) => {
-          console.log(error.message);
+          console.log(error);
           ErrorAlert("Receta no registrada");
         });
     }
@@ -64,20 +68,11 @@ const RecipeRegister: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack direction={"column"} spacing={5} alignItems={"center"}>
-        <Stack
-          alignItems={"center"}
-          fontFamily={"Times New Roman"}
-          fontSize={28}
-        >
-          <h1>Registar receta</h1>
+        <Stack alignItems={"center"} fontFamily={"Times New Roman"} fontSize={28}>
+          <h1>Registrar receta</h1>
         </Stack>
 
-        <Stack
-          direction={"column"}
-          spacing={5}
-          width={300}
-          alignItems={"center"}
-        >
+        <Stack direction={"column"} spacing={5} width={300} alignItems={"center"}>
           <TextField
             id="recipeName"
             label="Nombre de la receta"
@@ -89,12 +84,12 @@ const RecipeRegister: React.FC = () => {
 
           <TextField
             id="recipeCant"
-            label="Cantidad(g)"
+            label="Cantidad (g)"
             variant="outlined"
             type="number"
-            {...register("cant", { required: true })}
-            error={!!errors.cant}
-            helperText={errors.cant && "Este campo es requerido"}
+            {...register("quantity", { required: true })}
+            error={!!errors.quantity}
+            helperText={errors.quantity && "Este campo es requerido"}
           />
         </Stack>
         <Stack width={600} height={200}>

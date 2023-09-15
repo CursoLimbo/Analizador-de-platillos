@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import {CookiesProvider} from "react-cookie";
 import {ApolloProvider} from "@apollo/client";
 import {useAppApolloClient} from "../hooks/apollo/useApolloClient";
+import {ContextProvider} from '../hooks/utils/context'
 import  Head  from "next/head";
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -23,8 +24,9 @@ const App = ({ Component, pageProps }: AppProps) => {
                             rel="stylesheet">
                         </link>
                     </Head>
+                    <ContextProvider>
                         <Component {...pageProps} />
-
+                    </ContextProvider>
                 </ApolloProvider>
             </CookiesProvider>
 

@@ -4,12 +4,15 @@ import AddDataGridInfo from "components/addDatatable";
 import ReciveDataGridInfo from "components/ReciveDataTable";
 import { OperationVariables, QueryResult } from "@apollo/react-hooks";
 import {
-  useGetAllIngredients,
-  useGetIngredientById,
+  useGetAllIngredients
 } from "../hooks/services/Ingredients";
 import { AppButton } from "components/Button";
 import { useRouter } from "next/router";
+import { useContextData } from "hooks/utils/context";
+
+
 const AddIngredientsToRecipe: React.FC = () => {
+  const {ingredientsIDsArray, setIngredientsIDsArray } = useContextData();
   const [rows, setRows] = useState<RowData[]>([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [dataVersion, setDataVersion] = useState(0);
@@ -36,7 +39,7 @@ const AddIngredientsToRecipe: React.FC = () => {
   //*Data second table */
 
   const [rows2, setRows2] = useState<RowData[]>([]);
-  const [rowsID, setRowsID] = useState<string[]>([]);
+  // const [rowsID, setRowsID] = useState<string[]>([]);
 
   const handleGetIngredientsID = (ingredients: RowData[]) => {
     const newRows2 = [...rows2];
@@ -47,7 +50,6 @@ const AddIngredientsToRecipe: React.FC = () => {
         newRows2.push(ingredient);
       }
     }
-    console.log(newRows2);
     setRows2(newRows2);
   };
   const handleDeleteIngredientsRows = (id: string) => {
@@ -57,9 +59,15 @@ const AddIngredientsToRecipe: React.FC = () => {
     setRows2(newRows2);
   };
 
+  const clearContext = () => {
+    setIngredientsIDsArray([]);
+  }
+
 
   const handleReturnIngredientsIDs = ()=>{
-      const newRowsID = [...rowsID];
+    clearContext();
+    console.log('antes de asignar'+ingredientsIDsArray)
+      const newRowsID = [...ingredientsIDsArray];
       for (let i = 0; i < rows2.length; i++) {
         const ingredient = rows2[i];
         const existsInDataRowID = newRowsID.some((row) => row === ingredient.id);
@@ -67,8 +75,8 @@ const AddIngredientsToRecipe: React.FC = () => {
           newRowsID.push(ingredient.id);
         }
       }
-      setRowsID(newRowsID);
-      console.log(newRowsID)
+      setIngredientsIDsArray(newRowsID);
+      console.log('context:'+ingredientsIDsArray)
   }
 
   const columns = useMemo(() => {

@@ -13,7 +13,7 @@ export const SuccessAlert = (title: string) => {
 export const ErrorAlert = (title: string) => {
   return Swal.fire({
     position: "center",
-    icon: "success",
+    icon: "error",
     title: title,
     showConfirmButton: false,
     timer: 1500,
