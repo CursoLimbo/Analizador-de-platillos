@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
+import { Stack } from "@mui/material";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 
@@ -40,6 +41,7 @@ const RichTextEditor: React.FC<DataProps> = ({ handleSetText }) => {
   };
 
   return (
+    <Stack>
     <ReactQuill
       modules={module}
       theme="snow"
@@ -47,6 +49,7 @@ const RichTextEditor: React.FC<DataProps> = ({ handleSetText }) => {
       onChange={setValue}
       placeholder="Procedimiento de la receta"
     />
+    </Stack>
   );
 };
 

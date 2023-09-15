@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Footer } from "../components/Footer";
 import ingredientsRegisterStyles from "../styles/Ingredients-register.module.css";
 import {
   Stack,
@@ -250,7 +249,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
         </Stack>
         <Stack className={ingredientsRegisterStyles.btn}>
           <AppButton
-            className={ingredientsRegisterStyles.btnSave}
+            
             type="submit"
           >
             Guardar

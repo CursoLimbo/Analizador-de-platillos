@@ -38,6 +38,7 @@ const RecipeRegister: React.FC = () => {
     setIngredients(tempIngredients);
   }, [ingredientsIDsArray]);
 
+
   const handleSelectIngredients = () => {
     router.push("/addIngredientsToRecipe");
   };
@@ -82,7 +83,7 @@ const RecipeRegister: React.FC = () => {
             helperText={errors.name && "Este campo es requerido"}
           />
 
-          <TextField
+          <TextField 
             id="recipeCant"
             label="Cantidad (g)"
             variant="outlined"

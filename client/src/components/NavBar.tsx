@@ -17,7 +17,7 @@ interface NavBarProps {
   isHome: boolean
 }
 
-export const NavBar: React.FC<NavBarProps> = (props) => {
+const NavBar: React.FC<NavBarProps> = (props) => {
   const {isHome} = props
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const logOut = useLogout();
@@ -55,7 +55,7 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
               aria-label="go-back"
               sx={{ mr: 2 }}
               onClick={ () => {
-                if(isHome){
+                if(!isHome){
                   logOut().then();
                 }else{
                   handleGoBack();
@@ -106,3 +106,5 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
     </Box>
   );
 };
+
+export default NavBar
