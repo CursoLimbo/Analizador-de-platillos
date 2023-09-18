@@ -39,7 +39,7 @@ const AddIngredientsToRecipe: React.FC = () => {
   //*Data second table */
 
   const [rows2, setRows2] = useState<RowData[]>([]);
-  // const [rowsID, setRowsID] = useState<string[]>([]);
+  const [newRowsID, setNewRowsID] = useState<string[]>([]);
 
   const handleGetIngredientsID = (ingredients: RowData[]) => {
     const newRows2 = [...rows2];
@@ -51,33 +51,43 @@ const AddIngredientsToRecipe: React.FC = () => {
       }
     }
     setRows2(newRows2);
+    clearContext()
   };
   const handleDeleteIngredientsRows = (id: string) => {
     const newRows2 = [...rows2];
     const index = newRows2.findIndex((row) => row.id === id);
     newRows2.splice(index, 1);
     setRows2(newRows2);
+   
   };
 
-  const clearContext = () => {
-    setIngredientsIDsArray([]);
+
+  const clearContext= () => {
+    setNewRowsID([...ingredientsIDsArray])
+    const clearContext : string[]= []
+    setIngredientsIDsArray(clearContext);
   }
 
+  const handleReturnIngredientsIDs = ()=>{    
+      const tempRows = newRowsID
 
-  const handleReturnIngredientsIDs = ()=>{
-    clearContext();
-    console.log('antes de asignar'+ingredientsIDsArray)
-      const newRowsID = [...ingredientsIDsArray];
       for (let i = 0; i < rows2.length; i++) {
         const ingredient = rows2[i];
-        const existsInDataRowID = newRowsID.some((row) => row === ingredient.id);
+        const existsInDataRowID = tempRows.some((row) => row === ingredient.id);
         if (!existsInDataRowID) {
-          newRowsID.push(ingredient.id);
+          tempRows.push(ingredient.id);
         }
       }
-      setIngredientsIDsArray(newRowsID);
-      console.log('context:'+ingredientsIDsArray)
+      setIngredientsIDsArray(tempRows)
+      setNewRowsID([])
+      router.push("/recipeRegister");
+      
   }
+
+  useEffect(() => {
+    console.log('context:', ingredientsIDsArray);
+    console.log('newArr:', newRowsID);
+  }, [ingredientsIDsArray,newRowsID]);
 
   const columns = useMemo(() => {
     if (rows.length > 0) {

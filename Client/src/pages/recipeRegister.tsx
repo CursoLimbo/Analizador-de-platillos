@@ -43,6 +43,11 @@ const RecipeRegister: React.FC = () => {
     router.push("/addIngredientsToRecipe");
   };
 
+  const clearContext= () => {
+    const clearContext : string[]= []
+    setIngredientsIDsArray(clearContext);
+  }
+
   const onSubmit = async (data: RecipeFormatdata) => {
     const newRecipes: RecipeFormatdata = {
       name: data.name,
@@ -58,6 +63,7 @@ const RecipeRegister: React.FC = () => {
       mutate({ variables: { newRecipe: newRecipes } })
         .then((response) => {
           SuccessAlert("Receta registrada exitosamente");
+          clearContext()
         })
         .catch((error) => {
           console.log(error);
