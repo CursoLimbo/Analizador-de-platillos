@@ -40,6 +40,11 @@ const NavBar: React.FC<NavBarProps> = (props) => {
     window.location.href = `/settings-profile`
   };
 
+  const handleCloseSession = () => {
+    window.location.href = `/login`
+    logOut().then();
+  };
+
   const handleGoBack = () => {
     router.back();
   };
@@ -99,6 +104,7 @@ const NavBar: React.FC<NavBarProps> = (props) => {
             >
               <MenuOption type={"Perfil"} action={() => handleOpenPerfil()}/>
               <MenuOption type={"Configuraciones"} action={() => handleOpenSettings()}/>
+              <MenuOption type={"Cerrar sesión"} action={() => handleCloseSession()}/>
             </Menu>
           </Box>
         </Toolbar>

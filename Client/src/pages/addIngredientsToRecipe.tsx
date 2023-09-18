@@ -4,7 +4,7 @@ import AddDataGridInfo from "components/addDatatable";
 import ReciveDataGridInfo from "components/ReciveDataTable";
 import { OperationVariables, QueryResult } from "@apollo/react-hooks";
 import {
-  useGetAllIngredients
+  useGetAllIngredients,useGetIngredientById
 } from "../hooks/services/Ingredients";
 import { AppButton } from "components/Button";
 import { useRouter } from "next/router";
@@ -38,6 +38,8 @@ const AddIngredientsToRecipe: React.FC = () => {
 
   //*Data second table */
 
+  //TODO: Pendiente recuperar filas de la tabla2 cuando el context no esta vacio.
+
   const [rows2, setRows2] = useState<RowData[]>([]);
   const [newRowsID, setNewRowsID] = useState<string[]>([]);
 
@@ -58,7 +60,6 @@ const AddIngredientsToRecipe: React.FC = () => {
     const index = newRows2.findIndex((row) => row.id === id);
     newRows2.splice(index, 1);
     setRows2(newRows2);
-   
   };
 
 
@@ -84,10 +85,8 @@ const AddIngredientsToRecipe: React.FC = () => {
       
   }
 
-  useEffect(() => {
-    console.log('context:', ingredientsIDsArray);
-    console.log('newArr:', newRowsID);
-  }, [ingredientsIDsArray,newRowsID]);
+
+
 
   const columns = useMemo(() => {
     if (rows.length > 0) {
