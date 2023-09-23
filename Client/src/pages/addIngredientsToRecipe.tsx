@@ -3,12 +3,11 @@ import { Box, Stack } from "@mui/material";
 import AddDataGridInfo from "components/addDatatable";
 import ReciveDataGridInfo from "components/ReciveDataTable";
 import { OperationVariables, QueryResult } from "@apollo/react-hooks";
-import {
-  useGetAllIngredients,useGetIngredientById
-} from "../hooks/services/Ingredients";
+import {useGetAllIngredients} from "../hooks/services/Ingredients";
 import { AppButton } from "components/Button";
 import { useRouter } from "next/router";
-import { useContextData } from "hooks/utils/context";
+import { useContextData } from "hooks/utils/contextIngredients";
+
 
 
 const AddIngredientsToRecipe: React.FC = () => {
@@ -39,6 +38,26 @@ const AddIngredientsToRecipe: React.FC = () => {
   //*Data second table */
 
   //TODO: Pendiente recuperar filas de la tabla2 cuando el context no esta vacio.
+
+ 
+
+useEffect(() => {
+
+  const contextRows : RowData[] = [];
+  for(const id of ingredientsIDsArray){
+    for (const ingredient of rows) {
+      if(ingredient.id === id){
+        contextRows.push(ingredient)
+      }
+    }
+  }
+  setRows2(contextRows)
+}
+,[rows])
+
+
+
+
 
   const [rows2, setRows2] = useState<RowData[]>([]);
   const [newRowsID, setNewRowsID] = useState<string[]>([]);

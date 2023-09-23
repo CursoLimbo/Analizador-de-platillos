@@ -7,14 +7,19 @@ const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 
 interface DataProps {
   handleSetText: (text: string) => void;
+  contextText:string;
 }
 
-const RichTextEditor: React.FC<DataProps> = ({ handleSetText }) => {
-  const [value, setValue] = useState("");
+const RichTextEditor: React.FC<DataProps> = ({ handleSetText,contextText }) => {
+  const [value, setValue] = useState('');
 
   useEffect(() => {
     handleSetText(value);
   }, [value]);
+
+  useEffect(() => {
+    setValue(contextText)
+  },[contextText])
 
   const toolbarOptions = [
     ["bold", "italic", "underline", "strike"], // toggled buttons

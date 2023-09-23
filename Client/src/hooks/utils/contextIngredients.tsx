@@ -7,9 +7,13 @@ import React,{ createContext, useContext,useState, ReactNode} from "react";
 interface IContext {
     ingredientsIDsArray: string[];
     setIngredientsIDsArray: React.Dispatch<React.SetStateAction<string[]>>;
+    Recipe : Recipe;
+    setRecipe: React.Dispatch<React.SetStateAction<Recipe>>;
 
     
 }
+
+
 
 
 // defines the context  
@@ -20,6 +24,11 @@ const Context = createContext<IContext>({} as IContext);
 
 export const ContextProvider = ({ children }: { children: ReactNode }) => {
     const [ingredientsIDsArray, setIngredientsIDsArray] = useState<string[]>([]);
+    const [Recipe, setRecipe] = useState<Recipe>({
+        name: '',
+        quantity :  0,
+        procedure: ''
+      });
 
 
     return (
@@ -27,6 +36,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
             value={{
                 ingredientsIDsArray,
                 setIngredientsIDsArray,
+                Recipe,
+                setRecipe,
             }}
         >
             {children}

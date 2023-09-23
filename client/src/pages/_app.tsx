@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import {CookiesProvider} from "react-cookie";
 import {ApolloProvider} from "@apollo/client";
 import {useAppApolloClient} from "../hooks/apollo/useApolloClient";
-import {ContextProvider} from '../hooks/utils/context'
+import {ContextProvider} from '../hooks/utils/contextIngredients'
 import  Head  from "next/head";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
