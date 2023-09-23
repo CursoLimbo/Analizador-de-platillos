@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Footer } from "../components/Footer";
 import ingredientsRegisterStyles from "../styles/Ingredients-register.module.css";
 import {
   Stack,
@@ -139,8 +138,9 @@ const IngredientsRegister: React.FunctionComponent = () => {
             />
             <TextField
               id="IngFormat"
-              label="Presentación"
+              label="Presentación(uds)"
               variant="outlined"
+              type="number"
               className={ingredientsRegisterStyles.TextFieldRoot}
               {...register("presentation", { required: true })}
               error={!!errors.presentation}
@@ -150,6 +150,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
               id="IngPrice"
               label="Precio"
               variant="outlined"
+              type="number"
               className={ingredientsRegisterStyles.TextFieldRoot}
               {...register("price", { required: true })}
               error={!!errors.price}
@@ -196,7 +197,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
           >
             <TextField
               id="GramPrice"
-              label="Precio por gramo"
+              label="Precio por unidad"
               variant="outlined"
               className={ingredientsRegisterStyles.TextFieldRoot}
               InputProps={{
@@ -208,6 +209,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
               id="IngPerformance"
               label="Rendimiento"
               variant="outlined"
+              type="number"
               className={ingredientsRegisterStyles.TextFieldRoot}
               {...register("performance", { required: true })}
               error={!!errors.performance}
@@ -247,7 +249,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
         </Stack>
         <Stack className={ingredientsRegisterStyles.btn}>
           <AppButton
-            className={ingredientsRegisterStyles.btnSave}
+            
             type="submit"
           >
             Guardar

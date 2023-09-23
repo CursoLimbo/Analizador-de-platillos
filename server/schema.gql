@@ -270,6 +270,7 @@ type Recipe {
   ingredients: [String!]!
   name: String!
   procedure: String!
+  quantity: Float!
   revenue: Float!
   salesTax: Float!
   serviceTax: Float!
@@ -279,17 +280,18 @@ type Recipe {
 }
 
 input RecipeType {
-  PercentageInflation: Float!
+  PercentageInflation: Float
   id: ID
   ingredients: [String!]!
   name: String!
   procedure: String!
-  revenue: Float!
-  salesTax: Float!
-  serviceTax: Float!
-  totalCostPerQuantity: Float!
-  unitCost: Float!
-  utilities: Float!
+  quantity: Float!
+  revenue: Float
+  salesTax: Float
+  serviceTax: Float
+  totalCostPerQuantity: Float
+  unitCost: Float
+  utilities: Float
 }
 
 """The supplier model"""

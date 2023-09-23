@@ -17,7 +17,7 @@ interface NavBarProps {
   isHome: boolean
 }
 
-export const NavBar: React.FC<NavBarProps> = (props) => {
+const NavBar: React.FC<NavBarProps> = (props) => {
   const {isHome} = props
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const logOut = useLogout();
@@ -40,6 +40,11 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
     window.location.href = `/settings-profile`
   };
 
+  const handleCloseSession = () => {
+    window.location.href = `/login`
+    logOut().then();
+  };
+
   const handleGoBack = () => {
     router.back();
   };
@@ -55,7 +60,7 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
               aria-label="go-back"
               sx={{ mr: 2 }}
               onClick={ () => {
-                if(isHome){
+                if(!isHome){
                   logOut().then();
                 }else{
                   handleGoBack();
@@ -99,6 +104,7 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
             >
               <MenuOption type={"Perfil"} action={() => handleOpenPerfil()}/>
               <MenuOption type={"Configuraciones"} action={() => handleOpenSettings()}/>
+              <MenuOption type={"Cerrar sesión"} action={() => handleCloseSession()}/>
             </Menu>
           </Box>
         </Toolbar>
@@ -106,3 +112,5 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
     </Box>
   );
 };
+
+export default NavBar

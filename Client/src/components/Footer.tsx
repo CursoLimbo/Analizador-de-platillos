@@ -9,12 +9,12 @@ import Instagram from "@mui/icons-material/Instagram";
 
 const styles = {
   box: {
-    position: "relative",
+    position: "static",
     bottom: 0,
     left: 0,
     right: 0,
     padding: "0 2px",
-    mt: '2%',
+    mt: '1%',
   },
   bottomNavigation: {
     backgroundColor: "teal",
@@ -40,7 +40,7 @@ const styles = {
   },
 };
 
-export const Footer = () => {
+const Footer = () => {
   return (
     <Box sx={styles.box}>
       <BottomNavigation sx={styles.bottomNavigation}>
@@ -75,3 +75,5 @@ export const Footer = () => {
     </Box>
   );
 };
+
+export default Footer

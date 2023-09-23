@@ -23,31 +23,35 @@ export class Recipe{
 
     @Field()
     @Property({type: () => Number, required: true})
+    quantity: number;
+
+    @Field()
+    @Property({type: () => Number, required: false})
     totalCostPerQuantity: number;
 
     @Field()
-    @Property({type: () => Number, required: true})
+    @Property({type: () => Number, required: false})
     PercentageInflation: number;
 
     @Field()
-    @Property({type: () => Number, required: true})
+    @Property({type: () => Number, required: false})
     salesTax: number;
 
     @Field()
-    @Property({type: () => Number, required: true})
+    @Property({type: () => Number, required: false})
     serviceTax: number;
 
     @Field()
-    @Property({type: () => Number, required: true})
+    @Property({type: () => Number, required: false})
     utilities: number;
 
     @Field()
-    @Property({type: () => Number, required: true})
+    @Property({type: () => Number, required: false})
     revenue: number;
 
 
     @Field()
-    @Property({type: () => Number, required: true})
+    @Property({type: () => Number, required: false})
     unitCost: number;
 
 }
