@@ -4,24 +4,35 @@ import {
   useUpdateIngredientMutation,
 } from "../hooks/services/Ingredients";
 import { useRouter } from "next/router";
-import { Stack, TextField, MenuItem } from "@mui/material";
+import {
+  Stack,
+  TextField,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+  SelectChangeEvent,
+  FormHelperText,
+} from "@mui/material";
 import ingredientsRegisterStyles from "../styles/Ingredients-register.module.css";
 import { AppButton } from "../components/Button";
 import { useForm } from "react-hook-form";
 import { useGetAllSupplierQuery } from "hooks/services/Supplier";
 import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
+import { weigthUnit } from "hooks/utils/DataUnits";
 
 type IngredientFormData = {
   id: string;
   name: string;
+  brand: string;
+  unit: string;
   presentation: number;
+  cost: number;
   supplier: string;
-  price: number;
   costPerGram: number;
   performance: number;
   performancePercentage: number;
   mermado: number;
-  productMultiplyByTwo: number;
 };
 
 const IngredientUpdate: React.FC = () => {
@@ -40,7 +51,6 @@ const IngredientUpdate: React.FC = () => {
     undefined
   );
   const [confirmData, setConfirmData] = useState(false);
-
 
   useEffect(() => {
     if (typeof idUpdate === "string") {
@@ -61,55 +71,62 @@ const IngredientUpdate: React.FC = () => {
     useGetAllSupplierQuery();
 
   //read form data
-  const price = watch("price", 0);
+  const cost = watch("cost", 0);
   const presentation = watch("presentation", 0);
   const performance = watch("performance", 0);
   const costPerGram = watch("costPerGram", 0);
-  const performancePercentage = watch("performancePercentage", 0);
-  const supplier = watch("supplier", "");
+  const selectUnit = watch("unit", '');
+  const [selectedUnit, setSelectedUnit] = useState('');
+  const [unitCalc,setUnitCalc] = useState(1);
 
   //calc gramPrice
   useEffect(() => {
-    if (price > 0 && presentation > 0) {
-      const valCostPerGram = price / presentation;
-      setValue("costPerGram", Number(valCostPerGram.toFixed(2)));
-    } else {
-      setValue("costPerGram", 0);
+    if (cost > 0 && presentation > 0) {
+
+      const valCostPerGram = cost / (presentation*unitCalc);
+      setValue("costPerGram", Number(valCostPerGram.toFixed(4)));
     }
-  }, [price, presentation]);
+  }, [cost, presentation,unitCalc,selectedUnit]);
 
   //calc performance percent
   useEffect(() => {
     const valPerformacePercent = performance / 100;
     setValue("performancePercentage", valPerformacePercent);
-  }, [performance]);
-  //calc mermado and productX2
+  }, [performance,costPerGram]);
+
+  //calc mermado
   useEffect(() => {
-    const valmermado = Number((costPerGram * performancePercentage).toFixed(2));
+    const valmermado = Number((costPerGram * performance/100).toFixed(4));
     setValue("mermado", valmermado);
-    setValue("productMultiplyByTwo", valmermado * 2);
   }, [performance, costPerGram]);
 
-  const onSubmit = async (data: IngredientFormData) => {
-    const { price, ...formData } = data;
+  useEffect(()=>{
+    if(selectUnit !== ''){
+      setUnitCalc(weigthUnit[selectUnit])
+    }
+  },[selectUnit,selectedUnit])
 
-    const updatedFormData: Omit<IngredientFormData, "price"> = {
-      ...formData,
+
+  const onSubmit = async (data: IngredientFormData) => {
+    const newIngredient : IngredientFormData = {
+      id:id,
+      name: data.name,
+      brand:data.brand,
+      unit: data.unit,
       presentation: Number(data.presentation),
+      cost: Number(data.cost),
+      supplier: data.supplier,
+      costPerGram: data.costPerGram,
       performance: Number(data.performance),
-      costPerGram: Number(data.costPerGram.toString()),
-      performancePercentage: Number(data.performancePercentage.toString()),
-      mermado: Number(data.mermado.toString()),
-      productMultiplyByTwo: Number(data.productMultiplyByTwo.toString()),
-      supplier: data.supplier.toString(),
-      id: id,
-    };
+      performancePercentage: data.performancePercentage,
+      mermado: data.mermado,
+    }
     const confirm = await ConfirmAlert();
     if (confirm) {
-      mutate({ variables: { updateIngredient: updatedFormData } })
+      mutate({ variables: { updateIngredient: newIngredient } })
         .then((response) => {
           SuccessAlert("Ingrediente actualizado exitosamente");
-          router.push(`/ingredients?Update=${encodeURIComponent('true')}`)
+          router.push(`/ingredients?Update=${encodeURIComponent("true")}`);
         })
         .catch((error) => {
           console.log(error);
@@ -147,6 +164,35 @@ const IngredientUpdate: React.FC = () => {
                   error={!!errors.name}
                   helperText={errors.name && "Este campo es requerido"}
                 />
+                <FormControl
+                  className={ingredientsRegisterStyles.FormControlRoot}
+                  error={!!errors.unit}
+                >
+                  <InputLabel id="unit-label">Unidad</InputLabel>
+                  <Select
+                    labelId="unit-label"
+                    id="IngUnit"
+                    label="Unidad"
+                    defaultValue={ingredient?.unit}
+                    {...register("unit", { required: true })}
+                    onChange={(e: SelectChangeEvent) =>
+                      setSelectedUnit(e.target.value)
+                    }
+                  >
+                    {suppliersLoading ? (
+                      <MenuItem value="">Loading...</MenuItem>
+                    ) : (
+                      Object.keys(weigthUnit).map((unit: string) => (
+                        <MenuItem key={unit} value={unit}>
+                          {unit}
+                        </MenuItem>
+                      ))
+                    )}
+                  </Select>
+                  {errors.unit && (
+                    <FormHelperText>Este campo es requerido</FormHelperText>
+                  )}
+                </FormControl>
                 <TextField
                   id="IngFormat"
                   label="Presentación"
@@ -159,13 +205,11 @@ const IngredientUpdate: React.FC = () => {
                   id="IngPrice"
                   label="Precio"
                   defaultValue={
-                    ingredient?.presentation && ingredient?.costPerGram // Verifica si ambos valores tienen datos
-                      ? ingredient.presentation * ingredient.costPerGram
-                      : ""
+                    ingredient?.cost
                   }
-                  {...register("price", { required: true })}
-                  error={!!errors.price}
-                  helperText={errors.price && "Este campo es requerido"}
+                  {...register("cost", { required: true })}
+                  error={!!errors.cost}
+                  helperText={errors.cost && "Este campo es requerido"}
                 />
 
                 <TextField
@@ -174,7 +218,7 @@ const IngredientUpdate: React.FC = () => {
                   label="Proveedor"
                   defaultValue={ingredient?.supplier}
                   {...register("supplier", { required: true })}
-                  error={!!errors.price}
+                  error={!!errors.cost}
                   helperText={errors.supplier && "Este campo es requerido"}
                   className={ingredientsRegisterStyles.TextFieldRoot}
                 >
@@ -198,6 +242,15 @@ const IngredientUpdate: React.FC = () => {
                 direction={"column"}
                 spacing={5}
               >
+                <TextField
+                  id="brand"
+                  label="Marca"
+                  variant="outlined"
+                  defaultValue={ingredient?.brand}
+                  {...register("brand", { required: true })}
+                  error={!!errors.brand}
+                  helperText={errors.brand && "Este campo es requerido"}
+                />
                 <TextField
                   id="GramPrice"
                   label="Precio por gramo"
@@ -232,15 +285,6 @@ const IngredientUpdate: React.FC = () => {
                     readOnly: true,
                   }}
                   {...register("mermado")}
-                />
-                <TextField
-                  id="ProductoX2"
-                  label="Producto x 2"
-                  defaultValue={ingredient?.productMultiplyByTwo}
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                  {...register("productMultiplyByTwo")}
                 />
               </Stack>
             </Stack>
