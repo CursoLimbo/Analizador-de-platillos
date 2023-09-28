@@ -20,20 +20,20 @@ export class IngredientResolver {
 
     @Authorized()
     @Mutation(() => Ingredient, {name: 'CreateIngredient'})
-    async createIngredient(@Arg('newIngredient'){name, presentation, costPerGram, performance, supplier, performancePercentage, mermado, productMultiplyByTwo}: IngredientType): Promise<Ingredient>{
+    async createIngredient(@Arg('newIngredient'){name,brand,unit,presentation,cost, costPerGram, performance, supplier, performancePercentage, mermado}: IngredientType): Promise<Ingredient>{
         const ingredientCreated = (
-            await IngredientModel.create({name, presentation, costPerGram, performance, supplier, performancePercentage, mermado, productMultiplyByTwo})
+            await IngredientModel.create({name,brand,unit,presentation,cost, costPerGram, performance, supplier, performancePercentage, mermado, })
         ).save();
         return ingredientCreated;
     }
 
     @Authorized()
     @Mutation(() => Ingredient, {name: 'updateIngredient'})
-    async updateIngredient (@Arg('updateIngredient'){id, name, presentation, costPerGram, performance, supplier, performancePercentage, mermado, productMultiplyByTwo}: IngredientType): Promise<Ingredient>{
+    async updateIngredient (@Arg('updateIngredient'){id,name,brand,unit,presentation,cost,costPerGram, performance, supplier, performancePercentage, mermado}: IngredientType): Promise<Ingredient>{
         const updatedIngredient = (
             await IngredientModel.findByIdAndUpdate({_id:id},
                 {
-                    name,  presentation, costPerGram, performance, supplier, performancePercentage, mermado, productMultiplyByTwo
+                    name,brand,unit,presentation,cost, costPerGram, performance, supplier, performancePercentage, mermado
                 }, {new: true}
             )
         );

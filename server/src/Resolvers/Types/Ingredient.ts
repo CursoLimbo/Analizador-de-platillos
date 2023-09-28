@@ -11,7 +11,16 @@ export class IngredientType implements Partial<Ingredient>{
     name: string;
 
     @Field()
+    brand?: string;
+
+    @Field()
+    unit?: string;
+
+    @Field()
     presentation: number;
+
+    @Field()
+    cost?: number;
 
     @Field()
     costPerGram: number;
@@ -27,8 +36,4 @@ export class IngredientType implements Partial<Ingredient>{
 
     @Field()
     mermado: number;
-
-    @Field()
-    productMultiplyByTwo: number;
-
 }

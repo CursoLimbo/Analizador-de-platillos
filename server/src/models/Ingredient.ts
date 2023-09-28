@@ -11,10 +11,21 @@ export class Ingredient{
     @Property({type: () => String, required: true})
     name: string;
 
+    @Field()
+    @Property({type: () => String, required: true})
+    brand: string;
+
+    @Field()
+    @Property({type: () => String, required: true})
+    unit: string;
 
     @Field()
     @Property({type: () => Number, required: true})
     presentation: number;
+
+    @Field()
+    @Property({type: () => Number, required: true})
+    cost: number;
 
     @Field()
     @Property({type: () => Number, required: true})
@@ -36,10 +47,6 @@ export class Ingredient{
     @Field()
     @Property({type: () => Number, required: true})
     mermado: number;
-
-    @Field()
-    @Property({type: () => Number, required: true})
-    productMultiplyByTwo: number;
 
 }
 

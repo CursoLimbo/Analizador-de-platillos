@@ -3,15 +3,17 @@ import { gql } from "apollo-boost";
 export const getIngredientById = gql`
 query GetIngredient($getIngredientId: String!) {
   getIngredient(id: $getIngredientId) {
-    id
+    brand
+    cost
     costPerGram
     mermado
     name
     performance
     performancePercentage
     presentation
-    productMultiplyByTwo
     supplier
+    unit
+    id
   }
 }
 `;
@@ -19,15 +21,17 @@ query GetIngredient($getIngredientId: String!) {
 export const getAllIngredients = gql`
 query GetAllIngredients {
   GetAllIngredients {
-    supplier
-    productMultiplyByTwo
-    presentation
-    performancePercentage
-    performance
-    name
-    mermado
-    id
+    brand
+    cost
     costPerGram
+    mermado
+    name
+    performance
+    performancePercentage
+    presentation
+    supplier
+    unit
+    id
   }
 }
 `;
@@ -35,14 +39,16 @@ query GetAllIngredients {
 export const createIngredientMutation = gql`
   mutation Mutation($newIngredient: IngredientType!) {
     CreateIngredient(newIngredient: $newIngredient) {
-      supplier
-      productMultiplyByTwo
-      presentation
-      performancePercentage
-      performance
-      name
-      mermado
+      brand
+      cost
       costPerGram
+      mermado
+      name
+      performance
+      performancePercentage
+      presentation
+      supplier
+      unit
     }
   }
 `;
