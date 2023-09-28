@@ -18,23 +18,26 @@ export class RecipeType implements Partial<Recipe>{
     procedure: string;
 
     @Field()
+    quantity: number;
+
+    @Field({nullable: true})
     totalCostPerQuantity: number;
 
-    @Field()
+    @Field({nullable: true})
     PercentageInflation: number;
 
-    @Field()
+    @Field({nullable: true})
     salesTax: number;
 
-    @Field()
+    @Field({nullable: true})
     serviceTax: number;
 
-    @Field()
+    @Field({nullable: true})
     utilities: number;
 
-    @Field()
+    @Field({nullable: true})
     revenue: number;
 
-    @Field()
+    @Field({nullable: true})
     unitCost: number;
 }

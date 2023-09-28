@@ -21,7 +21,7 @@ export const AppModules = [
     {
         img: "/recipes.jpg",
         buttonName: "Recetas",
-        ref: ''
+        ref: 'recipeRegister'
     },
     {
         img: "/catalogues.jpg",
