@@ -16,17 +16,20 @@ import { useGetAllSupplierQuery } from "../hooks/services/Supplier";
 import { useCreateIngredientMutation } from "../hooks/services/Ingredients";
 import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
 import { useRouter } from "next/router";
+import { weigthUnit } from "hooks/utils/DataUnits";
 
 type IngredientFormData = {
   name: string;
+  brand:string
+  unit: string;
   presentation: number;
-  price: number;
+  cost: number;
   supplier: string;
   costPerGram: number;
   performance: number;
   performancePercentage: number;
   mermado: number;
-  productMultiplyByTwo: number;
+
 };
 
 const IngredientsRegister: React.FunctionComponent = () => {
@@ -42,21 +45,21 @@ const IngredientsRegister: React.FunctionComponent = () => {
   const Router = useRouter();
 
   //read form data
-  const price = watch("price", 0);
+  const cost = watch("cost", 0);
   const presentation = watch("presentation", 0);
   const performance = watch("performance", 0);
   const costPerGram = watch("costPerGram", 0);
   const performancePercentage = watch("performancePercentage", 0);
-
+  const [unitCalc,setUnitCalc] = useState(1);
   //calc gramPrice
   useEffect(() => {
-    if (price > 0 && presentation > 0) {
-      const valCostPerGram = price / presentation;
-      setValue("costPerGram", Number(valCostPerGram.toFixed(2)));
+    if (cost > 0 && presentation > 0) {
+      const valCostPerGram = cost / (presentation * unitCalc);
+      setValue("costPerGram", Number(valCostPerGram.toFixed(4)));
     } else {
       setValue("costPerGram", 0);
     }
-  }, [price, presentation]);
+  }, [cost, presentation,unitCalc]);
 
   //calc performance percent
   useEffect(() => {
@@ -67,40 +70,49 @@ const IngredientsRegister: React.FunctionComponent = () => {
       setValue("performancePercentage", 0);
     }
   }, [performance]);
-  //calc mermado and productX2
+  //calc mermado
   useEffect(() => {
     if (costPerGram > 0 && performancePercentage > 0) {
       const valmermado = Number(
-        (costPerGram * performancePercentage).toFixed(2)
+        (costPerGram * performance / 100).toFixed(4)
       );
 
       setValue("mermado", valmermado);
-      setValue("productMultiplyByTwo", valmermado * 2);
     } else {
       setValue("mermado", 0);
-      setValue("productMultiplyByTwo", 0);
     }
-  }, [performance]);
+  }, [performance,costPerGram]);
+
+
 
   const [selectedSupplier, setSelectedSupplier] = useState("");
+  const [selectedUnit, setSelectedUnit] = useState("");
   const { data: suppliersData, loading: suppliersLoading } =
     useGetAllSupplierQuery();
 
-  const onSubmit = async (data: IngredientFormData) => {
-    const { price, ...formData } = data;
+    useEffect(()=>{
+      setUnitCalc(weigthUnit[selectedUnit])
+    },[selectedUnit])
 
-    const updatedFormData: Omit<IngredientFormData, "price"> = {
-      ...formData,
+  const onSubmit = async (data: IngredientFormData) => {
+    const newIngredient : IngredientFormData = {
+      name: data.name,
+      brand:data.brand,
+      unit: data.unit,
       presentation: Number(data.presentation),
+      cost: Number(data.cost),
+      supplier: data.supplier,
+      costPerGram: data.costPerGram,
       performance: Number(data.performance),
-      costPerGram: Number(data.costPerGram.toString()),
-      performancePercentage: Number(data.performancePercentage.toString()),
-      mermado: Number(data.mermado.toString()),
-      productMultiplyByTwo: Number(data.productMultiplyByTwo.toString()),
-    };
+      performancePercentage: data.performancePercentage,
+      mermado: data.mermado,
+
+    }
+
+
     const confirm = await ConfirmAlert();
     if (confirm) {
-      mutate({ variables: { newIngredient: updatedFormData } })
+      mutate({ variables: { newIngredient: newIngredient } })
         .then((response) => {
           SuccessAlert("Ingrediente registrado exitosamente");
           Router.push("/ingredients");
@@ -108,6 +120,7 @@ const IngredientsRegister: React.FunctionComponent = () => {
         .catch((error) => {
           ErrorAlert("Ingrediente no registrado");
         });
+      console.log(newIngredient)
     }
   };
 
@@ -137,10 +150,41 @@ const IngredientsRegister: React.FunctionComponent = () => {
               error={!!errors.name}
               helperText={errors.name && "Este campo es requerido"}
             />
+<FormControl
+  className={ingredientsRegisterStyles.FormControlRoot}
+  error={!!errors.unit}
+>
+  <InputLabel id="unit-label">Unidad</InputLabel>
+  <Select
+    labelId="unit-label"
+    id="IngUnit"
+    label="Unidad"
+    value={selectedUnit}
+    {...register("unit", { required: true })}
+    onChange={(e: SelectChangeEvent) => setSelectedUnit(e.target.value)}
+    
+    
+  >
+    {suppliersLoading ? (
+      <MenuItem value="">Loading...</MenuItem>
+    ) : (
+      Object.keys(weigthUnit).map((unit: string) => (
+        <MenuItem key={unit} value={unit}>
+          {unit}
+        </MenuItem>
+      ))
+    )}
+  </Select>
+  {errors.unit && (
+    <FormHelperText>Este campo es requerido</FormHelperText>
+  )}
+</FormControl>
+
             <TextField
               id="IngFormat"
               label="Presentación"
               variant="outlined"
+              type="decimal"
               className={ingredientsRegisterStyles.TextFieldRoot}
               {...register("presentation", { required: true })}
               error={!!errors.presentation}
@@ -150,10 +194,12 @@ const IngredientsRegister: React.FunctionComponent = () => {
               id="IngPrice"
               label="Precio"
               variant="outlined"
+
+              type="decimal"
               className={ingredientsRegisterStyles.TextFieldRoot}
-              {...register("price", { required: true })}
-              error={!!errors.price}
-              helperText={errors.price && "Este campo es requerido"}
+              {...register("cost", { required: true })}
+              error={!!errors.cost}
+              helperText={errors.cost && "Este campo es requerido"}
             />
             <FormControl
               className={ingredientsRegisterStyles.FormControlRoot}
@@ -195,8 +241,17 @@ const IngredientsRegister: React.FunctionComponent = () => {
             spacing={5}
           >
             <TextField
+              id="brand"
+              label="Marca"
+              variant="outlined"
+              className={ingredientsRegisterStyles.TextFieldRoot}
+              {...register("brand", { required: true })}
+              error={!!errors.brand}
+              helperText={errors.brand && "Este campo es requerido"}
+            />
+            <TextField
               id="GramPrice"
-              label="Precio por gramo"
+              label="Precio(g)"
               variant="outlined"
               className={ingredientsRegisterStyles.TextFieldRoot}
               InputProps={{
@@ -232,16 +287,6 @@ const IngredientsRegister: React.FunctionComponent = () => {
                 readOnly: true,
               }}
               {...register("mermado")}
-            />
-            <TextField
-              id="ProductoX2"
-              label="Producto x 2"
-              variant="outlined"
-              className={ingredientsRegisterStyles.TextFieldRoot}
-              InputProps={{
-                readOnly: true,
-              }}
-              {...register("productMultiplyByTwo")}
             />
           </Stack>
         </Stack>

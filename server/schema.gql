@@ -103,6 +103,8 @@ input DiscountType {
 
 """The ingredient model"""
 type Ingredient {
+  brand: String!
+  cost: Float!
   costPerGram: Float!
   id: ID!
   mermado: Float!
@@ -110,11 +112,13 @@ type Ingredient {
   performance: Float!
   performancePercentage: Float!
   presentation: Float!
-  productMultiplyByTwo: Float!
   supplier: String!
+  unit: String!
 }
 
 input IngredientType {
+  brand: String!
+  cost: Float!
   costPerGram: Float!
   id: ID
   mermado: Float!
@@ -122,8 +126,8 @@ input IngredientType {
   performance: Float!
   performancePercentage: Float!
   presentation: Float!
-  productMultiplyByTwo: Float!
   supplier: String!
+  unit: String!
 }
 
 """The manager model"""
