@@ -7,7 +7,7 @@ export const AppModules = [
     {
         img: "/clients.jpg",
         buttonName: "Clientes",
-        ref: ''
+        ref: '/clientRegister'
     },
     {
         img: "/suppliers.jpg",
