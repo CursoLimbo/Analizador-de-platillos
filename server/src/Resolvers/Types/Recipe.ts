@@ -18,7 +18,7 @@ export class RecipeType implements Partial<Recipe>{
     procedure: string;
 
     @Field()
-    quantity: number;
+    portions: number;
 
     @Field({nullable: true})
     totalCostPerQuantity: number;
