@@ -8,10 +8,15 @@ query GetRecipe($getRecipeId: String!) {
 }
 `;
 
-export const getAllRecipes = `
+export const getAllRecipes = gql`
 query GetAllRecipes {
   GetAllRecipes {
     id
+    name
+    procedure
+    ingredients
+    portions
+    totalCostPerQuantity
   }
 }
 `;
