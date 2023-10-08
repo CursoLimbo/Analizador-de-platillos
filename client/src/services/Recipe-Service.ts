@@ -40,8 +40,8 @@ mutation UpdateRecipe($updateRecipe: RecipeType!) {
 }
 `;
 
-export const deleteRecipeMutation = `
-mutation DeleteRecipe($deleteRecipeId: String!) {
+export const deleteRecipeMutation = gql`
+mutation Mutation($deleteRecipeId: String!) {
   deleteRecipe(id: $deleteRecipeId)
 }
 `;

@@ -1,10 +1,11 @@
 import React,{ useEffect, useMemo, useState } from "react";
-import { useGetAllRecipes } from "hooks/services/Recipe";
+import { useGetAllRecipes,useDeleteRecipeMutation } from "hooks/services/Recipe";
 import TableData from "../components/dataTable"
 import { QueryResult } from "@apollo/client";
 import { OperationVariables } from "apollo-boost";
 import { useRouter } from "next/router";
 import { Box, Stack } from "@mui/material";
+import { ErrorAlert, SuccessAlert } from "components/sweetAlert";
 
 
 
@@ -15,11 +16,22 @@ const Recipes: React.FC = () =>{
   const [rows, setRows] = useState<RowData[]>([])
   const [dataLoaded, setDataLoaded] = useState(false)
   const [dataVersion, setDataVersion] = useState(0);
+  const [deleteRecipe] = useDeleteRecipeMutation();
   const router = useRouter();
   const createObj = '/recipeRegister'
   
   const handleUpdate = () => {}
-  const handleDelete = () => {}
+  const handleDelete = async (id: string) => {
+
+    deleteRecipe({ variables: { deleteRecipeId: id } })
+      .then((response: any) => {
+        SuccessAlert('Receta(s) eliminada(s)')
+        rowsData.refetch();
+      })
+      .catch((error: any) => {
+        ErrorAlert('Error al eliminar')
+      });
+  };
 
   useEffect(() => {
     console.log(rowsData)

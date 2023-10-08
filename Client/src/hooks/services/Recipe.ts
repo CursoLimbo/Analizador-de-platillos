@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from "@apollo/react-hooks";
-import { createRecipeMutation,getAllRecipes } from "services/Recipe-Service";
+import { createRecipeMutation,getAllRecipes,deleteRecipeMutation } from "services/Recipe-Service";
 
 export const useCreateRecipeMutation = () => {
     return useMutation(createRecipeMutation);
@@ -7,4 +7,8 @@ export const useCreateRecipeMutation = () => {
 
 export const useGetAllRecipes = () =>{
     return useQuery(getAllRecipes)
+}
+
+export const useDeleteRecipeMutation = () =>{
+    return useMutation(deleteRecipeMutation)
 }
