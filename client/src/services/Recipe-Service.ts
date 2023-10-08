@@ -8,10 +8,15 @@ query GetRecipe($getRecipeId: String!) {
 }
 `;
 
-export const getAllRecipes = `
+export const getAllRecipes = gql`
 query GetAllRecipes {
   GetAllRecipes {
     id
+    name
+    procedure
+    ingredients
+    portions
+    totalCostPerQuantity
   }
 }
 `;
@@ -35,8 +40,8 @@ mutation UpdateRecipe($updateRecipe: RecipeType!) {
 }
 `;
 
-export const deleteRecipeMutation = `
-mutation DeleteRecipe($deleteRecipeId: String!) {
+export const deleteRecipeMutation = gql`
+mutation Mutation($deleteRecipeId: String!) {
   deleteRecipe(id: $deleteRecipeId)
 }
 `;

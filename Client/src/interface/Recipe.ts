@@ -1,5 +1,5 @@
 interface Recipe {
     name: string;
-    quantity :  number;
+    portions :  number;
     procedure: string;
   }

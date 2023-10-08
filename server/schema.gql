@@ -273,8 +273,8 @@ type Recipe {
   id: ID!
   ingredients: [String!]!
   name: String!
+  portions: Float!
   procedure: String!
-  quantity: Float!
   revenue: Float!
   salesTax: Float!
   serviceTax: Float!
@@ -288,8 +288,8 @@ input RecipeType {
   id: ID
   ingredients: [String!]!
   name: String!
+  portions: Float!
   procedure: String!
-  quantity: Float!
   revenue: Float
   salesTax: Float
   serviceTax: Float

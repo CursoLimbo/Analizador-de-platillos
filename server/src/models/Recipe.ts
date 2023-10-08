@@ -23,7 +23,7 @@ export class Recipe{
 
     @Field()
     @Property({type: () => Number, required: true})
-    quantity: number;
+    portions: number;
 
     @Field()
     @Property({type: () => Number, required: false})

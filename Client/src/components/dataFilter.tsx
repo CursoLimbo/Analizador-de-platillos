@@ -29,7 +29,7 @@ const DataFilter: React.FC<DataFilt> = ({ rows, onDataFiltered }) => {
     <Stack className={ingredientsStyle.root}>
       <TextField
         id="search-bar"
-        label="Buscar Ingrediente"
+        label="Buscar"
         variant="outlined"
         value={searchValue}
         onChange={handleChange}
