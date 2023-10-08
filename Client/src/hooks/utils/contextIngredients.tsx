@@ -26,7 +26,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
     const [ingredientsIDsArray, setIngredientsIDsArray] = useState<string[]>([]);
     const [Recipe, setRecipe] = useState<Recipe>({
         name: '',
-        quantity :  0,
+        portions :  0,
         procedure: ''
       });
 

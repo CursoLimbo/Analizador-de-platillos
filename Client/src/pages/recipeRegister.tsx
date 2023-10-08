@@ -10,7 +10,7 @@ import { AppButton } from "components/Button";
 
 type RecipeFormatdata = {
   name: string;
-  quantity: number;
+  portions: number;
   procedure: string;
   ingredients: string[];
 };
@@ -25,7 +25,8 @@ const RecipeRegister: React.FC = () => {
   } = useForm<RecipeFormatdata>();
   const [mutate] = useCreateRecipeMutation();
   const router = useRouter();
-  const { ingredientsIDsArray, setIngredientsIDsArray ,Recipe,setRecipe} = useContextData();
+  const { ingredientsIDsArray, setIngredientsIDsArray, Recipe, setRecipe } =
+    useContextData();
   const [procedure, setProcedure] = useState("");
   const [contextText, setContextText] = useState("");
   const [ingredients, setIngredients] = useState<string[]>([]);
@@ -40,40 +41,36 @@ const RecipeRegister: React.FC = () => {
   }, [ingredientsIDsArray]);
 
   const nameRecipe = watch("name", "");
-  const quantity = watch("quantity", 0);
-
+  const portions = watch("portions", 0);
 
   const handleSelectIngredients = () => {
     RecipeContext();
     router.push("/addIngredientsToRecipe");
   };
 
-const RecipeContext=()=>{
+  const RecipeContext = () => {
+    const newRecipe = {
+      name: nameRecipe,
+      portions: Number(portions),
+      procedure: procedure,
+    };
 
-  const newRecipe = {
-    name: nameRecipe,
-    quantity: Number(quantity),
-    procedure: procedure,
-  }
-
-  setRecipe(newRecipe)
+    setRecipe(newRecipe);
   };
 
   useEffect(() => {
-    if (Recipe.name!== ''){
-      setValue("name", Recipe.name)
+    if (Recipe.name !== "") {
+      setValue("name", Recipe.name);
     }
-  
-    if (Recipe.quantity!== 0){
-      setValue("quantity", Recipe.quantity)
+
+    if (Recipe.portions !== 0) {
+      setValue("portions", Recipe.portions);
     }
-    if (Recipe.procedure!== ''){
+    if (Recipe.procedure !== "") {
       console.log(Recipe.procedure);
-      setContextText(Recipe.procedure)
+      setContextText(Recipe.procedure);
     }
   }, [Recipe]);
-
-
 
   const clearContext = () => {
     const clearContext: string[] = [];
@@ -83,7 +80,7 @@ const RecipeContext=()=>{
   const onSubmit = async (data: RecipeFormatdata) => {
     const newRecipes: RecipeFormatdata = {
       name: data.name,
-      quantity: Number(data.quantity),
+      portions: Number(data.portions),
       procedure: procedure,
       ingredients: ingredients,
     };
@@ -132,12 +129,12 @@ const RecipeContext=()=>{
 
           <TextField
             id="recipeCant"
-            label="Cantidad (g)"
+            label="Porciones"
             variant="outlined"
             type="number"
-            {...register("quantity", { required: true })}
-            error={!!errors.quantity}
-            helperText={errors.quantity && "Este campo es requerido"}
+            {...register("portions", { required: true })}
+            error={!!errors.portions}
+            helperText={errors.portions && "Este campo es requerido"}
           />
         </Stack>
         <Stack width={600} height={200}>
@@ -146,7 +143,10 @@ const RecipeContext=()=>{
               + Ingredientes
             </AppButton>
           </Stack>
-          <RichTextEditor handleSetText={handleSetText} contextText={contextText} />
+          <RichTextEditor
+            handleSetText={handleSetText}
+            contextText={contextText}
+          />
         </Stack>
         <Stack>
           <AppButton type="submit">Guardar</AppButton>
