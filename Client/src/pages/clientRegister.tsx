@@ -9,8 +9,8 @@ type ClientFormatData = {
     name: string;
     email: string;
     location: string;
-    whatsapp: number;
-    phone: number;
+    whatsapp: string;
+    phone: string;
 };
 
 const clientRegister: React.FC= () => {
@@ -125,6 +125,7 @@ return (
             id="email"
             label="Correo electrónico"
             variant="outlined"
+            type="email"
             {...register("name", { required: true })}
             error={!!errors.name}
             helperText={errors.name && "Este campo es requerido"}
