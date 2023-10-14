@@ -17,6 +17,8 @@ const AddIngredientsToRecipe: React.FC = () => {
   const [dataVersion, setDataVersion] = useState(0);
   let rowsData: QueryResult<any, OperationVariables> = useGetAllIngredients();
   const router = useRouter();
+  const [ingredientQuantity,setIngredientQuantity]=useState(0)
+  const [totalCostIngredient,setTotalCostIngredient]= useState(0)
 
   useEffect(() => {
     if (rowsData && rowsData.data) {
@@ -104,27 +106,24 @@ useEffect(() => {
       
   }
 
-
-
-
   const columns = useMemo(() => {
     if (rows.length > 0) {
       return [
-        { field: "id", headerName: "ID", width: 0, editable: true },
-        { field: "name", headerName: "Nombre", width: 150, editable: true },
+        // { field: "id", headerName: "ID", width: 0, editable: true },
+        { field: "name", headerName: "Nombre", width: 150, editable: false },
         {
           field: "supplier",
           headerName: "Proveedor",
           width: 200,
-          editable: true,
+          editable: false,
         },
         {
           field: "presentation",
           headerName: "Presentación",
           width: 100,
-          editable: true,
+          editable: false,
         },
-        { field: "mermado", headerName: "Mermado", width: 100, editable: true },
+        { field: "mermado", headerName: "Mermado", width: 100, editable: false },
       ];
     }
     return [];
@@ -134,20 +133,22 @@ useEffect(() => {
     if (rows2.length > 0) {
       return [
         { field: "id", headerName: "ID", width: 0, editable: true },
-        { field: "name", headerName: "Nombre", width: 150, editable: true },
+        { field: "name", headerName: "Nombre", width: 150, editable: false },
+        // {
+        //   field: "supplier",
+        //   headerName: "Proveedor",
+        //   width: 200,
+        //   editable: false,
+        // },
         {
-          field: "supplier",
-          headerName: "Proveedor",
-          width: 200,
-          editable: true,
-        },
-        {
-          field: "presentation",
-          headerName: "Presentación",
+          field: "costPerGram",
+          headerName: "Costo/g",
           width: 100,
-          editable: true,
+          editable: false,
         },
-        { field: "mermado", headerName: "Mermado", width: 100, editable: true },
+        { field: "ingredientQuantity", headerName: "Cantidad", width: 100, editable: true },
+        { field: "totalCostIngredient", headerName: "Costo", width: 100, editable: false },
+        // { field: "mermado", headerName: "Mermado", width: 100, editable: true },
       ];
     }
     return [];
