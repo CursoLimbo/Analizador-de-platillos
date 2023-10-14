@@ -271,7 +271,8 @@ input QuotationType {
 type Recipe {
   PercentageInflation: Float!
   id: ID!
-  ingredients: [String!]!
+  ingredientsId: [String!]!
+  ingredientsQuantity: [Float!]!
   name: String!
   portions: Float!
   procedure: String!
@@ -286,7 +287,8 @@ type Recipe {
 input RecipeType {
   PercentageInflation: Float
   id: ID
-  ingredients: [String!]!
+  ingredientsId: [String!]!
+  ingredientsQuantity: [Float!]!
   name: String!
   portions: Float!
   procedure: String!

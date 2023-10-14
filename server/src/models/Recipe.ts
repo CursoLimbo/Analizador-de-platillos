@@ -12,10 +12,13 @@ export class Recipe{
     @Property({type: () => String, required: true})
     name: string;
 
-
     @Field(type => [String])
     @Property({type: () => [String] , required: true})
-    ingredients: string[];
+    ingredientsId: string[];
+
+    @Field(type => [Number])
+    @Property({type: () => [Number] , required: true})
+    ingredientsQuantity: number[];
 
     @Field()
     @Property({type: () => String, required: true})

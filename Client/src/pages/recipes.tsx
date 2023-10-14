@@ -34,7 +34,7 @@ const Recipes: React.FC = () =>{
   };
 
   useEffect(() => {
-    console.log(rowsData)
+    console.log(rowsData.data)
     if (rowsData && rowsData.data) {
       setRows(rowsData.data.GetAllRecipes.slice());
       setDataLoaded(true);

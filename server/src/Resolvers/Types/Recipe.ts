@@ -12,7 +12,10 @@ export class RecipeType implements Partial<Recipe>{
     name: string;
 
     @Field(type => [String])
-    ingredients: string[];
+    ingredientsId: string[];
+
+    @Field(type => [Number])
+    ingredientsQuantity: number[];
 
     @Field()
     procedure: string;
