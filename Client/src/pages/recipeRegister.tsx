@@ -37,7 +37,8 @@ const RecipeRegister: React.FC = () => {
 
   useEffect(() => {
     let tempIngredients = [...ingredientsIDsArray];
-    setIngredients(tempIngredients);
+    console.log('context recipe: '+tempIngredients[0].name)
+    // setIngredients(tempIngredients);
   }, [ingredientsIDsArray]);
 
   const nameRecipe = watch("name", "");
@@ -90,15 +91,15 @@ const RecipeRegister: React.FC = () => {
 
     if (confirm) {
       console.log(newRecipes);
-      mutate({ variables: { newRecipe: newRecipes } })
-        .then((response) => {
-          SuccessAlert("Receta registrada exitosamente");
-          clearContext();
-        })
-        .catch((error) => {
-          console.log(error);
-          ErrorAlert("Receta no registrada");
-        });
+      // mutate({ variables: { newRecipe: newRecipes } })
+      //   .then((response) => {
+      //     SuccessAlert("Receta registrada exitosamente");
+      //     clearContext();
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     ErrorAlert("Receta no registrada");
+      //   });
     }
   };
 
