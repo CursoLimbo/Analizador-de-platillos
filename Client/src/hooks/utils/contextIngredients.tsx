@@ -5,8 +5,8 @@ import React,{ createContext, useContext,useState, ReactNode} from "react";
 // defines the state of the context
 
 interface IContext {
-    ingredientsIDsArray: string[];
-    setIngredientsIDsArray: React.Dispatch<React.SetStateAction<string[]>>;
+    ingredientsIDsArray: RecipeIngredient[];
+    setIngredientsIDsArray: React.Dispatch<React.SetStateAction<RecipeIngredient[]>>;
     Recipe : Recipe;
     setRecipe: React.Dispatch<React.SetStateAction<Recipe>>;
 
@@ -23,7 +23,7 @@ const Context = createContext<IContext>({} as IContext);
 //create provider
 
 export const ContextProvider = ({ children }: { children: ReactNode }) => {
-    const [ingredientsIDsArray, setIngredientsIDsArray] = useState<string[]>([]);
+    const [ingredientsIDsArray, setIngredientsIDsArray] = useState<RecipeIngredient[]>([]);
     const [Recipe, setRecipe] = useState<Recipe>({
         name: '',
         portions :  0,
