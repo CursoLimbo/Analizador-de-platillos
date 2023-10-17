@@ -38,6 +38,7 @@ const clientRegister: React.FC= () => {
           mutate({ variables: { newClient: newClients } })
             .then((response) => {
               SuccessAlert("Cliente registrado exitosamente");
+              window.location.reload();
             })
             .catch((error) => {
               console.log(error);
@@ -63,51 +64,30 @@ return (
         spacing={5}
         width={300}
         alignItems={"center"}>
-            <Stack
-          direction={"column"}
-          spacing={5}
-          width={300}
-          alignItems={"center"}
-        >
           <TextField
-            id="clientName"
+            id="name"
             label="Nombre"
             variant="outlined"
             {...register("name", { required: true })}
             error={!!errors.name}
             helperText={errors.name && "Este campo es requerido"}
           />
-        </Stack>
-        <Stack
-          direction={"column"}
-          spacing={5}
-          width={300}
-          alignItems={"center"}
-        >
           <TextField
-            id="address"
+            id="location"
             label="Ubicación"
             variant="outlined"
-            {...register("name", { required: true })}
-            error={!!errors.name}
-            helperText={errors.name && "Este campo es requerido"}
+            {...register("location", { required: true })}
+            error={!!errors.location}
+            helperText={errors.location && "Este campo es requerido"}
           />
-        </Stack>
-        <Stack
-          direction={"column"}
-          spacing={5}
-          width={300}
-          alignItems={"center"}
-        >
           <TextField
-            id="phoneNumber"
+            id="phone"
             label="Teléfono"
             variant="outlined"
-            {...register("name", { required: true })}
-            error={!!errors.name}
-            helperText={errors.name && "Este campo es requerido"}
+            {...register("phone", { required: true })}
+            error={!!errors.phone}
+            helperText={errors.phone && "Este campo es requerido"}
           />
-        </Stack>
         </Stack>
 
         <Stack
@@ -115,37 +95,23 @@ return (
         spacing={5}
         width={300}
         alignItems={"center"}>
-        <Stack
-          direction={"column"}
-          spacing={5}
-          width={300}
-          alignItems={"center"}
-        >
           <TextField
             id="email"
             label="Correo electrónico"
             variant="outlined"
             type="email"
-            {...register("name", { required: true })}
-            error={!!errors.name}
-            helperText={errors.name && "Este campo es requerido"}
+            {...register("email", { required: true })}
+            error={!!errors.email}
+            helperText={errors.email && "Este campo es requerido"}
           />
-        </Stack>
-        <Stack
-          direction={"column"}
-          spacing={5}
-          width={300}
-          alignItems={"center"}
-        >
           <TextField
             id="whatsapp"
             label="WhatsApp"
             variant="outlined"
-            {...register("name", { required: true })}
-            error={!!errors.name}
-            helperText={errors.name && "Este campo es requerido"}
+            {...register("whatsapp", { required: true })}
+            error={!!errors.whatsapp}
+            helperText={errors.whatsapp && "Este campo es requerido"}
           />
-        </Stack>
         </Stack>
         </Stack>
 
