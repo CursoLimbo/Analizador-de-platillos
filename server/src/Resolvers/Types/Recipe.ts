@@ -1,5 +1,7 @@
 import { Field, InputType, ID } from 'type-graphql';
 import { Recipe } from '../../models/Recipe';
+
+
 @InputType()
 export class IngredientRecipeType {
     @Field()

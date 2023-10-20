@@ -1,6 +1,7 @@
 import { Resolver, Mutation, Arg, Query, Authorized } from "type-graphql";
 import { Recipe, RecipeModel } from "../models/Recipe";
 import { RecipeType } from "./Types/Recipe";
+import { IngredientRecipeType } from "./Types/Recipe"; // Ensure this import
 
 @Resolver(_of => Recipe)
 export class RecipeResolver {
@@ -19,7 +20,20 @@ export class RecipeResolver {
     @Authorized()
     @Mutation(_returns => Recipe, { name: 'CreateRecipe' })
     async createRecipe(@Arg('newRecipe') newRecipe: RecipeType): Promise<Recipe> {
-        return RecipeModel.create(newRecipe);
+        const ingredients = newRecipe.ingredients.map(ingredient => {
+            const newIngredient = new IngredientRecipeType();
+            newIngredient.idIngredient = ingredient.idIngredient;
+            newIngredient.nameIngredient = ingredient.nameIngredient;
+            newIngredient.quantity = ingredient.quantity;
+            return newIngredient;
+        });
+
+        const recipe = new RecipeModel({
+            ...newRecipe,
+            ingredients,
+        });
+
+        return recipe.save();
     }
 
     @Authorized()
@@ -29,6 +43,7 @@ export class RecipeResolver {
             updateQuotation.id,
             {
                 ...updateQuotation,
+                ingredients: updateQuotation.ingredients.map(ingredient => ({ ...ingredient })),
             },
             { new: true }
         );
