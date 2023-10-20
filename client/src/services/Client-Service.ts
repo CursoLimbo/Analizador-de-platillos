@@ -37,3 +37,15 @@ export const DeleteClient = gql`
     deleteClient(id: $id)
   }
 `;
+
+export const CreateClientMutation = gql`
+mutation Mutation($newClient: ClientType!) {
+  CreateClient(newClient: $newClient) {
+    email
+    id
+    location
+    name
+    phone
+    whatsapp
+  }
+}`;
