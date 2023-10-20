@@ -37,7 +37,7 @@ const RecipeRegister: React.FC = () => {
 
   useEffect(() => {
     let tempIngredients = [...ingredientsIDsArray];
-    console.log('context recipe: '+tempIngredients[0].name)
+    console.log('context recipe: '+tempIngredients)
     // setIngredients(tempIngredients);
   }, [ingredientsIDsArray]);
 
