@@ -29,7 +29,7 @@ const RecipeRegister: React.FC = () => {
     useContextData();
   const [procedure, setProcedure] = useState("");
   const [contextText, setContextText] = useState("");
-  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [ingredients, setIngredients] = useState<RecipeIngredient[]>([]);
 
   const handleSetText = (text: string) => {
     setProcedure(text);
@@ -37,7 +37,8 @@ const RecipeRegister: React.FC = () => {
 
   useEffect(() => {
     let tempIngredients = [...ingredientsIDsArray];
-    setIngredients(tempIngredients);
+    console.log('context recipe: '+tempIngredients)
+    // setIngredients(tempIngredients);
   }, [ingredientsIDsArray]);
 
   const nameRecipe = watch("name", "");
@@ -73,7 +74,7 @@ const RecipeRegister: React.FC = () => {
   }, [Recipe]);
 
   const clearContext = () => {
-    const clearContext: string[] = [];
+    const clearContext: RecipeIngredient[] = [];
     setIngredientsIDsArray(clearContext);
   };
 
@@ -82,22 +83,23 @@ const RecipeRegister: React.FC = () => {
       name: data.name,
       portions: Number(data.portions),
       procedure: procedure,
-      ingredients: ingredients,
+      ingredients: [''],
+      // ingredients: ingredients,
     };
 
     const confirm = await ConfirmAlert();
 
     if (confirm) {
       console.log(newRecipes);
-      mutate({ variables: { newRecipe: newRecipes } })
-        .then((response) => {
-          SuccessAlert("Receta registrada exitosamente");
-          clearContext();
-        })
-        .catch((error) => {
-          console.log(error);
-          ErrorAlert("Receta no registrada");
-        });
+      // mutate({ variables: { newRecipe: newRecipes } })
+      //   .then((response) => {
+      //     SuccessAlert("Receta registrada exitosamente");
+      //     clearContext();
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     ErrorAlert("Receta no registrada");
+      //   });
     }
   };
 

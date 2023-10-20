@@ -14,7 +14,8 @@ query GetAllRecipes {
     id
     name
     procedure
-    ingredients
+    ingredientsId
+    ingredientsQuantity
     portions
     totalCostPerQuantity
   }
