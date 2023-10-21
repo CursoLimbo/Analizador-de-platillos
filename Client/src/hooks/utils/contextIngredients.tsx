@@ -13,9 +13,6 @@ interface IContext {
     
 }
 
-
-
-
 // defines the context  
 
 const Context = createContext<IContext>({} as IContext);

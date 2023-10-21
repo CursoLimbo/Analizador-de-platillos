@@ -31,24 +31,24 @@ export class RecipeType implements Partial<Recipe> {
     @Field()
     portions: number;
 
-    @Field({ nullable: true })
+    @Field({ defaultValue: 0 })
     totalCostPerQuantity: number;
 
-    @Field({ nullable: true })
+    @Field({ defaultValue: 0 })
     PercentageInflation: number;
 
-    @Field({ nullable: true })
+    @Field({ defaultValue: 0 })
     salesTax: number;
 
-    @Field({ nullable: true })
+    @Field({ defaultValue: 0 })
     serviceTax: number;
 
-    @Field({ nullable: true })
+    @Field({ defaultValue: 0 })
     utilities: number;
 
-    @Field({ nullable: true })
+    @Field({ defaultValue: 0 })
     revenue: number;
 
-    @Field({ nullable: true })
+    @Field({ defaultValue: 0 })
     unitCost: number;
 }

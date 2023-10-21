@@ -12,7 +12,7 @@ type RecipeFormatdata = {
   name: string;
   portions: number;
   procedure: string;
-  ingredients: string[];
+  ingredients: RecipeIngredient[];
 };
 
 const RecipeRegister: React.FC = () => {
@@ -37,8 +37,7 @@ const RecipeRegister: React.FC = () => {
 
   useEffect(() => {
     let tempIngredients = [...ingredientsIDsArray];
-    console.log('context recipe: '+tempIngredients)
-    // setIngredients(tempIngredients);
+    setIngredients(tempIngredients);
   }, [ingredientsIDsArray]);
 
   const nameRecipe = watch("name", "");
@@ -68,7 +67,6 @@ const RecipeRegister: React.FC = () => {
       setValue("portions", Recipe.portions);
     }
     if (Recipe.procedure !== "") {
-      console.log(Recipe.procedure);
       setContextText(Recipe.procedure);
     }
   }, [Recipe]);
@@ -83,24 +81,27 @@ const RecipeRegister: React.FC = () => {
       name: data.name,
       portions: Number(data.portions),
       procedure: procedure,
-      ingredients: [''],
-      // ingredients: ingredients,
+      ingredients: ingredients,
     };
 
     const confirm = await ConfirmAlert();
-
-    if (confirm) {
-      console.log(newRecipes);
-      // mutate({ variables: { newRecipe: newRecipes } })
-      //   .then((response) => {
-      //     SuccessAlert("Receta registrada exitosamente");
-      //     clearContext();
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //     ErrorAlert("Receta no registrada");
-      //   });
+    if(ingredients.length>0){
+      if (confirm) {
+        mutate({ variables: { newRecipe: newRecipes } })
+          .then((response) => {
+            SuccessAlert("Receta registrada exitosamente");
+            clearContext();
+            router.push("/recipes");
+          })
+          .catch((error) => {
+            console.log(error);
+            ErrorAlert("Receta no registrada");
+          });
+      }
+    }else{
+      ErrorAlert("Debe agregar ingredientes");
     }
+
   };
 
   return (

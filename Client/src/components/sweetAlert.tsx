@@ -22,8 +22,8 @@ export const ErrorAlert = (title: string) => {
 
 export const ConfirmAlert = async (): Promise<boolean> => {
   const result = await Swal.fire({
-    title: "¿Estás Seguro?",
-    text: 'Los cambios no podran revertirse!',
+    title: "¿Estás seguro?",
+    text: 'Los cambios no podran revertirse.',
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",

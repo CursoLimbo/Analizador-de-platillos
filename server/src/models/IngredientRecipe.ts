@@ -14,7 +14,7 @@ export class IngredientRecipe{
     nameIngredient: string;
 
     @Field()
-    @Property({type: () => String, required: true})
+    @Property({type: () => Number, required: true})
     quantity: number;
 
   
