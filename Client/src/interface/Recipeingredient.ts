@@ -1,5 +1,5 @@
 interface RecipeIngredient {
-    id: string;
-    name: string;
+    idIngredient: string;
+    nameIngredient: string;
     quantity: number;
   }

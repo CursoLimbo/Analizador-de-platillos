@@ -116,6 +116,19 @@ type Ingredient {
   unit: String!
 }
 
+"""The IngredientRecipe model"""
+type IngredientRecipe {
+  idIngredient: String!
+  nameIngredient: String!
+  quantity: Float!
+}
+
+input IngredientRecipeType {
+  idIngredient: String!
+  nameIngredient: String!
+  quantity: Float!
+}
+
 input IngredientType {
   brand: String!
   cost: Float!
@@ -269,26 +282,9 @@ input QuotationType {
 
 """The recipe model"""
 type Recipe {
-  PercentageInflation: Float!
-  id: ID!
-  ingredientsId: [String!]!
-  ingredientsQuantity: [Float!]!
-  name: String!
-  portions: Float!
-  procedure: String!
-  revenue: Float!
-  salesTax: Float!
-  serviceTax: Float!
-  totalCostPerQuantity: Float!
-  unitCost: Float!
-  utilities: Float!
-}
-
-input RecipeType {
   PercentageInflation: Float
-  id: ID
-  ingredientsId: [String!]!
-  ingredientsQuantity: [Float!]!
+  id: ID!
+  ingredients: [IngredientRecipe!]!
   name: String!
   portions: Float!
   procedure: String!
@@ -298,6 +294,21 @@ input RecipeType {
   totalCostPerQuantity: Float
   unitCost: Float
   utilities: Float
+}
+
+input RecipeType {
+  PercentageInflation: Float = 0
+  id: ID
+  ingredients: [IngredientRecipeType!]!
+  name: String!
+  portions: Float!
+  procedure: String!
+  revenue: Float = 0
+  salesTax: Float = 0
+  serviceTax: Float = 0
+  totalCostPerQuantity: Float = 0
+  unitCost: Float = 0
+  utilities: Float = 0
 }
 
 """The supplier model"""

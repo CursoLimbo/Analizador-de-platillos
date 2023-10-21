@@ -54,12 +54,12 @@ const AddIngredientsToRecipe: React.FC = () => {
       const selectedIngredientRow = rows.find((ingredient) => ingredient.id === selectedIngredient);
 
       if (selectedIngredientRow) {
-        const isAlreadyAdded = ingredients.some((ingredient) => ingredient.id === selectedIngredient);
+        const isAlreadyAdded = ingredients.some((ingredient) => ingredient.idIngredient === selectedIngredient);
 
         if (!isAlreadyAdded) {
           const newIngredient: RecipeIngredient = {
-            id: selectedIngredient,
-            name: selectedIngredientRow.name,
+            idIngredient: selectedIngredient,
+            nameIngredient: selectedIngredientRow.name,
             quantity: parseFloat(ingredientQuantity),
           };
           setIngredients([...ingredients, newIngredient]);
@@ -73,19 +73,17 @@ const AddIngredientsToRecipe: React.FC = () => {
   };
 
   const handleRemoveIngredient = (id: string) => {
-    const updatedIngredients = ingredients.filter((ingredient) => ingredient.id !== id);
+    const updatedIngredients = ingredients.filter((ingredient) => ingredient.idIngredient !== id);
     setIngredients(updatedIngredients);
   };
 
   const handleSaveIngredients = () => {
-    console.log('handleSaveIngredients')
     const ingredientsToSave: RecipeIngredient[] = [];
 
     ingredients.forEach((ingredient) => {
-      const { id, name, quantity } = ingredient;
-      ingredientsToSave.push({ id, name, quantity });
+      const { idIngredient, nameIngredient, quantity } = ingredient;
+      ingredientsToSave.push({ idIngredient, nameIngredient, quantity });
     });
-    console.log(ingredientsToSave)
     setIngredientsIDsArray(ingredientsToSave);
     Router.push("/recipeRegister");
   };
@@ -137,12 +135,12 @@ const AddIngredientsToRecipe: React.FC = () => {
           <TableBody>
             {ingredients.map((ingredient, index) => (
               <TableRow key={index}>
-                <TableCell>{ingredient.id}</TableCell>
-                <TableCell>{ingredient.name}</TableCell>
+                <TableCell>{ingredient.idIngredient}</TableCell>
+                <TableCell>{ingredient.nameIngredient}</TableCell>
                 <TableCell>{ingredient.quantity}</TableCell>
                 <TableCell>
                   <IconButton
-                    onClick={() => handleRemoveIngredient(ingredient.id)}
+                    onClick={() => handleRemoveIngredient(ingredient.idIngredient)}
                   >
                     <DeleteIcon />
                   </IconButton>

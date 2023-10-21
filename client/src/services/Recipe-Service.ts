@@ -13,11 +13,19 @@ query GetAllRecipes {
   GetAllRecipes {
     id
     name
-    procedure
-    ingredientsId
-    ingredientsQuantity
     portions
+    procedure
+    ingredients {
+      idIngredient
+      nameIngredient
+      quantity
+    }
+    revenue
+    salesTax
+    serviceTax
     totalCostPerQuantity
+    unitCost
+    utilities
   }
 }
 `;
@@ -25,10 +33,15 @@ query GetAllRecipes {
 export const createRecipeMutation = gql`
 mutation Mutation($newRecipe: RecipeType!) {
   CreateRecipe(newRecipe: $newRecipe) {
+    id
     name
-    quantity
+    portions
     procedure
-    ingredients
+    ingredients {
+      idIngredient
+      nameIngredient
+      quantity
+    }
   }
 }
 `;
