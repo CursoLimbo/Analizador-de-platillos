@@ -10,10 +10,15 @@ export const GetClientById = gql`
 
 export const GetAllClients = gql`
   query GetAllClients {
-    getAllClients {
+    GetAllClients {
+      email
       id
-    }
+      location
+      name
+      phone
+      whatsapp
   }
+}
 `;
 
 export const CreateClient = gql`
