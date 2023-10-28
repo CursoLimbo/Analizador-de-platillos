@@ -20,7 +20,9 @@ const Recipes: React.FC = () =>{
   const router = useRouter();
   const createObj = '/recipeRegister'
   
-  const handleUpdate = () => {}
+  const handleUpdate = (id:string) => {
+    router.push(`/recipeUpdate?idUpdate=${encodeURIComponent(id)}`)
+  }
   const handleDelete = async (id: string) => {
 
     deleteRecipe({ variables: { deleteRecipeId: id } })
@@ -34,7 +36,6 @@ const Recipes: React.FC = () =>{
   };
 
   useEffect(() => {
-    console.log(rowsData.data)
     if (rowsData && rowsData.data) {
       setRows(rowsData.data.GetAllRecipes.slice());
       setDataLoaded(true);

@@ -98,8 +98,9 @@ const AddIngredientsToRecipe: React.FC = () => {
         <h1>Agregar Ingredientes</h1>
       </Stack>
       <FormControl fullWidth>
-        <InputLabel>Selecciona un Ingrediente</InputLabel>
+        <InputLabel >Selecciona un Ingrediente</InputLabel>
         <Select
+          label='Selecciona un Ingrediente'
           value={selectedIngredient}
           onChange={(e) => setSelectedIngredient(e.target.value as string)}
         >
@@ -110,13 +111,17 @@ const AddIngredientsToRecipe: React.FC = () => {
           ))}
         </Select>
       </FormControl>
+      <Stack mt={2}>
       <TextField
         type="number"
         label="Cantidad(g)"
         value={ingredientQuantity}
+        variant='outlined'
         onChange={(e) => setIngredientQuantity(e.target.value)}
         fullWidth
       />
+      </Stack>
+
       <Stack mt={3} mb={3} alignItems={'center'}>
         <AppButton onClick={handleAddIngredient}>
           Agregar
