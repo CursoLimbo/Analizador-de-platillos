@@ -1,9 +1,24 @@
 import { gql } from "apollo-boost";
 
-export const getRecipeById = `
+export const getRecipeById = gql`
 query GetRecipe($getRecipeId: String!) {
   getRecipe(id: $getRecipeId) {
     id
+    name
+    portions
+    procedure
+    ingredients {
+      idIngredient
+      nameIngredient
+      quantity
+    }
+    PercentageInflation
+    revenue
+    salesTax
+    serviceTax
+    totalCostPerQuantity
+    unitCost
+    utilities
   }
 }
 `;
@@ -46,10 +61,19 @@ mutation Mutation($newRecipe: RecipeType!) {
 }
 `;
 
-export const updateRecipeMutation = `
-mutation UpdateRecipe($updateRecipe: RecipeType!) {
+export const updateRecipeMutation = gql`
+mutation Mutation($updateRecipe: RecipeType!) {
   updateRecipe(updateRecipe: $updateRecipe) {
     id
+    name
+    portions
+    procedure
+
+    ingredients {
+      idIngredient
+      nameIngredient
+      quantity
+    }
   }
 }
 `;

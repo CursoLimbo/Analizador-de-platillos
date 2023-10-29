@@ -6,6 +6,7 @@ import { OperationVariables } from "apollo-boost";
 import { useRouter } from "next/router";
 import { Box, Stack } from "@mui/material";
 import { ErrorAlert, SuccessAlert } from "components/sweetAlert";
+import { useContextData } from "hooks/utils/contextIngredients";
 
 
 
@@ -17,10 +18,15 @@ const Recipes: React.FC = () =>{
   const [dataLoaded, setDataLoaded] = useState(false)
   const [dataVersion, setDataVersion] = useState(0);
   const [deleteRecipe] = useDeleteRecipeMutation();
+  const {setIngredientsIDsArray} =
+  useContextData();
   const router = useRouter();
   const createObj = '/recipeRegister'
   
-  const handleUpdate = () => {}
+  const handleUpdate = (id:string) => {
+    setIngredientsIDsArray([])
+    router.push(`/recipeUpdate?idUpdate=${encodeURIComponent(id)}`)
+  }
   const handleDelete = async (id: string) => {
 
     deleteRecipe({ variables: { deleteRecipeId: id } })
@@ -34,7 +40,6 @@ const Recipes: React.FC = () =>{
   };
 
   useEffect(() => {
-    console.log(rowsData.data)
     if (rowsData && rowsData.data) {
       setRows(rowsData.data.GetAllRecipes.slice());
       setDataLoaded(true);

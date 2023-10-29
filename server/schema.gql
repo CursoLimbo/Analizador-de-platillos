@@ -199,7 +199,7 @@ type Mutation {
   updateIngredient(updateIngredient: IngredientType!): Ingredient!
   updateManager(updateManager: ManagerType!): Manager!
   updateQuotation(updateQuotation: QuotationType!): Quotation!
-  updateRecipe(updateQuotation: RecipeType!): Recipe!
+  updateRecipe(updateRecipe: RecipeType!): Recipe!
   updateSupplier(updateSupplier: SupplierType!): Supplier!
   updateTypeOfQuote(updateTypeOfQuote: TypeOfQuoteType!): TypeOfQuote!
 }

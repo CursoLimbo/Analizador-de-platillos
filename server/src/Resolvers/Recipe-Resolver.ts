@@ -38,17 +38,25 @@ export class RecipeResolver {
 
     @Authorized()
     @Mutation(_returns => Recipe, { name: 'updateRecipe' })
-    async updateRecipe(@Arg('updateQuotation') updateQuotation: RecipeType): Promise<Recipe> {
+    async updateRecipe(@Arg('updateRecipe') updateRecipe: RecipeType): Promise<Recipe> {
+        const updatedIngredients = updateRecipe.ingredients.map(ingredient => ({
+            idIngredient: ingredient.idIngredient,
+            nameIngredient: ingredient.nameIngredient,
+            quantity: ingredient.quantity,
+        }));
+    
         const updatedRecipe = await RecipeModel.findByIdAndUpdate(
-            updateQuotation.id,
+            updateRecipe.id,
             {
-                ...updateQuotation,
-                ingredients: updateQuotation.ingredients.map(ingredient => ({ ...ingredient })),
+                ...updateRecipe,
+                ingredients: updatedIngredients,
             },
             { new: true }
         );
+    
         return updatedRecipe;
     }
+    
 
     @Authorized()
     @Mutation(_returns => String, { name: 'deleteRecipe' })
