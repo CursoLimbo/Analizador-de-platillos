@@ -85,7 +85,7 @@ const AddIngredientsToRecipe: React.FC = () => {
       ingredientsToSave.push({ idIngredient, nameIngredient, quantity });
     });
     setIngredientsIDsArray(ingredientsToSave);
-    Router.push("/recipeRegister");
+    Router.back();
   };
 
   return (

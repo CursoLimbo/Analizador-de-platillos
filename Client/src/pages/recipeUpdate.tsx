@@ -7,6 +7,7 @@ import { useContextData } from "hooks/utils/contextIngredients";
 import RichTextEditor from "components/richTextEditor";
 import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
 import { AppButton } from "components/Button";
+import Ingredients from "./ingredients";
 
 type RecipeFormatdata = {
   id:string;
@@ -36,6 +37,8 @@ const RecipeRegister: React.FC = () => {
   const [contextText, setContextText] = useState("");
   const [ingredients, setIngredients] = useState<RecipeIngredient[]>([]);
   const [confirmData, setConfirmData] = useState(false);
+
+
 
   useEffect(() => {
     if (typeof idUpdate === "string") {
@@ -91,11 +94,17 @@ const RecipeRegister: React.FC = () => {
   }, [Recipe]);
 
   useEffect(() => {
-    if(recipeinfo!== undefined && confirmData  ){
+    if(recipeinfo!== undefined && confirmData && ingredients.length===0 ){
     setValue("name", recipeinfo.name);
     setValue("portions", recipeinfo.portions);
     setContextText(recipeinfo.procedure);
-    setIngredientsIDsArray(recipeinfo.ingredients)
+    const ingredientsData = recipeinfo.ingredients
+      .map(ingredient => ({
+        idIngredient: ingredient.idIngredient,
+        nameIngredient: ingredient.nameIngredient,
+        quantity: ingredient.quantity,
+      }));
+    setIngredientsIDsArray(ingredientsData)
     }
   },[recipeinfo])
 
@@ -105,7 +114,6 @@ const RecipeRegister: React.FC = () => {
   };
 
   const onSubmit = async (data: RecipeFormatdata) => {
-    console.log('update')
     const newRecipes: RecipeFormatdata = {
       id : id,
       name: data.name,
@@ -115,10 +123,9 @@ const RecipeRegister: React.FC = () => {
     };
 
     const confirm = await ConfirmAlert();
-    console.log(newRecipes)
     if(ingredients.length>0){
       if (confirm) {
-        mutate({ variables: { updateRecipe: newRecipes } })
+        mutate({ variables: {   updateRecipe: newRecipes } })
           .then((response) => {
             SuccessAlert("Receta actualizada exitosamente");
             clearContext();
@@ -142,7 +149,7 @@ const RecipeRegister: React.FC = () => {
     
 
     <form onSubmit={handleSubmit(onSubmit)}>
-      {confirmData ? (
+      {confirmData  ? (
       <Stack direction={"column"} spacing={5} alignItems={"center"}>
         <Stack
           alignItems={"center"}
