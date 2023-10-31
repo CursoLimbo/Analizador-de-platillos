@@ -73,6 +73,12 @@ const Clients: React.FunctionComponent = () => {
           editable: true,
         },
         {
+          field: "location",
+          headerName: "Ubicacion",
+          width: 150,
+          editable: true,
+        },
+        {
           field: "phone",
           headerName: "Telefono",
           width: 150,
