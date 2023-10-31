@@ -38,8 +38,8 @@ export const UpdateClient = gql`
 `;
 
 export const DeleteClient = gql`
-  mutation DeleteClient($id: String!) {
-    deleteClient(id: $id)
+  mutation DeleteClient($deleteClientId: String!) {
+    deleteClient(id: $deleteClientId)
   }
 `;
 
