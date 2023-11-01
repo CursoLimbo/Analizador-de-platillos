@@ -1,6 +1,6 @@
 import { gql } from "apollo-boost";
 
-export const getSupplierById = `
+export const getSupplierById = gql`
 query GetSupplier($getSupplierId: String!) {
   getSupplier(id: $getSupplierId) {
     id
@@ -19,15 +19,15 @@ query GetAllSuppliers {
 }
 `;
 
-export const createSupplierMutation = `
+export const createSupplierMutation = gql`
 mutation CreateSupplier($newSupplier: SupplierType!) {
-  CreateSupplier(newSupplier: $newSupplier) {
+  createSupplier(newSupplier: $newSupplier) {
     id
   }
 }
 `;
 
-export const updateSupplierMutation = `
+export const updateSupplierMutation = gql`
 mutation UpdateSupplier($updateSupplier: SupplierType!) {
   updateSupplier(updateSupplier: $updateSupplier) {
     id
@@ -35,7 +35,7 @@ mutation UpdateSupplier($updateSupplier: SupplierType!) {
 }
 `;
 
-export const deleteSupplierMutation = `
+export const deleteSupplierMutation = gql`
 mutation DeleteSupplier($deleteSupplierId: String!) {
   deleteSupplier(id: $deleteSupplierId)
 }
