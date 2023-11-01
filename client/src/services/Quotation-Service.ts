@@ -1,6 +1,6 @@
 import { gql } from "apollo-boost";
 
-export const getQuotationById = `
+export const getQuotationById = gql`
 query GetQuotation($getQuotationId: String!) {
   getQuotation(id: $getQuotationId) {
     id
@@ -8,7 +8,7 @@ query GetQuotation($getQuotationId: String!) {
 }
 `;
 
-export const getAllQuotations = `
+export const getAllQuotations = gql`
 query GetAllQuotations {
   GetAllQuotations {
     id
@@ -16,7 +16,7 @@ query GetAllQuotations {
 }
 `;
 
-export const createQuotationMutation = `
+export const createQuotationMutation = gql`
 mutation CreateQuotation($newQuotation: QuotationType!) {
   CreateQuotation(newQuotation: $newQuotation) {
     id
@@ -24,7 +24,7 @@ mutation CreateQuotation($newQuotation: QuotationType!) {
 }
 `;
 
-export const updateQuotationMutation = `
+export const updateQuotationMutation = gql`
 mutation UpdateQuotation($updateQuotation: QuotationType!) {
   updateQuotation(updateQuotation: $updateQuotation) {
     id
@@ -32,7 +32,7 @@ mutation UpdateQuotation($updateQuotation: QuotationType!) {
 }
 `;
 
-export const deleteQuotationMutation = `
+export const deleteQuotationMutation = gql`
 mutation DeleteQuotation($deleteQuotationId: String!) {
   deleteQuotation(id: $deleteQuotationId)
 }
