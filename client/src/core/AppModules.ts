@@ -17,7 +17,7 @@ export const AppModules = [
     {
         img: "/quotations.jpg",
         buttonName: "Cotizaciones",
-        ref: ''
+        ref: '/quotations'
     },
     {
         img: "/recipes.jpg",
