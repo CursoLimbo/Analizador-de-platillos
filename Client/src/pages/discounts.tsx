@@ -1,0 +1,105 @@
+import React, { useState, useEffect, useMemo } from "react";
+import { Box } from "@mui/material";
+import {
+  useGetAllDiscounts,
+  useDeleteDiscountMutation,
+} from "../hooks/services/Discounts";
+import TableData from "../components/dataTable";
+import { useRouter } from "next/router";
+import { OperationVariables, QueryResult } from "@apollo/react-hooks";
+import ingredientsStyle from "../styles/Ingredients-register.module.css";
+import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
+
+const Discounts: React.FunctionComponent = () => {
+  const [rows, setRows] = useState<RowData[]>([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const createObj: string = "/clientRegister";
+  const deleteClienMutationtHook = useDeleteDiscountMutation();
+  const [deleteClient] = deleteClienMutationtHook;
+  let rowsData: QueryResult<any, OperationVariables> = useGetAllDiscounts();
+  const [dataVersion, setDataVersion] = useState(0);
+  const router = useRouter();
+  const handleDeleteSelected = async (id: string) => {
+
+    deleteClient({ variables: { deleteClientId: id } })
+      .then((response: any) => {
+        SuccessAlert('Descuento(s) Eliminado(s)')
+        rowsData.refetch();
+      })
+      .catch((error: any) => {
+        ErrorAlert('Error al eliminar')
+      });
+  };
+
+  const handleUpdateSelected = (id: string) => {
+    router.push(`/discountUpdate?idUpdate=${encodeURIComponent(id)}`);
+  };
+  const { Update } = router.query;
+
+  useEffect(() => {
+    if (typeof Update === "string" && Update === 'true') {
+      rowsData.refetch();
+    }
+  }, [Update]);
+
+  useEffect(() => {
+    if (rowsData && rowsData.data) {
+      setRows(rowsData.data.GetAllDiscounts.slice());
+      setDataLoaded(true);
+    }
+  }, [rowsData]);
+
+  useEffect(() => {
+    if (dataLoaded) {
+      setDataVersion((prevDataVersion) => prevDataVersion + 1);
+    }
+  }, [dataLoaded]);
+
+  const columns = useMemo(() => {
+    if (rows.length > 0) {
+      return [
+        { field: "id", 
+        headerName: "ID", 
+        width: 250, 
+        editable: true },
+        { field: "name", 
+        headerName: "Nombre",
+        width: 150, 
+        editable: true },
+        {
+          field: "percentage",
+          headerName: "Cantidad (Porcentaje)",
+          width: 250,
+          editable: true,
+        },
+        {
+          field: "Descripcion",
+          headerName: "description",
+          width: 150,
+          editable: true,
+        }
+      ];
+    }
+    return [];
+  }, [rows]);
+  return (
+    <Box className={ingredientsStyle.box}>
+      <h1 className={ingredientsStyle.tableTitle}>Descuentos</h1>
+      {dataLoaded ? (
+        <TableData
+          dataRows={rows}
+          columns={columns}
+          urlCreate={createObj}
+          handleDelete={handleDeleteSelected}
+          handleUpdate={handleUpdateSelected}
+          dataVersion={dataVersion}
+        />
+      ) : (
+        <div>Loading...</div>
+      )}
+    </Box>
+  );
+};
+
+
+export default Discounts;

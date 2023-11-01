@@ -10,12 +10,14 @@ query GetDiscountById($getDiscountByIdId: String!) {
 `;
 
 export const GetAllDiscounts = gql`
-  query GetAllDiscounts {
-    getAllDiscounts {
+  query GetAllQuotations {
+    GetAllDiscounts {
+      description
       id
-
-    }
+      name
+      percentage
   }
+}
 `;
 
 export const CreateDiscount = gql`
