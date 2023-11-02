@@ -13,15 +13,15 @@ import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
 const Discounts: React.FunctionComponent = () => {
   const [rows, setRows] = useState<RowData[]>([]);
   const [dataLoaded, setDataLoaded] = useState(false);
-  const createObj: string = "/clientRegister";
-  const deleteClienMutationtHook = useDeleteDiscountMutation();
-  const [deleteClient] = deleteClienMutationtHook;
+  const createObj: string = "/discountRegister";
+  const deleteDiscountMutationHook = useDeleteDiscountMutation();
+  const [deleteDiscount] = deleteDiscountMutationHook;
   let rowsData: QueryResult<any, OperationVariables> = useGetAllDiscounts();
   const [dataVersion, setDataVersion] = useState(0);
   const router = useRouter();
   const handleDeleteSelected = async (id: string) => {
 
-    deleteClient({ variables: { deleteClientId: id } })
+    deleteDiscount({ variables: { deleteDiscountId: id } })
       .then((response: any) => {
         SuccessAlert('Descuento(s) Eliminado(s)')
         rowsData.refetch();
@@ -73,8 +73,8 @@ const Discounts: React.FunctionComponent = () => {
           editable: true,
         },
         {
-          field: "Descripcion",
-          headerName: "description",
+          field: "description",
+          headerName: "Descripcion",
           width: 150,
           editable: true,
         }
