@@ -11,7 +11,7 @@ export const AppModules = [
     },
     {
         img: "/suppliers.jpg",
-        buttonName: "Provedores",
+        buttonName: "Proveedores",
         ref: '/suppliers'
     },
     {

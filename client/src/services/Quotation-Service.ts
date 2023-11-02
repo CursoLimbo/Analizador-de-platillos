@@ -11,7 +11,11 @@ query GetQuotation($getQuotationId: String!) {
 export const getAllQuotations = gql`
 query GetAllQuotations {
   GetAllQuotations {
+    client
+    date
     id
+    typeOfQuotation
+    code
   }
 }
 `;

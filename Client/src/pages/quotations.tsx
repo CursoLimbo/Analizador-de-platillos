@@ -68,7 +68,7 @@ const Quotations: React.FunctionComponent = () => {
         editable: true },
         {
           field: "date",
-          headerName: "fecha",
+          headerName: "Fecha",
           width: 250,
           editable: true,
         },
