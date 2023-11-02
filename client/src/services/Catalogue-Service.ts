@@ -36,7 +36,7 @@ export const UpdateCatalogue = gql`
 `;
 
 export const DeleteCatalogue = gql`
-  mutation DeleteCatalogue($id: String!) {
-    deleteCatalogue(id: $id)
+  mutation Mutation($deleteCatalogueId: String!) {
+    deleteCatalogue(id: $deleteCatalogueId)
   }
 `;
