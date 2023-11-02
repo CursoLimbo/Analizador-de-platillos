@@ -27,7 +27,7 @@ export const AppModules = [
     {
         img: "/catalogues.jpg",
         buttonName: "catalogos",
-        ref: ''
+        ref: '/catalogues'
     },
     {
         img: "/discounts.jpg",

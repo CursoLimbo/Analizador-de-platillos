@@ -10,8 +10,11 @@ export const GetCatalogue = gql`
 
 export const GetAllCatalogues = gql`
   query GetAllCatalogues {
-    GetALlCatalogues {
+    GetAllCatalogues {
+      date
+      file
       id
+      name
     }
   }
 `;
