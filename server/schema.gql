@@ -294,6 +294,7 @@ type Recipe {
   totalCostPerQuantity: Float
   unitCost: Float
   utilities: Float
+  version: String!
 }
 
 input RecipeType {

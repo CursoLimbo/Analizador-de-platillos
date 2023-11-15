@@ -71,6 +71,10 @@ const Recipes: React.FC = () =>{
         headerName: "Costo Total",
         width: 150, 
         editable: false },
+        { field: "version", 
+        headerName: "Version de la receta",
+        width: 150, 
+        editable: false },
       ]
     }
     return []

@@ -22,6 +22,10 @@ export class Recipe {
     procedure: string;
 
     @Field()
+    @Property({ type: () => String, required: true })
+    version: string;
+
+    @Field()
     @Property({ type: () => Number, required: true })
     portions: number;
 
