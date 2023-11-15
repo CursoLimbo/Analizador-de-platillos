@@ -14,7 +14,7 @@ query GetAllQuotations {
     client
     date
     id
-    typeOfQuotation
+    name
     code
   }
 }

@@ -11,7 +11,7 @@ export class Quotation{
 
     @Field()
     @Property({type: () => String, required: true})
-    typeOfQuotation: string;
+    name: string;
 
 
     @Field()

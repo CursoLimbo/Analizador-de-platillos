@@ -260,9 +260,9 @@ type Quotation {
   develop: String!
   discount: Float!
   id: ID!
+  name: String!
   recipes: [String!]!
   total: Float!
-  typeOfQuotation: String!
 }
 
 input QuotationType {

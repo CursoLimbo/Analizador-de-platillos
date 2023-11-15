@@ -58,7 +58,7 @@ const Quotations: React.FunctionComponent = () => {
   const columns = useMemo(() => {
     if (rows.length > 0) {
       return [
-        { field: "typeOfQuotation", 
+        { field: "name", 
         headerName: "Tipo de Cotizacion", 
         width: 250, 
         editable: true },
