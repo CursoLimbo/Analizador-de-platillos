@@ -62,6 +62,10 @@ const Recipes: React.FC = () =>{
         width: 250, 
         editable: false 
         },
+        { field: "version", 
+        headerName: "Version",
+        width: 150, 
+        editable: false },
         { field: "portions", 
         headerName: "Porciones",
         width: 150, 
@@ -70,6 +74,10 @@ const Recipes: React.FC = () =>{
         { field: "totalCostPerQuantity", 
         headerName: "Costo Total",
         width: 150, 
+        editable: false },
+        { field: "totalCostRawMaterial", 
+        headerName: "Costo Total por Materia Prima",
+        width: 250, 
         editable: false },
       ]
     }
