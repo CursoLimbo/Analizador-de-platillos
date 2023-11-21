@@ -31,6 +31,10 @@ export class Recipe {
 
     @Field({ nullable: true })
     @Property({ type: () => Number, required: false })
+    totalCostRawMaterial: number;
+
+    @Field({ nullable: true })
+    @Property({ type: () => Number, required: false })
     PercentageInflation: number;
 
     @Field({ nullable: true })
@@ -52,6 +56,10 @@ export class Recipe {
     @Field({ nullable: true })
     @Property({ type: () => Number, required: false })
     unitCost: number;
+
+    @Field({ nullable: true })
+    @Property({ type: () => String, required: false })
+    version: String;
 }
 
 export const RecipeModel = getModelForClass(Recipe);

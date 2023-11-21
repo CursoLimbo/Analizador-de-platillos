@@ -292,8 +292,10 @@ type Recipe {
   salesTax: Float
   serviceTax: Float
   totalCostPerQuantity: Float
+  totalCostRawMaterial: Float
   unitCost: Float
   utilities: Float
+  version: String
 }
 
 input RecipeType {
