@@ -53,36 +53,58 @@ const Recipes: React.FC = () =>{
   }, [dataLoaded]);
 
 
+  const totalPresentation = rows.reduce((acc, row) => {
 
-  const columns = useMemo(()=>{
-    if(rows.length > 0){
+    return acc + row.presentation;
+  }, 0);
+  
+  const columns = useMemo(() => {
+    if (rows.length > 0) {
       return [
-        { field: "name", 
-        headerName: "Nombre",
-        width: 250, 
-        editable: false 
+        {
+          field: "name",
+          headerName: "Nombre",
+          width: 250,
+          editable: false,
         },
-        { field: "version", 
-        headerName: "Version",
-        width: 150, 
-        editable: false },
-        { field: "portions", 
-        headerName: "Porciones",
-        width: 150, 
-        editable: false 
+        {
+          field: "version",
+          headerName: "Version",
+          width: 150,
+          editable: false,
         },
-        { field: "totalCostPerQuantity", 
-        headerName: "Costo Total",
-        width: 150, 
-        editable: false },
-        { field: "totalCostRawMaterial", 
-        headerName: "Costo Total por Materia Prima",
-        width: 250, 
-        editable: false },
-      ]
+        {
+          field: "portions",
+          headerName: "Porciones",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "totalCostPerQuantity",
+          headerName: "Costo Total",
+          width: 150,
+          editable: false,
+        },
+        {
+          field: "totalCostRawMaterial",
+          headerName: "Costo Total por Materia Prima",
+          width: 250,
+          editable: false,
+          valueGetter: (params) => {
+            // Estableciendo porciones y CostoPorCantidad
+            const totalCostPerQuantity = params.row.totalCostPerQuantity;
+            const portions = params.row.portions;
+  
+            // Calcula preciopormateriaprima
+            const totalCostRawMaterial = totalCostPerQuantity * portions;
+  
+            return totalCostRawMaterial;
+          },
+        },
+      ];
     }
-    return []
-  },[rows])
+    return [];
+  }, [rows]);
 
 
 

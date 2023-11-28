@@ -19,28 +19,32 @@ query GetRecipe($getRecipeId: String!) {
     totalCostPerQuantity
     unitCost
     utilities
+    version
   }
 }
 `;
 
 export const getAllRecipes = gql`
-query GetAllRecipes {
+query GetAllQuotations {
   GetAllRecipes {
+    PercentageInflation
     id
-    name
-    portions
-    procedure
     ingredients {
       idIngredient
       nameIngredient
       quantity
     }
+    name
+    portions
+    procedure
     revenue
     salesTax
     serviceTax
     totalCostPerQuantity
+    totalCostRawMaterial
     unitCost
     utilities
+    version
   }
 }
 `;
@@ -49,14 +53,15 @@ export const createRecipeMutation = gql`
 mutation Mutation($newRecipe: RecipeType!) {
   CreateRecipe(newRecipe: $newRecipe) {
     id
-    name
-    portions
-    procedure
     ingredients {
       idIngredient
       nameIngredient
       quantity
     }
+    name
+    portions
+    procedure
+    version
   }
 }
 `;
@@ -68,7 +73,7 @@ mutation Mutation($updateRecipe: RecipeType!) {
     name
     portions
     procedure
-
+    version
     ingredients {
       idIngredient
       nameIngredient
