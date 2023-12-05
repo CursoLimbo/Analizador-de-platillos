@@ -13,6 +13,7 @@ type RecipeFormatdata = {
   portions: number;
   procedure: string;
   ingredients: RecipeIngredient[];
+  version: string;
 };
 
 const RecipeRegister: React.FC = () => {
@@ -42,6 +43,7 @@ const RecipeRegister: React.FC = () => {
 
   const nameRecipe = watch("name", "");
   const portions = watch("portions", 0);
+  const version = watch("version", "");
 
   const handleSelectIngredients = () => {
     RecipeContext();
@@ -53,6 +55,7 @@ const RecipeRegister: React.FC = () => {
       name: nameRecipe,
       portions: Number(portions),
       procedure: procedure,
+      version: version,
     };
 
     setRecipe(newRecipe);
@@ -69,6 +72,9 @@ const RecipeRegister: React.FC = () => {
     if (Recipe.procedure !== "") {
       setContextText(Recipe.procedure);
     }
+    if (Recipe.version !== "") {
+      setValue("version", Recipe.version);
+    }
   }, [Recipe]);
 
   const clearContext = () => {
@@ -82,6 +88,7 @@ const RecipeRegister: React.FC = () => {
       portions: Number(data.portions),
       procedure: procedure,
       ingredients: ingredients,
+      version: version,
     };
 
     const confirm = await ConfirmAlert();
@@ -138,6 +145,15 @@ const RecipeRegister: React.FC = () => {
             {...register("portions", { required: true })}
             error={!!errors.portions}
             helperText={errors.portions && "Este campo es requerido"}
+          />
+          <TextField
+            id="version"
+            label="Version"
+            variant="outlined"
+            type="string"
+            {...register("version", { required: false })}
+            error={!!errors.version}
+            helperText={errors.version && "Este campo es requerido"}
           />
         </Stack>
         <Stack width={600} height={200}>
