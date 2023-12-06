@@ -197,9 +197,12 @@ const RecipeRegister: React.FC = () => {
 
         </Stack>
         <Stack width={600} height={200}>
-          <Stack margin={1} alignItems={"start"}>
+          <Stack width={580} margin={1} flexDirection={"row"} justifyContent={"space-between"} >
             <AppButton onClick={handleSelectIngredients}>
               + Ingredientes
+            </AppButton>
+            <AppButton href="/costRecipeConf">
+              Costeo
             </AppButton>
           </Stack>
           <RichTextEditor
