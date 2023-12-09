@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Stack, TextField } from "@mui/material";
 import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import {
   useGetRecipeById,
   useUpdateRecipeMutation,
@@ -52,6 +52,7 @@ const RecipeRegister: React.FC = () => {
   const [contextText, setContextText] = useState("");
   const [ingredients, setIngredients] = useState<RecipeIngredient[]>([]);
   const [confirmData, setConfirmData] = useState(false);
+  const[totalCost,setTotalCost]=useState(0)
 
   useEffect(() => {
     if (typeof idUpdate === "string") {
@@ -138,6 +139,36 @@ const RecipeRegister: React.FC = () => {
     setIngredientsIDsArray(clearContext);
   };
 
+useEffect(()=>{
+    let recipeCost=10000
+    let IVA=0
+    let ISA=0
+    let Util=0
+    let profit=0
+    let inflation=0;
+
+    if (recipeinfo) {
+      inflation = recipeinfo.PercentageInflation;
+      IVA = recipeinfo.salesTax;
+      ISA = recipeinfo.serviceTax;
+      Util = recipeinfo.utilities;
+      profit = recipeinfo.revenue;
+    } else {
+      inflation = costConf.inflation;
+      IVA = costConf.IVA;
+      ISA = costConf.ISA;
+      Util = costConf.utilities;
+      profit = costConf.profits;
+    } 
+    let totalCost= recipeCost *((inflation/100)+1)
+    totalCost*=((Util/100)+1)
+    totalCost*=((profit/100)+1)
+    totalCost*=((IVA/100)+1)
+    totalCost*=((ISA/100)+1)
+    setTotalCost(Number(totalCost.toFixed(2)))
+},[contextText,recipeinfo])
+
+
   const onSubmit = async (data: RecipeFormatdata) => {
     const newRecipes: RecipeFormatdata = {
       id: id,
@@ -215,7 +246,7 @@ const RecipeRegister: React.FC = () => {
               label="Costo Total"
               variant="outlined"
               type="number"
-              defaultValue={0}
+              defaultValue={totalCost}
               InputProps={{
                 readOnly: true,
               }}
