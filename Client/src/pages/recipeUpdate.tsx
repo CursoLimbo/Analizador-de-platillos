@@ -140,7 +140,7 @@ const RecipeRegister: React.FC = () => {
   };
 
 useEffect(()=>{
-    let recipeCost=10000
+    let recipeCost=0
     let IVA=0
     let ISA=0
     let Util=0
