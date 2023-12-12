@@ -4,6 +4,9 @@ export const getSupplierById = gql`
 query GetSupplier($getSupplierId: String!) {
   getSupplier(id: $getSupplierId) {
     id
+    name
+    location
+    phone
   }
 }
 `;
@@ -31,9 +34,12 @@ mutation CreateSupplier($newSupplier: SupplierType!) {
 `;
 
 export const updateSupplierMutation = gql`
-mutation UpdateSupplier($updateSupplier: SupplierType!) {
+mutation Mutation($updateSupplier: SupplierType!) {
   updateSupplier(updateSupplier: $updateSupplier) {
     id
+    name
+    location
+    phone
   }
 }
 `;
