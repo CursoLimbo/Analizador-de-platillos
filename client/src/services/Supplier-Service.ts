@@ -21,8 +21,11 @@ query GetAllSuppliers {
 
 export const createSupplierMutation = gql`
 mutation CreateSupplier($newSupplier: SupplierType!) {
-  createSupplier(newSupplier: $newSupplier) {
+  CreateSupplier(newSupplier: $newSupplier) {
     id
+    name
+    location
+    phone
   }
 }
 `;
