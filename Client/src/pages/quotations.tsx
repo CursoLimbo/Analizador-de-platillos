@@ -13,7 +13,7 @@ import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
 const Quotations: React.FunctionComponent = () => {
   const [rows, setRows] = useState<RowData[]>([]);
   const [dataLoaded, setDataLoaded] = useState(false);
-  const createObj: string = "/quotationRegister";
+  const createObj: string = "/quoteRegister";
   const deleteQuotationMutationHook = useDeleteQuotationMutation();
   const [deleteQuotation] = deleteQuotationMutationHook;
   let rowsData: QueryResult<any, OperationVariables> = useGetAllQuotations();
