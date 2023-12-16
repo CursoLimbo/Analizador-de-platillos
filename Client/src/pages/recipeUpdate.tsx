@@ -252,7 +252,7 @@ useEffect(()=>{
               }}
             />
           </Stack>
-          <Stack width={600} height={200}>
+          <Stack width={600}>
             <Stack
               width={580}
               margin={1}
@@ -264,10 +264,13 @@ useEffect(()=>{
               </AppButton>
               <AppButton onClick={handleConfigCosts}>Costeo</AppButton>
             </Stack>
-            <RichTextEditor
-              handleSetText={handleSetText}
-              contextText={contextText}
-            />
+          </Stack>
+          <Stack maxWidth={650}>
+          <RichTextEditor
+            handleSetText={handleSetText}
+            contextText={contextText}
+            placeHolder="Procedimiento de la receta"
+          />
           </Stack>
           <Stack>
             <AppButton type="submit">Guardar</AppButton>

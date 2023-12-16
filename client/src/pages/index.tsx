@@ -15,7 +15,7 @@ const Home = () => {
               Bienvenida Lu
           </span>
             <div className={styles.objects}>
-                <ImageList sx={{width: 700}} rowHeight={330} gap={20} cols={3}>
+                <ImageList sx={{width: 900, }} rowHeight={330} gap={20} cols={4} >
                     {AppModules.map((module) => (
                         <ImageListItem key={module.img}>
                             <img

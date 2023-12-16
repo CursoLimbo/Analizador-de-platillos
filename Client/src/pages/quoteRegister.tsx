@@ -6,16 +6,27 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { AppButton } from "components/Button";
 import Title from "components/Title";
 import RichTextEditor from "components/richTextEditor";
 import React from "react";
 import { useForm } from "react-hook-form";
 
+interface QuoteRegisterProps {
+  amountOfPeople: string;
+  bankAccounts: string;
+  client: string;
+  code: string;
+  company: string;
+  date: string;
+  develop: string;
+  discount: string;
+  recipes: string;
+  total: string;
+  typeOfQuotation: string;
+}
 
-
-
-
-const quoteRegister: React.FC = () => {
+const quoteRegister: React.FC<QuoteRegisterProps> = () => {
   const {
     register,
     setValue,
@@ -26,17 +37,19 @@ const quoteRegister: React.FC = () => {
 
   const handleSelect = () => {};
   const handleSetText = () => {};
-  
+  const onSubmmit=()=>{}
 
   return (
     <Stack alignItems={"center"}>
-      <Title text="Crear Cotización"/>
+      <Title text="Crear Cotización" />
 
-      <form action="">
+      <form onSubmit={handleSubmit(onSubmmit)}>
         <Stack alignItems={"center"} my={5}>
           <Stack width={450}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Tipo de cotización</InputLabel>
+              <InputLabel id="demo-simple-select-label">
+                Tipo de cotización
+              </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -78,7 +91,7 @@ const quoteRegister: React.FC = () => {
             <TextField
               id="endHour"
               label="Hora finalización"
-              InputLabelProps={{ shrink: true}}
+              InputLabelProps={{ shrink: true }}
               variant="outlined"
               type="time"
               {...register("endHour", { required: true })}
@@ -101,11 +114,10 @@ const quoteRegister: React.FC = () => {
             </FormControl>
           </Stack>
           <Stack width={250} gap={5}>
-            
             <TextField
               id="dateQuote"
               label="Fecha cotización"
-              InputLabelProps={{ shrink: true}}
+              InputLabelProps={{ shrink: true }}
               variant="outlined"
               type="date"
               {...register("dateQuote", { required: true })}
@@ -115,7 +127,7 @@ const quoteRegister: React.FC = () => {
             <TextField
               id="startDate"
               label="Fecha inicio"
-              InputLabelProps={{ shrink: true}}
+              InputLabelProps={{ shrink: true }}
               variant="outlined"
               type="date"
               {...register("startDate", { required: true })}
@@ -151,7 +163,7 @@ const quoteRegister: React.FC = () => {
             <TextField
               id="startHour"
               label="Hora de inicio"
-              InputLabelProps={{ shrink: true}}
+              InputLabelProps={{ shrink: true }}
               variant="outlined"
               type="time"
               {...register("startHour", { required: true })}
@@ -183,7 +195,14 @@ const quoteRegister: React.FC = () => {
           </Stack>
         </Stack>
         <Stack my={5}>
-          <RichTextEditor handleSetText={handleSetText} contextText={""} />
+          <RichTextEditor
+            handleSetText={handleSetText}
+            contextText={""}
+            placeHolder={""}
+          />
+        </Stack>
+        <Stack alignItems={"center"}>
+          <AppButton>Guardar</AppButton>
         </Stack>
       </form>
     </Stack>

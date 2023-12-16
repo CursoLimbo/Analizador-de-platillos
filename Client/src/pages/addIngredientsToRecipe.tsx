@@ -24,6 +24,7 @@ import { useGetAllIngredients } from "../hooks/services/Ingredients";
 import { AppButton } from 'components/Button';
 import { useContextData } from 'hooks/utils/contextIngredients';
 import { useRouter } from 'next/router';
+import layout from '../styles/layout.module.css'
 
 
 const AddIngredientsToRecipe: React.FC = () => {
@@ -89,7 +90,7 @@ const AddIngredientsToRecipe: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" className={layout.layout}>
       <Stack
         alignItems={"center"}
         fontFamily={"Times New Roman"}

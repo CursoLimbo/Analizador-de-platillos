@@ -8,6 +8,7 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useRouter } from "next/router";
 
+
 const App = ({ Component, pageProps }: AppProps) => {
     const apolloClient: any = useAppApolloClient();
     const router = useRouter();
@@ -32,7 +33,9 @@ const App = ({ Component, pageProps }: AppProps) => {
                     </Head>
                     <ContextProvider>
                     {showNavbar && <NavBar isHome />}
-                        <Component {...pageProps} />
+                        <Component  {...pageProps} />
+                        
+                        
                     {showNavbar && <Footer />}
                     </ContextProvider>
                 </ApolloProvider>

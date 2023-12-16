@@ -140,17 +140,20 @@ const RecipeRegister: React.FC = () => {
             helperText={errors.portions && "Este campo es requerido"}
           />
         </Stack>
-        <Stack width={600} height={200}>
-          <Stack margin={1} alignItems={"start"}>
+        <Stack width={600} >
+          <Stack alignItems={"start"}>
             <AppButton onClick={handleSelectIngredients}>
               + Ingredientes
             </AppButton>
           </Stack>
+        </Stack>
+        <Stack maxWidth={650}>
           <RichTextEditor
             handleSetText={handleSetText}
             contextText={contextText}
+            placeHolder="Procedimiento de la receta"
           />
-        </Stack>
+          </Stack>
         <Stack>
           <AppButton type="submit">Guardar</AppButton>
         </Stack>
