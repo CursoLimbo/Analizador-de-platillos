@@ -1,6 +1,8 @@
-import React,{ useEffect, useMemo, useState } from "react";
-import { useGetAllRecipes,useDeleteRecipeMutation } from "hooks/services/Recipe";
-import TableData from "../components/dataTable"
+import React, { useEffect, useMemo, useState } from "react";
+import { useGetAllRecipes, useDeleteRecipeMutation } from "hooks/services/Recipe";
+import { useQuery } from "@apollo/client";
+import { useGetIngredientById } from "hooks/services/Ingredients";
+import TableData from "../components/dataTable";
 import { QueryResult } from "@apollo/client";
 import { OperationVariables } from "apollo-boost";
 import { useRouter } from "next/router";
@@ -8,42 +10,61 @@ import { Box, Stack } from "@mui/material";
 import { ErrorAlert, SuccessAlert } from "components/sweetAlert";
 import { useContextData } from "hooks/utils/contextIngredients";
 
-
-
-const Recipes: React.FC = () =>{
-
-
-  let rowsData : QueryResult<any,OperationVariables> = useGetAllRecipes();
-  const [rows, setRows] = useState<RowData[]>([])
-  const [dataLoaded, setDataLoaded] = useState(false)
+const Recipes: React.FC = () => {
+  let rowsData: QueryResult<any, OperationVariables> = useGetAllRecipes();
+  const [rows, setRows] = useState<RowData[]>([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [dataVersion, setDataVersion] = useState(0);
   const [deleteRecipe] = useDeleteRecipeMutation();
-  const {setIngredientsIDsArray} =
-  useContextData();
+  const { setIngredientsIDsArray } = useContextData();
   const router = useRouter();
-  const createObj = '/recipeRegister'
-  
-  const handleUpdate = (id:string) => {
-    setIngredientsIDsArray([])
-    router.push(`/recipeUpdate?idUpdate=${encodeURIComponent(id)}`)
-  }
-  const handleDelete = async (id: string) => {
+  const createObj = '/recipeRegister';
 
+  const handleUpdate = (id: string) => {
+    setIngredientsIDsArray([]);
+    router.push(`/recipeUpdate?idUpdate=${encodeURIComponent(id)}`);
+  };
+
+  const handleDelete = async (id: string) => {
     deleteRecipe({ variables: { deleteRecipeId: id } })
       .then((response: any) => {
-        SuccessAlert('Receta(s) eliminada(s)')
+        SuccessAlert('Receta(s) eliminada(s)');
         rowsData.refetch();
       })
       .catch((error: any) => {
-        ErrorAlert('Error al eliminar')
+        ErrorAlert('Error al eliminar');
       });
   };
 
   useEffect(() => {
-    if (rowsData && rowsData.data) {
-      setRows(rowsData.data.GetAllRecipes.slice());
-      setDataLoaded(true);
-    }
+    const calculateTotalCostRawMaterial = async () => {
+      if (rowsData && rowsData.data) {
+        const updatedRows = await Promise.all(
+          rowsData.data.GetAllRecipes.map(async (recipe: any) => {
+            let totalCostRawMaterial = 0;
+
+            for (const ingredient of recipe.ingredients) {
+              const { data } = await useQuery(useGetIngredientById, {
+                variables: { getIngredientId: ingredient.idIngredient },
+              });
+
+              if (data && data.getIngredient) {
+                const costPerGram = data.getIngredient.costPerGram;
+                const ingredientCost = costPerGram * ingredient.quantity;
+                totalCostRawMaterial += ingredientCost;
+              }
+            }
+
+            return { ...recipe, totalCostRawMaterial };
+          })
+        );
+
+        setRows(updatedRows);
+        setDataLoaded(true);
+      }
+    };
+
+    calculateTotalCostRawMaterial();
   }, [rowsData]);
 
   useEffect(() => {
@@ -52,12 +73,6 @@ const Recipes: React.FC = () =>{
     }
   }, [dataLoaded]);
 
-
-  const totalPresentation = rows.reduce((acc, row) => {
-
-    return acc + row.presentation;
-  }, 0);
-  
   const columns = useMemo(() => {
     if (rows.length > 0) {
       return [
@@ -90,47 +105,33 @@ const Recipes: React.FC = () =>{
           headerName: "Costo Total por Materia Prima",
           width: 250,
           editable: false,
-          valueGetter: (params) => {
-            // Estableciendo porciones y CostoPorCantidad
-            const totalCostPerQuantity = params.row.totalCostPerQuantity;
-            const portions = params.row.portions;
-  
-            // Calcula preciopormateriaprima
-            const totalCostRawMaterial = totalCostPerQuantity * portions;
-  
-            return totalCostRawMaterial;
-          },
         },
       ];
     }
     return [];
   }, [rows]);
 
-
-
-
-    return(
+  return (
     <Box textAlign={'center'} display={'flex'} justifyContent={'space-around'}>
-    <Box width={700}>
-    <Stack alignItems={"center"} fontFamily={"Times New Roman"} fontSize={28}>
-        <h1>Recetas</h1>
-      </Stack>
-      {dataLoaded ? (
-        <TableData
-          dataRows={rows}
-          columns={columns}
-          urlCreate={createObj}
-          handleDelete={handleDelete}
-          handleUpdate={handleUpdate}
-          dataVersion={dataVersion}
-        />
-      ) : (
-        <div>Loading...</div>
-      )}
+      <Box width={700}>
+        <Stack alignItems={"center"} fontFamily={"Times New Roman"} fontSize={28}>
+          <h1>Recetas</h1>
+        </Stack>
+        {dataLoaded ? (
+          <TableData
+            dataRows={rows}
+            columns={columns}
+            urlCreate={createObj}
+            handleDelete={handleDelete}
+            handleUpdate={handleUpdate}
+            dataVersion={dataVersion}
+          />
+        ) : (
+          <div>Loading...</div>
+        )}
+      </Box>
     </Box>
-    </Box>
-    )
-}
-
+  );
+};
 
 export default Recipes;
