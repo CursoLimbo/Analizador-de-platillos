@@ -3,19 +3,17 @@
 .objects {
     display: flex;
     justify-content: center;
-    padding-top: 2%;
 
 }
 
 .cont-main{
-    padding-top: 16%;
+    padding-top: 10%;
 }
 
 .titulo {
     font-size: 100px;
     display:flex;
     justify-content: center;
-    margin-top: 5%;
     font-family: cursive;
 }
 

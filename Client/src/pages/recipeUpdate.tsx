@@ -10,6 +10,8 @@ import { useContextData } from "hooks/utils/contextIngredients";
 import RichTextEditor from "components/richTextEditor";
 import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
 import { AppButton } from "components/Button";
+import layout from '../styles/layout.module.css'
+import Title from "components/Title";
 
 type RecipeFormatdata = {
   id: string;
@@ -205,16 +207,10 @@ useEffect(()=>{
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className={layout.layout} >
       {confirmData ? (
         <Stack direction={"column"} spacing={5} alignItems={"center"}>
-          <Stack
-            alignItems={"center"}
-            fontFamily={"Times New Roman"}
-            fontSize={28}
-          >
-            <h1>Actualizar receta</h1>
-          </Stack>
+          <Title text="Actualizar receta"/>
 
           <Stack
             direction={"column"}
@@ -252,7 +248,7 @@ useEffect(()=>{
               }}
             />
           </Stack>
-          <Stack width={600} height={200}>
+          <Stack width={600}>
             <Stack
               width={580}
               margin={1}
@@ -264,10 +260,13 @@ useEffect(()=>{
               </AppButton>
               <AppButton onClick={handleConfigCosts}>Costeo</AppButton>
             </Stack>
-            <RichTextEditor
-              handleSetText={handleSetText}
-              contextText={contextText}
-            />
+          </Stack>
+          <Stack maxWidth={650}>
+          <RichTextEditor
+            handleSetText={handleSetText}
+            contextText={contextText}
+            placeHolder="Procedimiento de la receta"
+          />
           </Stack>
           <Stack>
             <AppButton type="submit">Guardar</AppButton>

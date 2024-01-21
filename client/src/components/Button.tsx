@@ -11,5 +11,6 @@ export const AppButton = styled(Button)<ButtonProps>(({ theme, type }) => {
         '&:hover': {
             backgroundColor: teal[700],
         },
+
     }
 });

@@ -1,0 +1,11 @@
+.layout{
+    min-height: 80vh;
+    
+}
+/* className={`${ingredientsStyle.box} ${layout.layout}`} */
+/* className={layout.layout} */
+/* <Title text="Registrar cliente"/> */
+
+
+/* import layout from '../styles/layout.module.css'
+import Title from "components/Title"; */

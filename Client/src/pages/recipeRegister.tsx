@@ -7,6 +7,7 @@ import { useContextData } from "hooks/utils/contextIngredients";
 import RichTextEditor from "components/richTextEditor";
 import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
 import { AppButton } from "components/Button";
+import Title from "components/Title";
 
 type RecipeFormatdata = {
   name: string;
@@ -107,13 +108,15 @@ const RecipeRegister: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack direction={"column"} spacing={5} alignItems={"center"}>
-        <Stack
+        {/* <Stack
           alignItems={"center"}
           fontFamily={"Times New Roman"}
           fontSize={28}
         >
           <h1>Registrar receta</h1>
-        </Stack>
+        </Stack> */}
+
+        <Title text="Registrar receta"/> 
 
         <Stack
           direction={"column"}
@@ -139,18 +142,21 @@ const RecipeRegister: React.FC = () => {
             error={!!errors.portions}
             helperText={errors.portions && "Este campo es requerido"}
           />
-        </Stack>
-        <Stack width={600} height={200}>
-          <Stack margin={1} alignItems={"start"}>
+        T</Stack>
+        <Stack width={600} >
+          <Stack alignItems={"start"}>
             <AppButton onClick={handleSelectIngredients}>
               + Ingredientes
             </AppButton>
           </Stack>
+        </Stack>
+        <Stack maxWidth={650}>
           <RichTextEditor
             handleSetText={handleSetText}
             contextText={contextText}
+            placeHolder="Procedimiento de la receta"
           />
-        </Stack>
+          </Stack>
         <Stack>
           <AppButton type="submit">Guardar</AppButton>
         </Stack>

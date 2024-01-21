@@ -26,6 +26,7 @@
     "apollo-link": "^1.2.14",
     "apollo-link-http": "^1.5.17",
     "cloudinary-core": "^2.13.0",
+    "dayjs": "^1.11.10",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.1",
     "graphql": "^15.8.0",

@@ -7,6 +7,9 @@ import { useRouter } from "next/router";
 import { Box, Stack } from "@mui/material";
 import { ErrorAlert, SuccessAlert } from "components/sweetAlert";
 import { useContextData } from "hooks/utils/contextIngredients";
+import layout from '../styles/layout.module.css'
+import Title from "components/Title";
+
 
 
 
@@ -88,11 +91,9 @@ const Recipes: React.FC = () =>{
 
 
     return(
-    <Box textAlign={'center'} display={'flex'} justifyContent={'space-around'}>
+    <Box textAlign={'center'} display={'flex'} justifyContent={'space-around'} className={layout.layout} >
     <Box width={700}>
-    <Stack alignItems={"center"} fontFamily={"Times New Roman"} fontSize={28}>
-        <h1>Recetas</h1>
-      </Stack>
+      <Title text="Recetas"/> 
       {dataLoaded ? (
         <TableData
           dataRows={rows}

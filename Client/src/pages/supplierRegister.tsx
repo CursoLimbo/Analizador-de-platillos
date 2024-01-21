@@ -5,6 +5,8 @@ import { useCreateSupplierMutation } from "../hooks/services/Supplier";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import layout from '../styles/layout.module.css'
+import Title from "components/Title"; 
 
 
 type SupplierFormatData = {
@@ -45,15 +47,9 @@ const supplierRegister: React.FC= () => {
         }
     };
 return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className={layout.layout} >
       <Stack direction={"column"} spacing={5} alignItems={"center"}>
-        <Stack
-          alignItems={"center"}
-          fontFamily={"Times New Roman"}
-          fontSize={28}
-        >
-          <h1>Registrar proveedor</h1>
-        </Stack>
+        <Title text="Registrar proveedor"/>
 
         <Stack direction={"row"}>
 

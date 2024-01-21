@@ -8,9 +8,10 @@ const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 interface DataProps {
   handleSetText: (text: string) => void;
   contextText:string;
+  placeHolder:string
 }
 
-const RichTextEditor: React.FC<DataProps> = ({ handleSetText,contextText }) => {
+const RichTextEditor: React.FC<DataProps> = ({ handleSetText,contextText ,placeHolder}) => {
   const [value, setValue] = useState('');
 
   useEffect(() => {
@@ -46,13 +47,13 @@ const RichTextEditor: React.FC<DataProps> = ({ handleSetText,contextText }) => {
   };
 
   return (
-    <Stack>
+    <Stack maxWidth={850}>
     <ReactQuill
       modules={module}
       theme="snow"
       value={value}
       onChange={setValue}
-      placeholder="Procedimiento de la receta"
+      placeholder={placeHolder}
     />
     </Stack>
   );

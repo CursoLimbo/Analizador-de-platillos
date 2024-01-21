@@ -12,6 +12,8 @@ import ingredientsRegisterStyles from "../styles/Ingredients-register.module.css
 import { AppButton } from "../components/Button";
 import { useForm } from "react-hook-form";
 import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
+import layout from '../styles/layout.module.css'
+import Title from "components/Title";
 
 type SupplierFormData = {
   id: string;
@@ -74,10 +76,8 @@ const SupplierUpdate: React.FC = () => {
   };
 
   return (
-    <div className={ingredientsRegisterStyles.box}>
-      <h1 className={ingredientsRegisterStyles.title}>
-        Actualizar proveedor
-      </h1>
+    <div className={`${ingredientsRegisterStyles.box} ${layout.layout}`}>
+      <Title text="Actualizar proveedor"/>
       {confirmData ? (
         <Stack>
           <form
