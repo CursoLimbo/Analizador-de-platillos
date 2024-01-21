@@ -8,6 +8,9 @@ import {
   useGetClientById,
   useUpdateClientMutation,
 } from "../hooks/services/Clients";
+import layout from '../styles/layout.module.css'
+import Title from "components/Title";
+
 
 type ClientFormatData = {
     id: string;
@@ -75,15 +78,9 @@ const clientUpdate: React.FC= () => {
         }
     };
 return (
-  <form onSubmit={handleSubmit(onSubmit)}>
+  <form onSubmit={handleSubmit(onSubmit)} className={layout.layout} >
       <Stack direction={"column"} spacing={5} alignItems={"center"}>
-        <Stack
-          alignItems={"center"}
-          fontFamily={"Times New Roman"}
-          fontSize={28}
-        >
-          <h1>Modificar cliente</h1>
-        </Stack>
+        <Title text="Modificar cliente"/>
 
         <Stack direction={"row"}>
 

@@ -5,6 +5,8 @@ import { useCreateClientMutation } from "../hooks/services/Clients";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import Title from "components/Title";
+import layout from '../styles/layout.module.css'
 
 type ClientFormatData = {
     name: string;
@@ -49,15 +51,9 @@ const clientRegister: React.FC= () => {
         }
     };
 return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className={layout.layout}>
       <Stack direction={"column"} spacing={5} alignItems={"center"}>
-        <Stack
-          alignItems={"center"}
-          fontFamily={"Times New Roman"}
-          fontSize={28}
-        >
-          <h1>Registrar cliente</h1>
-        </Stack>
+        <Title text="Registrar cliente"/>
 
         <Stack direction={"row"}>
 
@@ -115,7 +111,7 @@ return (
             helperText={errors.whatsapp && "Este campo es requerido"}
           />
         </Stack>
-        </Stack>
+        ti</Stack>
 
         <Stack>
           <AppButton type="submit">Guardar</AppButton>

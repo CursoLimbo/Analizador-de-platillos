@@ -9,6 +9,8 @@ import { useRouter } from "next/router";
 import { OperationVariables, QueryResult } from "@apollo/react-hooks";
 import ingredientsStyle from "../styles/Ingredients-register.module.css";
 import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
+import Title from "components/Title";
+import layout from '../styles/layout.module.css'
 
 const Catalogues: React.FunctionComponent = () => {
   const [rows, setRows] = useState<RowData[]>([]);
@@ -83,8 +85,8 @@ const Catalogues: React.FunctionComponent = () => {
     return [];
   }, [rows]);
   return (
-    <Box className={ingredientsStyle.box}>
-      <h1 className={ingredientsStyle.tableTitle}>Catalogos</h1>
+    <Box className={`${ingredientsStyle.box} ${layout.layout}`} >
+      <Title text="Catalogos"/> 
       {dataLoaded ? (
         <TableData
           dataRows={rows}

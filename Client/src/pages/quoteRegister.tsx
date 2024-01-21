@@ -11,6 +11,8 @@ import Title from "components/Title";
 import RichTextEditor from "components/richTextEditor";
 import React from "react";
 import { useForm } from "react-hook-form";
+import layout from '../styles/layout.module.css'
+
 
 interface QuoteRegisterProps {
   amountOfPeople: string;
@@ -40,10 +42,10 @@ const quoteRegister: React.FC<QuoteRegisterProps> = () => {
   const onSubmmit=()=>{}
 
   return (
-    <Stack alignItems={"center"}>
+    <Stack alignItems={"center"} className={layout.layout}>
       <Title text="Crear Cotización" />
 
-      <form onSubmit={handleSubmit(onSubmmit)}>
+      <form onSubmit={handleSubmit(onSubmmit)} >
         <Stack alignItems={"center"} my={5}>
           <Stack width={450}>
             <FormControl fullWidth>

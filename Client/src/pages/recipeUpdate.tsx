@@ -10,6 +10,8 @@ import { useContextData } from "hooks/utils/contextIngredients";
 import RichTextEditor from "components/richTextEditor";
 import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
 import { AppButton } from "components/Button";
+import layout from '../styles/layout.module.css'
+import Title from "components/Title";
 
 type RecipeFormatdata = {
   id: string;
@@ -205,16 +207,10 @@ useEffect(()=>{
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className={layout.layout} >
       {confirmData ? (
         <Stack direction={"column"} spacing={5} alignItems={"center"}>
-          <Stack
-            alignItems={"center"}
-            fontFamily={"Times New Roman"}
-            fontSize={28}
-          >
-            <h1>Actualizar receta</h1>
-          </Stack>
+          <Title text="Actualizar receta"/>
 
           <Stack
             direction={"column"}

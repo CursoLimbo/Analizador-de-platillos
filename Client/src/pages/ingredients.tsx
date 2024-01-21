@@ -9,6 +9,8 @@ import { useRouter } from "next/router";
 import { OperationVariables, QueryResult } from "@apollo/react-hooks";
 import ingredientsStyle from "../styles/Ingredients-register.module.css";
 import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
+import layout from '../styles/layout.module.css'
+import Title from "components/Title";
 
 const Ingredients: React.FunctionComponent = () => {
   const [rows, setRows] = useState<RowData[]>([]);
@@ -116,8 +118,8 @@ const Ingredients: React.FunctionComponent = () => {
   }, [rows]);
 
   return (
-    <Box className={ingredientsStyle.box}>
-      <h1 className={ingredientsStyle.tableTitle}>Ingredientes</h1>
+    <Box className={`${ingredientsStyle.box} ${layout.layout}`}>
+      <Title text="Ingredientes"/>
       {dataLoaded ? (
         <TableData
           dataRows={rows}

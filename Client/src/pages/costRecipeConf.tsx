@@ -8,6 +8,8 @@ import { ConfirmAlert } from "../components/sweetAlert";
 import { useContextData } from "../hooks/utils/contextIngredients";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import layout from '../styles/layout.module.css'
+import Title from "components/Title";
 
 type CostData = {
   inflation: number;
@@ -53,8 +55,8 @@ const CostRecipeConf: React.FC = () => {
   };
 
   return (
-    <Stack alignItems="center" fontFamily="Times New Roman" fontSize={28}>
-      <h1>Costeo Receta</h1>
+    <Stack alignItems="center" fontFamily="Times New Roman" fontSize={28}className={layout.layout}>
+      <Title text="Costeo Receta"/>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack alignItems="center">
           <Stack width={250} gap={5}>

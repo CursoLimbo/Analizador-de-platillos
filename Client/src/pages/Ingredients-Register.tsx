@@ -16,6 +16,8 @@ import { useCreateIngredientMutation } from "../hooks/services/Ingredients";
 import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
 import { useRouter } from "next/router";
 import { weigthUnit } from "hooks/utils/DataUnits";
+import layout from '../styles/layout.module.css'
+import Title from "components/Title";
 
 type IngredientFormData = {
   name: string;
@@ -124,8 +126,8 @@ const IngredientsRegister: React.FunctionComponent = () => {
   };
 
   return (
-    <div className={ingredientsRegisterStyles.box}>
-      <h1 className={ingredientsRegisterStyles.title}>Registrar ingrediente</h1>
+    <div className={`${ingredientsRegisterStyles.box} ${layout.layout}`}>
+      <Title text="Registrar ingrediente"/> 
       <form
         className={ingredientsRegisterStyles.formData}
         onSubmit={handleSubmit(onSubmit)}

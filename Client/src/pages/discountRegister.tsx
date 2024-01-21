@@ -4,6 +4,8 @@ import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
 import { useCreateDiscountMutation } from "../hooks/services/Discounts";
 import React from "react";
 import { useForm } from "react-hook-form";
+import layout from '../styles/layout.module.css'
+import Title from "components/Title";
 
 type DiscountFormatData = {
     name: string;
@@ -43,16 +45,9 @@ const discountRegister: React.FC= () => {
         }
     };
 return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className={layout.layout}>
       <Stack direction={"column"} spacing={5} alignItems={"center"}>
-        <Stack
-          alignItems={"center"}
-          fontFamily={"Times New Roman"}
-          fontSize={28}
-        >
-          <h1>Registrar descuento</h1>
-        </Stack>
-
+        <Title text="Registrar descuento"/>
         <Stack direction={"row"}>
 
         <Stack

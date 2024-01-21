@@ -20,6 +20,8 @@ import { useForm } from "react-hook-form";
 import { useGetAllSupplierQuery } from "hooks/services/Supplier";
 import { ConfirmAlert, ErrorAlert, SuccessAlert } from "components/sweetAlert";
 import { weigthUnit } from "hooks/utils/DataUnits";
+import layout from '../styles/layout.module.css'
+import Title from "components/Title";
 
 type IngredientFormData = {
   id: string;
@@ -136,10 +138,8 @@ const IngredientUpdate: React.FC = () => {
   };
 
   return (
-    <div className={ingredientsRegisterStyles.box}>
-      <h1 className={ingredientsRegisterStyles.title}>
-        Actualizar ingrediente
-      </h1>
+    <div className={`${ingredientsRegisterStyles.box} ${layout.layout}`}>
+      <Title text="Actualizar ingrediente"/>
       {confirmData ? (
         <Stack>
           <form
