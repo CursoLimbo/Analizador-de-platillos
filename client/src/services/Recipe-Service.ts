@@ -27,6 +27,7 @@ export const getAllRecipes = gql`
 query GetAllRecipes {
   GetAllRecipes {
     id
+    sid
     name
     portions
     procedure

@@ -1,8 +1,7 @@
-import {Resolver, Mutation, Arg, Query, ID, Authorized} from "type-graphql";
+import { nanoid } from 'nanoid';
+import {Resolver, Mutation, Arg, Query, Authorized} from "type-graphql";
 import {Catalogue, CatalogueModel} from "../models/Catalogue";
 import {CatalogueType} from "./Types/Catalogue";
-
-
 
 @Resolver((_of) => Catalogue)
 export class CatalogueResolver {
@@ -14,15 +13,16 @@ export class CatalogueResolver {
 
     @Authorized()
     @Query(()=> [Catalogue], {name: 'GetAllCatalogues', description: 'Get List of catalogues'})
-    async getALlCatalogues(){
+    async getAllCatalogues(){
         return CatalogueModel.find();
     }
 
     @Authorized()
     @Mutation(() => Catalogue, {name: 'CreateCatalogue'})
     async createCatalogue(@Arg('newCatalogue'){name, file}: CatalogueType): Promise<Catalogue>{
+        const sid = nanoid(8);
         const catalogueCreated = (
-            await CatalogueModel.create({name, file})
+            await CatalogueModel.create({sid, name, file})
         ).save();
         return catalogueCreated;
     }

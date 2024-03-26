@@ -35,6 +35,7 @@ type Catalogue {
   file: String!
   id: ID!
   name: String!
+  sid: String!
 }
 
 input CatalogueType {
@@ -50,6 +51,7 @@ type Client {
   location: String!
   name: String!
   phone: String!
+  sid: String!
   whatsapp: String!
 }
 
@@ -69,6 +71,7 @@ type Company {
   logo: String!
   name: String!
   phone: String!
+  sid: String!
   whatsapp: String!
 }
 
@@ -92,6 +95,7 @@ type Discount {
   id: ID!
   name: String!
   percentage: Float!
+  sid: String!
 }
 
 input DiscountType {
@@ -112,6 +116,7 @@ type Ingredient {
   performance: Float!
   performancePercentage: Float!
   presentation: Float!
+  sid: String!
   supplier: String!
   unit: String!
 }
@@ -258,10 +263,11 @@ type Quotation {
   company: String!
   date: String!
   develop: String!
-  discount: Float!
+  discount: Float
   id: ID!
   name: String!
   recipes: [String!]!
+  sid: String!
   total: Float!
 }
 
@@ -291,6 +297,7 @@ type Recipe {
   revenue: Float
   salesTax: Float
   serviceTax: Float
+  sid: String!
   totalCostPerQuantity: Float
   totalCostRawMaterial: Float
   unitCost: Float
@@ -319,6 +326,7 @@ type Supplier {
   location: String!
   name: String!
   phone: String!
+  sid: String!
 }
 
 input SupplierType {

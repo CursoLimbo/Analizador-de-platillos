@@ -1,7 +1,7 @@
+import { nanoid } from 'nanoid';
 import { Resolver, Mutation, Arg, Query, Authorized } from "type-graphql";
 import { Recipe, RecipeModel } from "../models/Recipe";
-import { RecipeType } from "./Types/Recipe";
-import { IngredientRecipeType } from "./Types/Recipe"; // Ensure this import
+import { RecipeType, IngredientRecipeType } from "./Types/Recipe";
 
 @Resolver(_of => Recipe)
 export class RecipeResolver {
@@ -20,6 +20,7 @@ export class RecipeResolver {
     @Authorized()
     @Mutation(_returns => Recipe, { name: 'CreateRecipe' })
     async createRecipe(@Arg('newRecipe') newRecipe: RecipeType): Promise<Recipe> {
+        const sid = nanoid(8);
         const ingredients = newRecipe.ingredients.map(ingredient => {
             const newIngredient = new IngredientRecipeType();
             newIngredient.idIngredient = ingredient.idIngredient;
@@ -29,6 +30,7 @@ export class RecipeResolver {
         });
 
         const recipe = new RecipeModel({
+            sid,
             ...newRecipe,
             ingredients,
         });

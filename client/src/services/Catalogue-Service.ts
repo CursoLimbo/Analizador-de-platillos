@@ -14,6 +14,7 @@ export const GetAllCatalogues = gql`
       date
       file
       id
+      sid
       name
     }
   }

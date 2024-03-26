@@ -18,6 +18,7 @@ query GetAllSuppliers {
     phone
     location
     id
+    sid
   }
 }
 `;

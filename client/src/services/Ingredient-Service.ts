@@ -30,6 +30,7 @@ query GetAllIngredients {
     performancePercentage
     presentation
     supplier
+    sid
     unit
     id
   }

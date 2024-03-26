@@ -60,6 +60,11 @@ const Recipes: React.FC = () =>{
   const columns = useMemo(()=>{
     if(rows.length > 0){
       return [
+        { field: "sid", 
+        headerName: "ID",
+        width: 250, 
+        editable: false 
+        },
         { field: "name", 
         headerName: "Nombre",
         width: 250, 

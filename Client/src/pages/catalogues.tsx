@@ -60,7 +60,7 @@ const Catalogues: React.FunctionComponent = () => {
   const columns = useMemo(() => {
     if (rows.length > 0) {
       return [
-        { field: "id", 
+        { field: "sid", 
         headerName: "ID", 
         width: 250, 
         editable: true },

@@ -60,10 +60,10 @@ const Ingredients: React.FunctionComponent = () => {
   const columns = useMemo(() => {
     if (rows.length > 0) {
       return [
-        // { field: "id", 
-        // headerName: "ID", 
-        // width: 250, 
-        // editable: true },
+        { field: "sid", 
+        headerName: "ID", 
+        width: 250, 
+        editable: true },
         { field: "name", 
         headerName: "Nombre",
         width: 150, 

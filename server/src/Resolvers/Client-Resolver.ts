@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import {Resolver, Mutation, Arg, Query, ID, Authorized} from "type-graphql";
 import {Client, ClientModel} from "../models/Client";
 import {ClientType} from "./Types/Client";
@@ -20,8 +21,9 @@ export class ClientResolver {
     @Authorized()
     @Mutation(() => Client, {name: 'CreateClient'})
     async createClient(@Arg('newClient'){name, location, phone, whatsapp, email}: ClientType): Promise<Client>{
+        const sid = nanoid(8);
         const clientCreated = (
-            await ClientModel.create({name, location, phone, whatsapp, email})
+            await ClientModel.create({sid, name, location, phone, whatsapp, email})
         ).save();
         return clientCreated;
     }

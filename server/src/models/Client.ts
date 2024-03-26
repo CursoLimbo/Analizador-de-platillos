@@ -8,6 +8,10 @@ export class Client{
     id:string;
 
     @Field()
+    @Property({type: () => String, required: false})
+    sid: string;
+
+    @Field()
     @Property({type: () => String, required: true})
     name: string;
 

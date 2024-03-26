@@ -12,6 +12,7 @@ export const getAllQuotations = gql`
 query GetAllQuotations {
   GetAllQuotations {
     client
+    sid
     date
     id
     name

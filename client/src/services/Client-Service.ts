@@ -16,9 +16,10 @@ export const GetAllClients = gql`
       location
       name
       phone
+      sid
       whatsapp
-  }
-}
+    }
+  }  
 `;
 
 export const CreateClient = gql`

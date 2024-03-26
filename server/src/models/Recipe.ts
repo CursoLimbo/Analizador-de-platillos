@@ -1,7 +1,7 @@
 import { prop as Property, getModelForClass, modelOptions } from "@typegoose/typegoose";
 import { Field, ObjectType, ID } from "type-graphql";
 import { IngredientRecipeType } from "../Resolvers/Types/Recipe";
-import { IngredientRecipeModel,IngredientRecipe } from "./IngredientRecipe";
+import { IngredientRecipeModel, IngredientRecipe } from "./IngredientRecipe";
 
 @ObjectType({ description: 'The recipe model' })
 @modelOptions({ schemaOptions: { collection: 'Recipe', timestamps: true } })
@@ -11,11 +11,15 @@ export class Recipe {
 
     @Field()
     @Property({ type: () => String, required: true })
+    sid: string; // Add sid field
+
+    @Field()
+    @Property({ type: () => String, required: true })
     name: string;
 
     @Field(type => [IngredientRecipe])
     @Property({ type: () => [IngredientRecipe], required: true })
-    ingredients: IngredientRecipe[]; 
+    ingredients: IngredientRecipe[];
 
     @Field()
     @Property({ type: () => String, required: true })
@@ -59,7 +63,7 @@ export class Recipe {
 
     @Field({ nullable: true })
     @Property({ type: () => String, required: false })
-    version: String;
+    version: string;
 }
 
 export const RecipeModel = getModelForClass(Recipe);

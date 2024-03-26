@@ -14,6 +14,7 @@ export const GetAllDiscounts = gql`
     GetAllDiscounts {
       description
       id
+      sid
       name
       percentage
   }
